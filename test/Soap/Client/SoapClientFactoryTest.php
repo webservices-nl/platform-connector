@@ -64,6 +64,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
                 'username'    => 'johndoe',
                 'password'    => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
+                ''
             ]
         );
 

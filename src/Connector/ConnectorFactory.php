@@ -40,7 +40,7 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param array                $settings
      * @param LoggerInterface|null $logger
      *
-     * @return SoapFactory
+     * @return ConnectorInterface
      * @throws InputException
      */
     public static function create($platform, $protocol, array $settings = [], LoggerInterface $logger = null)

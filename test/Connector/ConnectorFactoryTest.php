@@ -26,7 +26,10 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testInstance()
     {
-        $factory = ConnectorFactory::create('webservices', 'soap', ['username' => 'lala', 'password' => 'hihi']);
-        var_dump($factory); die;
+        $client = ConnectorFactory::create('webservices', 'soap', ['username' => 'lala', 'password' => 'hihi']);
+
+        $this->assertInstanceOf('Webservicesnl\Connector\WebservicesConnector', $client);
+        $this->assertInstanceOf('Webservicesnl\Connector\Adapter\SoapAdapter', $client->getAdapter());
+
     }
 }

@@ -143,7 +143,7 @@ class SoapClient extends \SoapClient
      */
     public function hasClient()
     {
-        return ($this->curlClient instanceof Client);
+        return ($this->curlClient instanceof CurlClient);
     }
 
     private function doHttpRequest($request, $location, $action)

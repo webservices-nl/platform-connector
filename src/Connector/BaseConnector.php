@@ -4,7 +4,12 @@ namespace Webservicesnl\Connector;
 
 use Webservicesnl\Connector\Adapter\AdapterInterface;
 
-abstract class BaseConnector
+/**
+ * Class BaseConnector.
+ *
+ * @package Webservicesnl\Connector
+ */
+abstract class BaseConnector implements ConnectorInterface
 {
     /**
      * @var AdapterInterface
@@ -27,5 +32,13 @@ abstract class BaseConnector
     public function getAdapter()
     {
         return $this->adapter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+       return basename(str_replace('\\', '/', get_called_class()));
     }
 }
