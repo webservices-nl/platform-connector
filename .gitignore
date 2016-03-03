@@ -1,0 +1,4 @@
+vendor/
+ansible/
+composer.lock
+phpunit.xml

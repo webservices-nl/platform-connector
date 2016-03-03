@@ -1,0 +1,48 @@
+{
+  "name": "webservices-nl/soap-client",
+  "description": "Soap client wrapper for Webservices.nl written in PHP",
+  "keywords": [
+    "soap",
+    "webservicesnl",
+    "webservices.nl"
+  ],
+  "config": {
+    "gitlab-domains": [
+      "gitlab.fdmg.org"
+    ],
+    "preferred-install": "dist"
+  },
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "WebservicesNL",
+      "email": "tech@webservices.nl",
+      "homepage": "http://www.webservices.nl"
+    }
+  ],
+  "require": {
+    "php": "^5.4",
+    "monolog/monolog": "^1.17",
+    "guzzlehttp/guzzle": "~5",
+    "guzzlehttp/log-subscriber": "^1.0",
+    "webservices-nl/common": "0.0.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5",
+    "mockery/mockery": "~0.9",
+    "league/factory-muffin": "^2.1",
+    "league/factory-muffin-faker": "~1.0-beta"
+  },
+  "autoload": {
+    "psr-4": {
+      "Webservicesnl\\Connector\\": "src/Connector/",
+      "Webservicesnl\\Soap\\": "src/Soap/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Webservicesnl\\Test\\": "test/"
+    }
+  }
+}
