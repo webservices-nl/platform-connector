@@ -14,7 +14,6 @@ use Webservicesnl\Soap\Client\SoapFactory;
  *
  * Helps with creating a connector for a given platform over a certain protocol.
  *
- * @package Webservicesnl\Connector
  */
 class ConnectorFactory implements LoggerAwareInterface
 {
@@ -33,7 +32,7 @@ class ConnectorFactory implements LoggerAwareInterface
     ];
 
     /**
-     * Creates an connection for a given platform
+     * Creates an connection for a given platform.
      *
      * @param string               $platform
      * @param string               $protocol
@@ -41,6 +40,7 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param LoggerInterface|null $logger
      *
      * @return ConnectorInterface
+     *
      * @throws InputException
      */
     public static function create($platform, $protocol, array $settings = [], LoggerInterface $logger = null)
@@ -53,9 +53,9 @@ class ConnectorFactory implements LoggerAwareInterface
         $platform = ucfirst($platform);
         $protocol = ucfirst($protocol);
 
-        $clientFactory = sprintf("Webservicesnl\\%s\\Client\\%sFactory", $protocol, $protocol);
-        $connectorFQCN = sprintf(__NAMESPACE__ .'\\'. $platform . 'Connector');
-        $adapterFQCN = sprintf(__NAMESPACE__ .'\\Adapter\\'. $protocol . 'Adapter');
+        $clientFactory = sprintf('Webservicesnl\\%s\\Client\\%sFactory', $protocol, $protocol);
+        $connectorFQCN = sprintf(__NAMESPACE__ . '\\' . $platform . 'Connector');
+        $adapterFQCN = sprintf(__NAMESPACE__ . '\\Adapter\\' . $protocol . 'Adapter');
 
         if (!class_exists($clientFactory) || !class_exists($connectorFQCN)) {
             throw new InputException("Could not load classes for '$protocol' and '$platform'");

@@ -7,7 +7,6 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
 /**
  * Class BaseConnector.
  *
- * @package Webservicesnl\Connector
  */
 abstract class AbstractConnector implements ConnectorInterface
 {
@@ -29,19 +28,18 @@ abstract class AbstractConnector implements ConnectorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getAdapter()
     {
         return $this->adapter;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPlatform()
     {
-       return static::PLATFORM_NAME;
+        return static::PLATFORM_NAME;
     }
 }

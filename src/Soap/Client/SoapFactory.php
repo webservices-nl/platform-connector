@@ -20,7 +20,8 @@ class SoapFactory implements LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * Default settings
+     * Default settings.
+     *
      * @var array
      */
     protected static $defaultSettings = [
@@ -66,7 +67,7 @@ class SoapFactory implements LoggerAwareInterface
     }
 
     /**
-     * Build SoapClient
+     * Build SoapClient.
      *
      * @param array $settings
      *
@@ -96,8 +97,8 @@ class SoapFactory implements LoggerAwareInterface
 
         if ($this->hasLogger() === true) {
             $this->getLogger()->info("Creating a SoapClient for platform '$this->platform'", $settings);
-            $this->getLogger()->debug("Created EndpointManager", ['endpoint' => print_r($manager, true)]);
-            $this->getLogger()->debug("Created SoapClient", ['soapclient' => print_r($soapClient, true)]);
+            $this->getLogger()->debug('Created EndpointManager', ['endpoint' => print_r($manager, true)]);
+            $this->getLogger()->debug('Created SoapClient', ['soapclient' => print_r($soapClient, true)]);
         }
 
         return $soapClient;
@@ -116,7 +117,7 @@ class SoapFactory implements LoggerAwareInterface
      */
     public function hasLogger()
     {
-        return ($this->getLogger() instanceof LoggerInterface);
+        return $this->getLogger() instanceof LoggerInterface;
     }
 
     /**

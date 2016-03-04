@@ -11,7 +11,6 @@ use Webservicesnl\Soap\Client\SoapSettings;
 /**
  * Class WebservicesConfig.
  *
- * @package Webservicesnl\Soap\Client\Config
  */
 class WebservicesConfig implements ConfigInterface
 {
@@ -19,7 +18,7 @@ class WebservicesConfig implements ConfigInterface
     const SOAPHEADER_URL = 'http://www.webservices.nl/soap/';
 
     /**
-     * List with server endpoints
+     * List with server endpoints.
      *
      * @var array
      */
@@ -32,6 +31,7 @@ class WebservicesConfig implements ConfigInterface
      * @param SoapSettings|array $settings
      *
      * @return array
+     *
      * @throws InputException
      */
     public static function configure($settings)
@@ -54,7 +54,7 @@ class WebservicesConfig implements ConfigInterface
                     true
                 ),
             ],
-            'endPoints'   => self::$endPoints,
+            'endPoints' => self::$endPoints,
         ];
     }
 }

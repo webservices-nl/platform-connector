@@ -7,7 +7,6 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
 /**
  * Interface ConnectorInterface.
  *
- * @package Webservicesnl\Connector
  */
 interface ConnectorInterface
 {
@@ -17,7 +16,7 @@ interface ConnectorInterface
     public function getAdapter();
 
     /**
-     * returns name of platform
+     * returns name of platform.
      *
      * @return string
      */

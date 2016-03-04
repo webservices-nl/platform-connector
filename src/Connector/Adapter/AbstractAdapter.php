@@ -7,7 +7,7 @@ abstract class AbstractAdapter
     const PROTOCOL_NAME = 'abstract';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getProtocol()
     {

@@ -7,14 +7,14 @@ interface AdapterInterface
     /**
      *
      * @param string $functionName
-     * @param mixed $arguments
+     * @param mixed  $arguments
      *
      * @return mixed
      */
     public function call($functionName, $arguments);
 
     /**
-     * Returns this adapter's protocol
+     * Returns this adapter's protocol.
      *
      * @return string
      */

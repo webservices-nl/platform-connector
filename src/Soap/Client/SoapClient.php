@@ -90,11 +90,12 @@ class SoapClient extends \SoapClient
      * @param null   $output_headers
      *
      * @return mixed
+     *
      * @throws WebservicesNlServerException|WebservicesNlServerUnavailableException|WebservicesNlServerUnavailableInternalErrorException|WebservicesNlServerUnavailableTemporaryException
      */
     public function soapCall($function_name, $arguments = [], $options = [], $input_headers = [], &$output_headers = null)
     {
-//        try {
+        //        try {
 //            // try all servers until we have a result
 //            while (1) {
 //                try {
@@ -143,7 +144,7 @@ class SoapClient extends \SoapClient
      */
     public function hasClient()
     {
-        return ($this->curlClient instanceof CurlClient);
+        return $this->curlClient instanceof CurlClient;
     }
 
     private function doHttpRequest($request, $location, $action)

@@ -2,12 +2,11 @@
 
 namespace Webservicesnl\Test\Soap\Client;
 
-use Webservicesnl\Soap\Client\SoapSettings;
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use Webservicesnl\Soap\Client\SoapSettings;
 
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      *
      */
@@ -58,7 +57,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checking getter and setter (might be a silly test)
+     * Checking getter and setter (might be a silly test).
      */
     public function testMappingToArray()
     {

@@ -5,8 +5,7 @@ namespace Webservicesnl\Connector\Adapter;
 use GuzzleHttp\Client as GuzzleClient;
 
 /**
- * Class RestAdapter
- * @package Connector\Adapter
+ * Class RestAdapter.
  */
 class RestAdapter extends AbstractAdapter implements AdapterInterface
 {
@@ -29,6 +28,5 @@ class RestAdapter extends AbstractAdapter implements AdapterInterface
 
     public function call($functionName, $arguments)
     {
-
     }
 }
