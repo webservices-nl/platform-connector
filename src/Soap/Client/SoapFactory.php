@@ -12,6 +12,8 @@ use Webservicesnl\Soap\Client\Config\ConfigFactory;
 
 /**
  * Class SoapFactory.
+ *
+ * Create a SoapClient for a given platform (mainly webservices)
  */
 class SoapFactory implements LoggerAwareInterface
 {
@@ -74,7 +76,7 @@ class SoapFactory implements LoggerAwareInterface
     {
         $settings = $settings + self::$defaultSettings;
         $soapSettings = SoapSettings::loadFromArray($settings);
-        $config = ConfigFactory::config($this->platform, $settings);
+        $config = ConfigFactory::config($this->platform, $soapSettings);
 
         // add endpoint manager
         $manager = new EndpointManager();

@@ -9,8 +9,10 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
  *
  * @package Webservicesnl\Connector
  */
-abstract class BaseConnector implements ConnectorInterface
+abstract class AbstractConnector implements ConnectorInterface
 {
+    const PLATFORM_NAME = 'abstract';
+
     /**
      * @var AdapterInterface
      */
@@ -27,18 +29,19 @@ abstract class BaseConnector implements ConnectorInterface
     }
 
     /**
-     * @return AdapterInterface
+     * @inheritdoc
      */
+
     public function getAdapter()
     {
         return $this->adapter;
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    public function getType()
+    public function getPlatform()
     {
-       return basename(str_replace('\\', '/', get_called_class()));
+       return static::PLATFORM_NAME;
     }
 }

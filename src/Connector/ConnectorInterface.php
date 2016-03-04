@@ -17,7 +17,9 @@ interface ConnectorInterface
     public function getAdapter();
 
     /**
+     * returns name of platform
+     *
      * @return string
      */
-    public function getType();
+    public function getPlatform();
 }
