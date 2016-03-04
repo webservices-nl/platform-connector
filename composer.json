@@ -37,7 +37,6 @@
   },
   "autoload": {
     "psr-4": {
-      "Webservicesnl\\Config\\": "src/Common/Config",
       "Webservicesnl\\Connector\\": "src/Connector/",
       "Webservicesnl\\Soap\\": "src/Soap/"
     }
