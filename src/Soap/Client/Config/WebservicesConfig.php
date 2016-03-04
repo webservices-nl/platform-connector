@@ -38,7 +38,7 @@ class WebservicesConfig implements ConfigInterface
                     true
                 ),
             ],
-            'endPoints'   => self::$endPoints,
+            'endPoints' => self::$endPoints,
         ];
     }
 }

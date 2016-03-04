@@ -7,7 +7,6 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
 /**
  * Interface ConnectorInterface.
  *
- * @package Webservicesnl\Connector
  */
 interface ConnectorInterface
 {

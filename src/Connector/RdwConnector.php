@@ -4,11 +4,10 @@ namespace Webservicesnl\Connector;
 
 /**
  * Class RwdConnector
- * @package Webservicesnl\Connector
  */
-class RwdConnector extends BaseConnector
+class RdwConnector extends BaseConnector
 {
-//    public function getUser($username)
+    //    public function getUser($username)
 //    {
 //        return $this->getAdapter()->getUser($username);
 //    }

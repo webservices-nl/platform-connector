@@ -6,7 +6,6 @@ use Webservicesnl\Soap\Client\SoapClient;
 
 /**
  * Class SoapAdapter
- * @package Webservicesnl\Connector\Adapter
  */
 class SoapAdapter extends AbstractAdapter implements AdapterInterface
 {
@@ -30,7 +29,7 @@ class SoapAdapter extends AbstractAdapter implements AdapterInterface
     public function call($functionName, $args)
     {
         if (in_array($functionName, get_class_methods('SoapClient'))) {
-            return call_user_func(array($this->client, $functionName), $args);
+            return call_user_func([$this->client, $functionName], $args);
         }
 
         return $this->client->soapCall($functionName, $args);

@@ -2,14 +2,12 @@
 
 namespace Webservicesnl\Soap\Client\Config;
 
-use Webservicesnl\Exception\Client\InputException;
 use Webservicesnl\Common\Config\ConfigInterface;
-
+use Webservicesnl\Exception\Client\InputException;
 
 /**
  * Class ConfigFactory
  *
- * @package Webservicesnl\Soap\Client\Config
  */
 class ConfigFactory
 {
@@ -18,6 +16,7 @@ class ConfigFactory
      * @param array  $settings
      *
      * @return mixed
+     *
      * @throws InputException
      */
     public static function config($platform, array $settings)

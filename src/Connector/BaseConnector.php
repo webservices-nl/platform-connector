@@ -7,7 +7,6 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
 /**
  * Class BaseConnector.
  *
- * @package Webservicesnl\Connector
  */
 abstract class BaseConnector implements ConnectorInterface
 {
@@ -39,6 +38,6 @@ abstract class BaseConnector implements ConnectorInterface
      */
     public function getType()
     {
-       return basename(str_replace('\\', '/', get_called_class()));
+        return basename(str_replace('\\', '/', get_called_class()));
     }
 }

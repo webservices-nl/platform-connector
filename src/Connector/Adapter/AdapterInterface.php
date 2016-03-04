@@ -2,12 +2,15 @@
 
 namespace Webservicesnl\Connector\Adapter;
 
+/**
+ * Interface AdapterInterface
+ */
 interface AdapterInterface
 {
     /**
      *
      * @param string $functionName
-     * @param mixed $arguments
+     * @param mixed  $arguments
      *
      * @return mixed
      */
