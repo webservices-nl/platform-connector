@@ -32,7 +32,7 @@ class ConnectorFactory implements LoggerAwareInterface
     ];
 
     /**
-     * Creates an connection for a given platform
+     * Creates an connection for a given platform.
      *
      * @param string               $platform
      * @param string               $protocol

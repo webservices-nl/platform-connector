@@ -5,7 +5,7 @@ namespace Webservicesnl\Connector\Adapter;
 use Webservicesnl\Soap\Client\SoapClient;
 
 /**
- * Class SoapAdapter
+ * Class SoapAdapter.
  */
 class SoapAdapter extends AbstractAdapter implements AdapterInterface
 {

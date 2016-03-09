@@ -9,8 +9,10 @@ namespace Webservicesnl\Connector;
  *
  * This file is regenerated with each release ...
  */
-class WebservicesConnector extends BaseConnector
+class WebservicesConnector extends AbstractConnector
 {
+    const PLATFORM_NAME = 'webservices';
+
     /**
      * @param string $username
      *

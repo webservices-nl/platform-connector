@@ -5,7 +5,7 @@ namespace Webservicesnl\Connector\Adapter;
 use GuzzleHttp\Client as GuzzleClient;
 
 /**
- * Class RestAdapter
+ * Class RestAdapter.
  */
 class RestAdapter extends AbstractAdapter implements AdapterInterface
 {

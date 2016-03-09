@@ -2,15 +2,23 @@
 
 namespace Webservicesnl\Soap\Client\Config;
 
+use Mockery\CountValidator\Exception;
 use Webservicesnl\Common\Config\ConfigInterface;
+use Webservicesnl\Exception\Client\Input\InvalidException;
+use Webservicesnl\Exception\Client\InputException;
+use Webservicesnl\Soap\Client\SoapSettings;
 
+/**
+ * Class WebservicesConfig.
+ *
+ */
 class WebservicesConfig implements ConfigInterface
 {
     const PLATFORM_NAME = 'webservices';
     const SOAPHEADER_URL = 'http://www.webservices.nl/soap/';
 
     /**
-     * List with server endpoints
+     * List with server endpoints.
      *
      * @var array
      */
@@ -20,20 +28,28 @@ class WebservicesConfig implements ConfigInterface
     ];
 
     /**
-     * @param array $settings
+     * @param SoapSettings|array $settings
      *
      * @return array
+     *
+     * @throws InputException
      */
-    public static function configure(array $settings)
+    public static function configure($settings)
     {
+        if (is_array($settings)) {
+            $settings = SoapSettings::loadFromArray($settings);
+        } elseif (!$settings instanceof SoapSettings) {
+            throw new InputException('Settings is not a SoapSettings object or array');
+        }
+
         return [
             'soapHeaders' => [
                 new \SoapHeader(
                     self::SOAPHEADER_URL,
                     'headerLogin',
                     [
-                        'username' => $settings['username'],
-                        'password' => $settings['password'],
+                        'username' => $settings->getUsername(),
+                        'password' => $settings->getPassword(),
                     ],
                     true
                 ),

@@ -3,14 +3,12 @@
 namespace Webservicesnl\Test\Soap\Client;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use Monolog\Logger;
 use Monolog\Handler\TestHandler;
-
+use Monolog\Logger;
 use Webservicesnl\Soap\Client\SoapFactory;
 
 /**
- * Class SoapClientFactoryTest
- * @package Webservicesnl\Test\Soap\Client
+ * Class SoapClientFactoryTest.
  */
 class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -61,8 +59,8 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
         $soapClient = SoapFactory::build('webservices', $logger)->create(
             [
-                'username'    => 'johndoe',
-                'password'    => 'fakePassword',
+                'username' => 'johndoe',
+                'password' => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
                 ''
             ]
