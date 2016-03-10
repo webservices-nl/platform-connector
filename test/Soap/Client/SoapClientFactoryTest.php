@@ -35,16 +35,16 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testInstanceWithoutArguments()
     {
         $bla = new SoapFactory('webservices');
-        $this->assertNull($bla->getLogger());
+        static::assertNull($bla->getLogger());
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      */
     public function testInstanceWithoutMandatoryValues()
     {
-        $soapClient = SoapFactory::build('webservices')->create([]);
+        SoapFactory::build('webservices')->create([]);
     }
 
     /**
@@ -59,20 +59,20 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
         $soapClient = SoapFactory::build('webservices', $logger)->create(
             [
-                'username' => 'johndoe',
-                'password' => 'fakePassword',
+                'username'    => 'johndoe',
+                'password'    => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
-                ''
+                '',
             ]
         );
 
-        $this->assertTrue($soapClient->hasClient());
-        $this->assertAttributeInstanceOf('\Monolog\Logger', 'logger', $soapClient);
-        $this->assertAttributeContains($soapHeader, '__default_headers', $soapClient);
+        static::assertTrue($soapClient->hasClient());
+        static::assertAttributeInstanceOf('\Monolog\Logger', 'logger', $soapClient);
+        static::assertAttributeContains($soapHeader, '__default_headers', $soapClient);
 
-        $this->assertTrue($consoleHandler->hasInfoThatContains("Creating a SoapClient for platform 'webservices'"));
-        $this->assertTrue($consoleHandler->hasDebugThatContains('Created EndpointManager'));
-        $this->assertTrue($consoleHandler->hasDebugThatContains('Created SoapClient'));
+        static::assertTrue($consoleHandler->hasInfoThatContains("Creating a SoapClient for platform 'webservices'"));
+        static::assertTrue($consoleHandler->hasDebugThatContains('Created EndpointManager'));
+        static::assertTrue($consoleHandler->hasDebugThatContains('Created SoapClient'));
     }
 
     /**
@@ -81,7 +81,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testInstanceWithoutLogger()
     {
         $soapClient = SoapFactory::build('webservices')->create(['username' => 'john', 'password' => 'lalala']);
-        $this->assertAttributeNotInstanceOf('\Monolog\Logger', 'logger', $soapClient);
+        static::assertAttributeNotInstanceOf('\Monolog\Logger', 'logger', $soapClient);
     }
 
     /**
@@ -97,6 +97,6 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->assertFalse($soapClient->hasClient());
+        static::assertFalse($soapClient->hasClient());
     }
 }

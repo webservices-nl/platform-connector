@@ -26,7 +26,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      */
     public function testInstantiationWithoutCredentials()
@@ -35,7 +35,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not a valid timeout
      */
     public function testSettingsConnectionTimeout()
@@ -52,8 +52,8 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
         $options = ['username' => 'john', 'password' => 'secret'];
         $settings = SoapSettings::loadFromArray($options);
 
-        $this->assertNotEmpty($settings->getPassword(), 'SoapSettings should have a password');
-        $this->assertNotEmpty($settings->getUsername(), 'SoapSettings should have a username');
+        static::assertNotEmpty($settings->getPassword(), 'SoapSettings should have a password');
+        static::assertNotEmpty($settings->getUsername(), 'SoapSettings should have a username');
     }
 
     /**
@@ -75,7 +75,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
                 $name = 'is' . ucfirst($key);
             }
 
-            $this->assertEquals($settings->{$name}(), $value, "SoapSetting should have $key value");
+            static::assertEquals($settings->{$name}(), $value, "SoapSetting should have $key value");
         });
     }
 }

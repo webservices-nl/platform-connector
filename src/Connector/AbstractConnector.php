@@ -6,7 +6,7 @@ use Webservicesnl\Connector\Adapter\AdapterInterface;
 
 /**
  * Class BaseConnector.
- *
+ * This a base class, it drops the base...
  */
 abstract class AbstractConnector implements ConnectorInterface
 {

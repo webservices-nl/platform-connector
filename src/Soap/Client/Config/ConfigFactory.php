@@ -3,8 +3,7 @@
 namespace Webservicesnl\Soap\Client\Config;
 
 use Webservicesnl\Common\Config\ConfigInterface;
-use Webservicesnl\Exception\Client\Input\InvalidException;
-use Webservicesnl\Exception\Client\InputException;
+use Webservicesnl\Common\Exception\Client\InputException;
 use Webservicesnl\Soap\Client\SoapSettings;
 
 /**
@@ -25,8 +24,8 @@ class ConfigFactory
      */
     public static function config($platform, $settings)
     {
-        if (!is_string($platform) || empty($platform)) {
-            throw new InvalidException("That just won't jive");
+        if (!is_string($platform)) {
+            throw new InputException("That just won't jive");
         }
 
         /** @var ConfigInterface $platformClassFQCN */

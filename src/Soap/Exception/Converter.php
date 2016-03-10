@@ -2,8 +2,8 @@
 
 namespace Webservicesnl\Soap\Exception;
 
-use Webservicesnl\Exception\Exception;
-use Webservicesnl\Exception\ServerException;
+use Webservicesnl\Common\Exception\Exception;
+use Webservicesnl\Common\Exception\ServerException;
 
 /**
  * Class Converter.
@@ -27,8 +27,6 @@ class Converter
         }
 
         /** @var Exception $exception */
-        $exception = new $errorClassFQ($fault->getMessage());
-
-        return $exception;
+        return new $errorClassFQ($fault->getMessage());
     }
 }

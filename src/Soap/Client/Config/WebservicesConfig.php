@@ -2,10 +2,8 @@
 
 namespace Webservicesnl\Soap\Client\Config;
 
-use Mockery\CountValidator\Exception;
 use Webservicesnl\Common\Config\ConfigInterface;
-use Webservicesnl\Exception\Client\Input\InvalidException;
-use Webservicesnl\Exception\Client\InputException;
+use Webservicesnl\Common\Exception\Client\InputException;
 use Webservicesnl\Soap\Client\SoapSettings;
 
 /**

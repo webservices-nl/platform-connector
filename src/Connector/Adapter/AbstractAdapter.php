@@ -2,6 +2,9 @@
 
 namespace Webservicesnl\Connector\Adapter;
 
+/**
+ * Class AbstractAdapter
+ */
 abstract class AbstractAdapter
 {
     const PROTOCOL_NAME = 'abstract';

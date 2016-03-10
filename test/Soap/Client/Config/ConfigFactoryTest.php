@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\test\Soap\Client\Config;
+namespace Webservicesnl\Test\Soap\Client\Config;
 
 use Webservicesnl\Soap\Client\Config\ConfigFactory;
 
@@ -10,10 +10,10 @@ use Webservicesnl\Soap\Client\Config\ConfigFactory;
 class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage That just won't jive
      *
-     * @throws \Webservicesnl\Exception\Client\Input\InvalidException
+     * @throws \Webservicesnl\Common\Exception\Client\InputException
      */
     public function testInstanceWithoutArguments()
     {
@@ -21,10 +21,10 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\InputException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      *
-     * @throws \Webservicesnl\Exception\Client\InputException
+     * @throws \Webservicesnl\Common\Exception\Client\InputException
      */
     public function testInstanceWithArguments()
     {
@@ -32,10 +32,10 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\InputException
+     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not find a config for 'FakePlatform'
      *
-     * @throws \Webservicesnl\Exception\Client\InputException
+     * @throws \Webservicesnl\Common\Exception\Client\InputException
      */
     public function testInstanceWithBadPlatform()
     {

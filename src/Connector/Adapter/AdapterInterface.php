@@ -2,9 +2,15 @@
 
 namespace Webservicesnl\Connector\Adapter;
 
+/**
+ * Interface AdapterInterface
+ *
+ * Contract for the connector adapters
+ */
 interface AdapterInterface
 {
     /**
+     * Call the client request function
      *
      * @param string $functionName
      * @param mixed  $arguments

@@ -9,7 +9,7 @@ namespace Webservicesnl\Soap\Exception;
  *
  * @link http://php.net/manual/en/soapfault.soapfault.php
  */
-class SoapFault extends \SoapFault implements SoapFaultInterface
+class SoapFault extends \SoapFault
 {
     /**
      * More details about the cause of the error.

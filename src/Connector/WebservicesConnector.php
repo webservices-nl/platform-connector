@@ -14,6 +14,8 @@ class WebservicesConnector extends AbstractConnector
     const PLATFORM_NAME = 'webservices';
 
     /**
+     * This is just demo function
+     *
      * @param string $username
      *
      * @return mixed

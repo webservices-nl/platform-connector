@@ -26,7 +26,7 @@
     "monolog/monolog": "^1.17",
     "guzzlehttp/guzzle": "~5",
     "guzzlehttp/log-subscriber": "^1.0",
-    "webservices-nl/common": "0.0.3"
+    "webservices-nl/common": "0.0.5"
   },
   "require-dev": {
     "phpunit/phpunit": "^5",
@@ -36,7 +36,6 @@
   },
   "autoload": {
     "psr-4": {
-      "Webservicesnl\\Config\\": "src/Common/Config",
       "Webservicesnl\\Connector\\": "src/Connector/",
       "Webservicesnl\\Soap\\": "src/Soap/"
     }
