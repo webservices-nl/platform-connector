@@ -2,7 +2,7 @@
 
 namespace Webservicesnl\Soap\Client;
 
-use Webservicesnl\Exception\Client\Input\InvalidException;
+use Webservicesnl\Common\Exception\Client\InputException;
 
 /**
  * Class SoapSettings.
@@ -45,7 +45,7 @@ class SoapSettings
     /**
      * @var array | null
      */
-    private $classMap = null;
+    private $classMap;
 
     /**
      * The compression option allows to use compression of HTTP SOAP requests and responses.
@@ -69,7 +69,7 @@ class SoapSettings
      *
      * @var resource
      */
-    private $context = null;
+    private $context;
 
     /**
      * The encoding option defines internal character encoding.
@@ -146,11 +146,24 @@ class SoapSettings
     private $responseTimeout = self::DEFAULT_RESPONSE_TIMEOUT;
 
     /**
-     * Threshold when to try server again after failure (in minites).
+     * Threshold when to try server again after failure (in minutes).
      *
      * @var int
      */
     private $retryMinutes = 60;
+
+    /**
+     * All possible SOAP SSL methods
+     *
+     * @var array
+     */
+    public static $sslMethods =
+        [
+            SOAP_SSL_METHOD_TLS,
+            SOAP_SSL_METHOD_SSLv2,
+            SOAP_SSL_METHOD_SSLv3,
+            SOAP_SSL_METHOD_SSLv23,
+        ];
 
     /**
      * The ssl_method option is one of SOAP_SSL_METHOD_TLS, SOAP_SSL_METHOD_SSLv2, SOAP_SSL_METHOD_SSLv3 or
@@ -174,8 +187,13 @@ class SoapSettings
      *               "to_xml"    => "some_function_name" callback accepting one string parameter")
      *
      */
-    private $typeMap = null;
+    private $typeMap;
 
+    /**
+     * Soap Version (either SOAP_1_1 or SOAP_1_2)
+     *
+     * @var int
+     */
     private $soapVersion = SOAP_1_1;
 
     /**
@@ -183,7 +201,7 @@ class SoapSettings
      *
      * @var string
      */
-    private $uri = null;
+    private $uri;
 
     /**
      * The user_agent option specifies string to use in User-Agent header.
@@ -203,14 +221,13 @@ class SoapSettings
      * @param array $options
      *
      * @return SoapSettings
-     *
-     * @throws InvalidException
+     * @throws InputException
      */
     public static function loadFromArray(array $options)
     {
         $options = array_filter($options);
-        if (!isset($options['username']) || !isset($options['password'])) {
-            throw new InvalidException('Not all mandatory config credentials are set');
+        if (!array_key_exists('username', $options) || !array_key_exists('password', $options)) {
+            throw new InputException('Not all mandatory config credentials are set');
         }
 
         $config = new static();
@@ -265,6 +282,8 @@ class SoapSettings
     }
 
     /**
+     * Returns class mapping
+     *
      * @return array|null
      */
     public function getClassMap()
@@ -298,7 +317,7 @@ class SoapSettings
      */
     public function setCompression($compression)
     {
-        if (in_array($compression, [SOAP_COMPRESSION_ACCEPT, SOAP_COMPRESSION_GZIP, SOAP_COMPRESSION_DEFLATE])) {
+        if (in_array($compression, [SOAP_COMPRESSION_ACCEPT, SOAP_COMPRESSION_GZIP, SOAP_COMPRESSION_DEFLATE], true)) {
             $this->compression = $compression;
         }
 
@@ -318,12 +337,12 @@ class SoapSettings
      *
      * @return SoapSettings
      *
-     * @throws InvalidException
+     * @throws InputException
      */
     public function setConnectionTimeout($connectionTimeout)
     {
         if (!is_int($connectionTimeout)) {
-            throw new InvalidException('Not a valid timeout');
+            throw new InputException('Not a valid timeout');
         }
         $this->connectionTimeout = $connectionTimeout;
 
@@ -399,14 +418,16 @@ class SoapSettings
     }
 
     /**
+     * Set SoapFeatures bitmask
+     *
      * @param int $features
      *
      * @return SoapSettings
      */
     public function setFeatures($features)
     {
-        if (in_array($features, [\SOAP_SINGLE_ELEMENT_ARRAYS, \SOAP_USE_XSI_ARRAY_TYPE, \SOAP_WAIT_ONE_WAY_CALLS])) {
-            $this->features = $features;
+        if (in_array($features, [SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS], true)) {
+            $this->features |= $features;
         }
 
         return $this;
@@ -607,7 +628,7 @@ class SoapSettings
      */
     public function setSoapVersion($soapVersion)
     {
-        if (in_array($soapVersion, [SOAP_1_1, SOAP_1_2])) {
+        if (in_array($soapVersion, [SOAP_1_1, SOAP_1_2], false)) {
             $this->soapVersion = $soapVersion;
         }
     }
@@ -629,14 +650,7 @@ class SoapSettings
      */
     public function setSslMethod($sslMethod)
     {
-        if (PHP_VERSION_ID <= 504000 &&
-            in_array($sslMethod, [
-                SOAP_SSL_METHOD_TLS,
-                SOAP_SSL_METHOD_SSLv2,
-                SOAP_SSL_METHOD_SSLv3,
-                SOAP_SSL_METHOD_SSLv23,
-            ])
-        ) {
+        if (PHP_VERSION_ID >= 50400 && in_array($sslMethod, self::$sslMethods, true)) {
             $this->sslMethod = $sslMethod;
         }
 

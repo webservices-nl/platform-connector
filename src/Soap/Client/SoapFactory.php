@@ -4,10 +4,14 @@ namespace Webservicesnl\Soap\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Log\LogSubscriber;
-use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Webservicesnl\Endpoint\Manager as EndpointManager;
+
+use Webservicesnl\Common\Client\ClientFactoryInterface;
+use Webservicesnl\Common\Endpoint\Manager as EndpointManager;
+use Webservicesnl\Common\Exception\Client\Input\InvalidException;
+use Webservicesnl\Common\Exception\Client\InputException;
+use Webservicesnl\Common\Exception\Server\NoServerAvailableException;
 use Webservicesnl\Soap\Client\Config\ConfigFactory;
 
 /**
@@ -15,7 +19,7 @@ use Webservicesnl\Soap\Client\Config\ConfigFactory;
  *
  * Create a SoapClient for a given platform (mainly webservices)
  */
-class SoapFactory implements LoggerAwareInterface
+class SoapFactory implements ClientFactoryInterface
 {
     use LoggerAwareTrait;
 
@@ -25,12 +29,13 @@ class SoapFactory implements LoggerAwareInterface
      * @var array
      */
     protected static $defaultSettings = [
-        'password'      => null,
-        'platform'      => null,
-        'protocol'      => 'soap',
-        'soapHeaders'   => [],
-        'username'      => null,
-        'useHttpClient' => true,
+        'endpointTimeout' => 60,
+        'password'        => null,
+        'platform'        => null,
+        'protocol'        => 'soap',
+        'soapHeaders'     => [],
+        'username'        => null,
+        'useHttpClient'   => true,
     ];
 
     /**
@@ -39,24 +44,21 @@ class SoapFactory implements LoggerAwareInterface
     protected $platform;
 
     /**
-     * @var SoapSettings
-     */
-    protected $soapSettings;
-
-    /**
      * SoapBuilder constructor.
      *
-     * @param string          $platform
-     * @param LoggerInterface $logger
+     * @param string               $platform
+     * @param LoggerInterface|null $logger
      */
     public function __construct($platform, LoggerInterface $logger = null)
     {
         $this->platform = $platform;
-        $this->logger = $logger;
+        if ($logger) {
+            $this->setLogger($logger);
+        }
     }
 
     /**
-     * @param                      $platform
+     * @param string               $platform
      * @param LoggerInterface|null $logger
      *
      * @return static
@@ -71,6 +73,10 @@ class SoapFactory implements LoggerAwareInterface
      *
      * @param array $settings
      *
+     * @throws InputException
+     *
+     * @throws NoServerAvailableException
+     * @throws InvalidException
      * @return SoapClient
      */
     public function create(array $settings = [])
@@ -80,7 +86,7 @@ class SoapFactory implements LoggerAwareInterface
         $config = ConfigFactory::config($this->platform, $soapSettings);
 
         // add endpoint manager
-        $manager = new EndpointManager();
+        $manager = new EndpointManager($settings);
         foreach ($config['endPoints'] as $endPoint) {
             $manager->createEndpoint($endPoint);
         }
@@ -133,21 +139,5 @@ class SoapFactory implements LoggerAwareInterface
         }
 
         return $client;
-    }
-
-    /**
-     * @return SoapSettings
-     */
-    public function getSoapSettings()
-    {
-        return $this->soapSettings;
-    }
-
-    /**
-     * @param SoapSettings $soapSettings
-     */
-    public function setSoapSettings($soapSettings)
-    {
-        $this->soapSettings = $soapSettings;
     }
 }
