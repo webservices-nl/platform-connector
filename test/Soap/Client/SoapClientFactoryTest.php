@@ -1,11 +1,12 @@
 <?php
 
-namespace Webservicesnl\Test\Soap\Client;
+namespace WebservicesNl\Test\Soap\Client;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use Monolog\Handler\TestHandler;
 use Monolog\Logger;
-use Webservicesnl\Soap\Client\SoapFactory;
+use Monolog\Handler\TestHandler;
+use WebservicesNl\Soap\Client\Config\WebservicesConfig;
+use WebservicesNl\Soap\Client\SoapFactory;
 
 /**
  * Class SoapClientFactoryTest.
@@ -34,17 +35,17 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceWithoutArguments()
     {
-        $bla = new SoapFactory('webservices');
+        $bla = new SoapFactory('Webservices');
         static::assertNull($bla->getLogger());
     }
 
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      */
     public function testInstanceWithoutMandatoryValues()
     {
-        SoapFactory::build('webservices')->create([]);
+        SoapFactory::build('Webservices')->create([]);
     }
 
     /**
@@ -52,15 +53,15 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceWithLoggerAndGuzzle()
     {
-        $consoleHandler = new TestHandler();
-        $logger = new Logger('unit-test');
-        $logger->pushHandler($consoleHandler);
+        $handler = new TestHandler();
+        $logger = new Logger('unit-test', [$handler]);
+        $platform = WebservicesConfig::PLATFORM_NAME;
 
         $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
-        $soapClient = SoapFactory::build('webservices', $logger)->create(
+        $soapClient = SoapFactory::build($platform, $logger)->create(
             [
-                'username'    => 'johndoe',
-                'password'    => 'fakePassword',
+                'username' => 'johndoe',
+                'password' => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
                 '',
             ]
@@ -70,9 +71,9 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         static::assertAttributeInstanceOf('\Monolog\Logger', 'logger', $soapClient);
         static::assertAttributeContains($soapHeader, '__default_headers', $soapClient);
 
-        static::assertTrue($consoleHandler->hasInfoThatContains("Creating a SoapClient for platform 'webservices'"));
-        static::assertTrue($consoleHandler->hasDebugThatContains('Created EndpointManager'));
-        static::assertTrue($consoleHandler->hasDebugThatContains('Created SoapClient'));
+        static::assertTrue($handler->hasInfoThatContains('Creating a SoapClient for platform Webservices'));
+        static::assertTrue($handler->hasDebugThatContains('Created EndpointManager'));
+        static::assertTrue($handler->hasDebugThatContains('Created SoapClient'));
     }
 
     /**
@@ -80,7 +81,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceWithoutLogger()
     {
-        $soapClient = SoapFactory::build('webservices')->create(['username' => 'john', 'password' => 'lalala']);
+        $soapClient = SoapFactory::build('Webservices')->create(['username' => 'john', 'password' => 'lalala']);
         static::assertAttributeNotInstanceOf('\Monolog\Logger', 'logger', $soapClient);
     }
 
@@ -89,7 +90,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceWithoutGuzzle()
     {
-        $soapClient = SoapFactory::build('webservices')->create(
+        $soapClient = SoapFactory::build('Webservices')->create(
             [
                 'username'      => 'johndoe',
                 'password'      => 'fake',

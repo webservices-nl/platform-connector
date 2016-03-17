@@ -1,8 +1,8 @@
 <?php
 
-namespace Webservicesnl\Test\Soap\Client\Config;
+namespace WebservicesNl\Test\Soap\Client\Config;
 
-use Webservicesnl\Soap\Client\Config\ConfigFactory;
+use WebservicesNl\Soap\Client\Config\ConfigFactory;
 
 /**
  * Class ConfigFactoryTest.
@@ -10,10 +10,10 @@ use Webservicesnl\Soap\Client\Config\ConfigFactory;
 class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage That just won't jive
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Could not find a platform config for ''
      *
-     * @throws \Webservicesnl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceWithoutArguments()
     {
@@ -21,10 +21,10 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      *
-     * @throws \Webservicesnl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceWithArguments()
     {
@@ -32,10 +32,10 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a config for 'FakePlatform'
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Could not find a platform config for 'FakePlatform'
      *
-     * @throws \Webservicesnl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceWithBadPlatform()
     {

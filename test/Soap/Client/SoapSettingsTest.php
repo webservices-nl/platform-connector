@@ -1,9 +1,9 @@
 <?php
 
-namespace Webservicesnl\Test\Soap\Client;
+namespace WebservicesNl\Test\Soap\Client;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use Webservicesnl\Soap\Client\SoapSettings;
+use WebservicesNl\Soap\Client\SoapSettings;
 
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      */
     public function testInstantiationWithoutCredentials()
@@ -35,7 +35,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Common\Exception\Client\InputException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not a valid timeout
      */
     public function testSettingsConnectionTimeout()
@@ -61,8 +61,8 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
      */
     public function testMappingToArray()
     {
-        /** @var \Webservicesnl\Soap\Client\SoapSettings $settings */
-        $settings = FactoryMuffin::create('Webservicesnl\Soap\Client\SoapSettings');
+        /** @var \WebservicesNl\Soap\Client\SoapSettings $settings */
+        $settings = FactoryMuffin::create('WebservicesNl\Soap\Client\SoapSettings');
         $array = $settings->toArray();
 
         // accessing private properties ...

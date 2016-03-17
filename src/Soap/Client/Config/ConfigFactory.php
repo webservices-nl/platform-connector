@@ -31,7 +31,7 @@ class ConfigFactory
         /** @var ConfigInterface $platformClassFQCN */
         $platformClassFQCN = __NAMESPACE__ . '\\' . ucfirst($platform) . 'Config';
         if (!class_exists($platformClassFQCN)) {
-            throw new InputException("Could not find a config for '$platform'");
+                throw new InputException("Could not find a config for '$platform'");
         }
 
         // return config file with settings vars in place

@@ -67,6 +67,7 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param string $protocol
      *
      * @return ConnectorInterface
+     *
      * @throws InputException
      */
     public function create($platform, $protocol)

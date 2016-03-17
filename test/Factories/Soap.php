@@ -1,15 +1,15 @@
 <?php
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use Webservicesnl\Soap\Client\SoapSettings;
+use WebservicesNl\Soap\Client\SoapSettings;
 
-FactoryMuffin::define('Webservicesnl\Soap\Client\SoapSettings', [
+FactoryMuffin::define('WebservicesNl\Soap\Client\SoapSettings', [
     'authentication'    => function () {
         return array_rand([SOAP_AUTHENTICATION_BASIC, SOAP_AUTHENTICATION_DIGEST]);
     },
     'cacheWsdl'         => 'numberBetween|0;3',
     'classMap'          => null,
-    'compression'       => function () {
+    'compression' => function () {
         return array_rand([SOAP_COMPRESSION_DEFLATE, SOAP_COMPRESSION_GZIP, SOAP_COMPRESSION_ACCEPT]);
     },
     'connectionTimeout' => 'numberBetween|6;60',
