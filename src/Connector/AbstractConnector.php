@@ -1,8 +1,8 @@
 <?php
 
-namespace Webservicesnl\Connector;
+namespace WebservicesNl\Connector;
 
-use Webservicesnl\Connector\Adapter\AdapterInterface;
+use WebservicesNl\Connector\Adapter\AdapterInterface;
 
 /**
  * Class BaseConnector.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\Connector\Adapter;
+namespace WebservicesNl\Connector\Adapter;
 
 /**
  * Class AbstractAdapter

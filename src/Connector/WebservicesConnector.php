@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\Connector;
+namespace WebservicesNl\Connector;
 
 /**
  * Class WebservicesConnector.
@@ -11,7 +11,7 @@ namespace Webservicesnl\Connector;
  */
 class WebservicesConnector extends AbstractConnector
 {
-    const PLATFORM_NAME = 'webservices';
+    const PLATFORM_NAME = 'Webservices';
 
     /**
      * This is just demo function

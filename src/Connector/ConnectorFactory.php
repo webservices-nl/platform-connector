@@ -1,13 +1,13 @@
 <?php
 
-namespace Webservicesnl\Connector;
+namespace WebservicesNl\Connector;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Webservicesnl\Common\Client\ClientFactoryInterface;
-use Webservicesnl\Common\Exception\Client\InputException;
-use Webservicesnl\Connector\Adapter\AdapterInterface;
+use WebservicesNl\Common\Client\ClientFactoryInterface;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Connector\Adapter\AdapterInterface;
 
 /**
  * Class ConnectorFactory.
@@ -19,19 +19,6 @@ class ConnectorFactory implements LoggerAwareInterface
 {
     // add logger interface
     use LoggerAwareTrait;
-
-    const PLATFORM_WS = 'webservices';
-    const PLATFORM_RDW = 'rdw';
-
-    /**
-     * Available platforms
-     *
-     * @var array
-     */
-    public static $platforms = [
-        self::PLATFORM_RDW,
-        self::PLATFORM_WS,
-    ];
 
     /**
      * Generic settings (eg credentials)
@@ -76,7 +63,7 @@ class ConnectorFactory implements LoggerAwareInterface
         $protocol = ucfirst($protocol);
 
         /** @var ClientFactoryInterface $clientFactory */
-        $clientFactory = sprintf('Webservicesnl\\%s\\Client\\%sFactory', $protocol, $protocol);
+        $clientFactory = sprintf('WebservicesNl\\%1$s\\Client\\%1$sFactory', $protocol);
 
         /** @var ConnectorInterface $connectorFQCN */
         $connectorFQCN = sprintf(__NAMESPACE__ . '\\' . $platform . 'Connector');
@@ -85,7 +72,7 @@ class ConnectorFactory implements LoggerAwareInterface
         $adapterFQCN = sprintf(__NAMESPACE__ . '\\Adapter\\' . $protocol . 'Adapter');
 
         if (!class_exists($clientFactory) || !class_exists($connectorFQCN)) {
-            throw new InputException("Could not load classes for '$platform' and '$protocol'");
+            throw new InputException("Could not load classes for platform: '$platform' and protocol: '$protocol'");
         }
 
         // try to create protocol client (like a SoapClient or RestClient)

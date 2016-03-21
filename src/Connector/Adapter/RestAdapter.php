@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\Connector\Adapter;
+namespace WebservicesNl\Connector\Adapter;
 
 use GuzzleHttp\Client as GuzzleClient;
 

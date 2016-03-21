@@ -1,8 +1,9 @@
 <?php
 
-namespace Webservicesnl\Connector\Adapter;
+namespace WebservicesNl\Connector\Adapter;
 
-use Webservicesnl\Soap\Client\SoapClient;
+use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
+use WebservicesNl\Soap\Client\SoapClient;
 
 /**
  * Class SoapAdapter.
@@ -34,6 +35,7 @@ class SoapAdapter extends AbstractAdapter implements AdapterInterface
      * @param string $functionName
      * @param mixed  $args
      *
+     * @throws NoServerAvailableException
      * @return mixed
      */
     public function call($functionName, $args)

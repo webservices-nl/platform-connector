@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\Soap\Exception;
+namespace WebservicesNl\Soap\Exception;
 
 /**
  * Abstract Class SoapFault.
@@ -75,10 +75,15 @@ class SoapFault extends \SoapFault
      * SoapFault constructor.
      *
      * @param string $message
+     * @param int    $detail
+     *
+     * @internal param string $faultstring
      */
-    public function __construct($message)
+    public function __construct($message, $detail)
     {
-        parent::__construct($message);
+        $this->message = $message;
+
+        parent::SoapFault($this->getFaultCode(), $this->getFaultString(), $this->faultActor, $detail);
     }
 
     /**

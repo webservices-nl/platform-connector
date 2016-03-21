@@ -1,8 +1,8 @@
 <?php
 
-namespace Webservicesnl\Soap\Client;
+namespace WebservicesNl\Soap\Client;
 
-use Webservicesnl\Common\Exception\Client\InputException;
+use WebservicesNl\Common\Exception\Client\InputException;
 
 /**
  * Class SoapSettings.
@@ -418,7 +418,7 @@ class SoapSettings
     }
 
     /**
-     * Set SoapFeatures bitmask
+     * Set SoapFeatures bitmask.
      *
      * @param int $features
      *

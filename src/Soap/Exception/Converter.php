@@ -1,9 +1,9 @@
 <?php
 
-namespace Webservicesnl\Soap\Exception;
+namespace WebservicesNl\Soap\Exception;
 
-use Webservicesnl\Common\Exception\Exception;
-use Webservicesnl\Common\Exception\ServerException;
+use WebservicesNl\Common\Exception\Exception as WebserviceException;
+use WebservicesNl\Common\Exception\ServerException;
 
 /**
  * Class Converter.
@@ -13,20 +13,31 @@ class Converter
     /**
      * @param \SoapFault $fault
      *
-     * @return Exception;
+     * @return WebserviceException
      *
      * @throws ServerException
      */
     public function convertToException(\SoapFault $fault)
     {
-        $errorCode = isset($fault->{'detail'}->{'errorCode'}) ? $fault->{'detail'}->{'errorCode'} : 'Server';
-        $errorClassFQ = str_replace('.', '\\', $errorCode) . 'Exception';
+        $errorClassName = isset($fault->{'detail'}->{'errorCode'}) ? $fault->{'detail'}->{'errorCode'} : 'Server';
+        $errorClassFQ = 'WebservicesNl\Common\Exception\\' . str_replace('.', '\\', $errorClassName) . 'Exception';
 
+        // should we throw an error about throwing an error? or just create a default error?
         if (!class_exists($errorClassFQ)) {
             throw new ServerException($fault->getMessage());
         }
 
-        /** @var Exception $exception */
-        return new $errorClassFQ($fault->getMessage());
+        /** @var WebserviceException $exception */
+        return new $errorClassFQ($fault->getMessage(), $fault->getCode());
+    }
+
+    /**
+     * Return error (build statically).
+     * 
+     * @return static
+     */
+    public static function build()
+    {
+        return new static();
     }
 }
