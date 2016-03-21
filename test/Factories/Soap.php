@@ -5,19 +5,26 @@ use WebservicesNl\Soap\Client\SoapSettings;
 
 FactoryMuffin::define('WebservicesNl\Soap\Client\SoapSettings', [
     'authentication'    => function () {
-        return array_rand([SOAP_AUTHENTICATION_BASIC, SOAP_AUTHENTICATION_DIGEST]);
+        $values = [SOAP_AUTHENTICATION_BASIC, SOAP_AUTHENTICATION_DIGEST];
+
+        return $values[array_rand($values)];
     },
     'cacheWsdl'         => 'numberBetween|0;3',
     'classMap'          => null,
-    'compression' => function () {
-        return array_rand([SOAP_COMPRESSION_DEFLATE, SOAP_COMPRESSION_GZIP, SOAP_COMPRESSION_ACCEPT]);
+    'compression'       => function () {
+
+        $values = [SOAP_COMPRESSION_DEFLATE, SOAP_COMPRESSION_GZIP, SOAP_COMPRESSION_ACCEPT];
+
+        return $values[array_rand($values)];
     },
     'connectionTimeout' => 'numberBetween|6;60',
     'context'           => '',
     'encoding'          => '',
     'exceptions'        => '',
     'features'          => function () {
-        return array_rand([SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS]);
+        $values = [SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS];
+
+        return $values[array_rand($values)];
     },
     'keepAlive'         => 'boolean',
     'localCert'         => null,
