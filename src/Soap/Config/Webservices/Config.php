@@ -1,17 +1,16 @@
 <?php
 
-namespace WebservicesNl\Soap\Client\Config;
+namespace WebservicesNl\Soap\Config\Webservices;
 
 use WebservicesNl\Common\Config\ConfigInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Soap\Client\SoapSettings;
-use WebservicesNl\Soap\Exception\Converter;
 
 /**
  * Class WebservicesConfig.
  *
  */
-class WebservicesConfig implements ConfigInterface
+class Config implements ConfigInterface
 {
     const PLATFORM_NAME = 'Webservices';
     const SOAPHEADER_URL = 'http://www.webservices.nl/soap/';
@@ -54,6 +53,7 @@ class WebservicesConfig implements ConfigInterface
                 ),
             ],
             'endPoints' => self::$endPoints,
+            'converter' => Converter::build()
         ];
     }
 }

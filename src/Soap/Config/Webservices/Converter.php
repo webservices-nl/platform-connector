@@ -1,12 +1,12 @@
 <?php
 
-namespace WebservicesNl\Soap\Exception;
+namespace WebservicesNl\Soap\Config\Webservices;
 
 use WebservicesNl\Common\Exception\Exception as WebserviceException;
 use WebservicesNl\Common\Exception\ServerException;
 
 /**
- * Class Converter.
+ * Class Webservice SoapConverter.
  */
 class Converter
 {
@@ -24,7 +24,7 @@ class Converter
 
         // should we throw an error about throwing an error? or just create a default error?
         if (!class_exists($errorClassFQ)) {
-            throw new ServerException($fault->getMessage());
+            throw new ServerException("Could not convert errorCode: '$errorClassName'");
         }
 
         /** @var WebserviceException $exception */
@@ -33,7 +33,7 @@ class Converter
 
     /**
      * Return error (build statically).
-     * 
+     *
      * @return static
      */
     public static function build()

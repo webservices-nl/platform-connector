@@ -1,8 +1,8 @@
 <?php
 
-namespace WebservicesNl\Test\Soap\Client\Config;
+namespace WebservicesNl\Test\Soap\Config\Webservices;
 
-use WebservicesNl\Soap\Client\Config\WebservicesConfig;
+use WebservicesNl\Soap\Config\Webservices\Config as WebservicesConfig;
 
 /**
  * Class WebservicesConfigTest.

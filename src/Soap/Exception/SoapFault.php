@@ -11,6 +11,11 @@ namespace WebservicesNl\Soap\Exception;
  */
 class SoapFault extends \SoapFault
 {
+    protected $faultCodes = [
+        SOAP_1_1 => ['Server', 'Client', 'VersionMismatch', 'MustUnderstand'],
+        SOAP_1_2 => ['Sender', 'Receiver', 'VersionMismatch', 'MustUnderstand', 'DataEncodingUnknown'],
+    ];
+
     /**
      * More details about the cause of the error.
      *
@@ -67,23 +72,24 @@ class SoapFault extends \SoapFault
     public $headerFault;
 
     /**
-     * @var string
-     */
-    public $errorMessage;
-
-    /**
      * SoapFault constructor.
      *
      * @param string $message
      * @param int    $detail
-     *
-     * @internal param string $faultstring
      */
     public function __construct($message, $detail)
     {
         $this->message = $message;
+        $this->detail = $detail;
 
-        parent::SoapFault($this->getFaultCode(), $this->getFaultString(), $this->faultActor, $detail);
+        parent::SoapFault(
+            $this->getFaultCode(),
+            $this->getFaultString(),
+            $this->getFaultActor(),
+            $this->getDetail(),
+            $this->getFaultName(),
+            $this->getHeaderFault()
+        );
     }
 
     /**
@@ -132,13 +138,5 @@ class SoapFault extends \SoapFault
     public function getFaultString()
     {
         return $this->faultString;
-    }
-
-    /**
-     * @return string
-     */
-    public function getErrorMessage()
-    {
-        return $this->errorMessage;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebservicesNl\Test\Soap\Client\Config;
 
-use WebservicesNl\Soap\Client\Config\ConfigFactory;
+use WebservicesNl\Soap\Config\ConfigFactory;
 
 /**
  * Class ConfigFactoryTest.
