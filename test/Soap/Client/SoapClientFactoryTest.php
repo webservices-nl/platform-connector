@@ -1,97 +1,99 @@
 <?php
 
-namespace Webservicesnl\Test\Soap\Client;
+namespace WebservicesNl\Test\Soap\Client;
 
-use League\FactoryMuffin\Facade as FactoryMuffin;
-use Monolog\Logger;
 use Monolog\Handler\TestHandler;
-
-use Webservicesnl\Soap\Client\SoapFactory;
+use Monolog\Logger;
+use WebservicesNl\Soap\Client\SoapFactory;
+use WebservicesNl\Soap\Config\Webservices\Config as WebservicesConfig;
 
 /**
- * Class SoapClientFactoryTest
- * @package Webservicesnl\Test\Soap\Client
+ * Class SoapClientFactoryTest.
  */
 class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
-     */
-    public static function setupBeforeClass()
-    {
-        FactoryMuffin::setCustomSaver(function () {
-            return true;
-        });
-        FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
-            $name = 'set' . ucfirst(strtolower($name));
-            if (method_exists($object, $name)) {
-                $object->{$name}($value);
-            }
-        });
-        FactoryMuffin::loadFactories(dirname(dirname(__DIR__)) . '/Factories');
-    }
-
-    /**
-     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutArguments()
     {
-        $bla = new SoapFactory('webservices');
-        $this->assertNull($bla->getLogger());
+        $bla = new SoapFactory('Webservices');
+        static::assertNull($bla->getLogger());
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
+     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutMandatoryValues()
     {
-        $soapClient = SoapFactory::build('webservices')->create([]);
+        SoapFactory::build('Webservices')->create([]);
     }
 
     /**
      *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testInstanceWithLoggerAndGuzzle()
     {
-        $consoleHandler = new TestHandler();
-        $logger = new Logger('unit-test');
-        $logger->pushHandler($consoleHandler);
+        $handler = new TestHandler();
+        $logger = new Logger('unit-test', [$handler]);
+        $platform = WebservicesConfig::PLATFORM_NAME;
 
         $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
-        $soapClient = SoapFactory::build('webservices', $logger)->create(
+        $soapClient = SoapFactory::build($platform, $logger)->create(
             [
                 'username'    => 'johndoe',
                 'password'    => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
-                ''
+                '',
             ]
         );
 
-        $this->assertTrue($soapClient->hasClient());
-        $this->assertAttributeInstanceOf('\Monolog\Logger', 'logger', $soapClient);
-        $this->assertAttributeContains($soapHeader, '__default_headers', $soapClient);
+        static::assertTrue($soapClient->hasClient());
+        static::assertAttributeInstanceOf('\Monolog\Logger', 'logger', $soapClient);
+        static::assertAttributeContains($soapHeader, '__default_headers', $soapClient);
 
-        $this->assertTrue($consoleHandler->hasInfoThatContains("Creating a SoapClient for platform 'webservices'"));
-        $this->assertTrue($consoleHandler->hasDebugThatContains('Created EndpointManager'));
-        $this->assertTrue($consoleHandler->hasDebugThatContains('Created SoapClient'));
+        static::assertTrue($handler->hasInfoThatContains('Creating a SoapClient for platform Webservices'));
+        static::assertTrue($handler->hasDebugThatContains('Created EndpointManager'));
+        static::assertTrue($handler->hasDebugThatContains('Created SoapClient'));
     }
 
     /**
-     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutLogger()
     {
-        $soapClient = SoapFactory::build('webservices')->create(['username' => 'john', 'password' => 'lalala']);
-        $this->assertAttributeNotInstanceOf('\Monolog\Logger', 'logger', $soapClient);
+        $soapClient = SoapFactory::build('Webservices')->create(['username' => 'john', 'password' => 'lalala']);
+        static::assertAttributeNotInstanceOf('\Monolog\Logger', 'logger', $soapClient);
     }
 
     /**
      *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testInstanceWithoutGuzzle()
     {
-        $soapClient = SoapFactory::build('webservices')->create(
+        $soapClient = SoapFactory::build('Webservices')->create(
             [
                 'username'      => 'johndoe',
                 'password'      => 'fake',
@@ -99,6 +101,30 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->assertFalse($soapClient->hasClient());
+        static::assertFalse($soapClient->hasClient());
+    }
+    
+    /**
+     *
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage fakePlatform is not a valid platform
+     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
+     */
+    public function testInstanceWithBadPlatform()
+    {
+        $soapClient = SoapFactory::build('fakePlatform')->create(
+            [
+                'username'      => 'johndoe',
+                'password'      => 'fake',
+                'useHttpClient' => false,
+            ]
+        );
+
+        static::assertFalse($soapClient->hasClient());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webservicesnl\Connector;
+namespace WebservicesNl\Connector;
 
 /**
  * Class WebservicesConnector.
@@ -9,9 +9,13 @@ namespace Webservicesnl\Connector;
  *
  * This file is regenerated with each release ...
  */
-class WebservicesConnector extends BaseConnector
+class WebservicesConnector extends AbstractConnector
 {
+    const PLATFORM_NAME = 'Webservices';
+
     /**
+     * This is just demo function.
+     *
      * @param string $username
      *
      * @return mixed

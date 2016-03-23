@@ -1,13 +1,12 @@
 <?php
 
-namespace Webservicesnl\Test\Soap\Client;
+namespace WebservicesNl\Test\Soap\Client;
 
-use Webservicesnl\Soap\Client\SoapSettings;
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Soap\Client\SoapSettings;
 
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      *
      */
@@ -27,7 +26,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
      */
     public function testInstantiationWithoutCredentials()
@@ -36,7 +35,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Webservicesnl\Exception\Client\Input\InvalidException
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not a valid timeout
      */
     public function testSettingsConnectionTimeout()
@@ -53,17 +52,17 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
         $options = ['username' => 'john', 'password' => 'secret'];
         $settings = SoapSettings::loadFromArray($options);
 
-        $this->assertNotEmpty($settings->getPassword(), 'SoapSettings should have a password');
-        $this->assertNotEmpty($settings->getUsername(), 'SoapSettings should have a username');
+        static::assertNotEmpty($settings->getPassword(), 'SoapSettings should have a password');
+        static::assertNotEmpty($settings->getUsername(), 'SoapSettings should have a username');
     }
 
     /**
-     * Checking getter and setter (might be a silly test)
+     * Checking getter and setter (might be a silly test).
      */
     public function testMappingToArray()
     {
-        /** @var \Webservicesnl\Soap\Client\SoapSettings $settings */
-        $settings = FactoryMuffin::create('Webservicesnl\Soap\Client\SoapSettings');
+        /** @var \WebservicesNl\Soap\Client\SoapSettings $settings */
+        $settings = FactoryMuffin::create('WebservicesNl\Soap\Client\SoapSettings');
         $array = $settings->toArray();
 
         // accessing private properties ...
@@ -76,7 +75,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
                 $name = 'is' . ucfirst($key);
             }
 
-            $this->assertEquals($settings->{$name}(), $value, "SoapSetting should have $key value");
+            static::assertEquals($settings->{$name}(), $value, "SoapSetting should have $key value");
         });
     }
 }

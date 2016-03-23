@@ -1,37 +1,49 @@
 <?php
 
-namespace Webservicesnl\Soap\Client;
+namespace WebservicesNl\Soap\Client;
 
-use GuzzleHttp\Client as CurlClient;
+use GuzzleHttp\Client as httpClient;
+use GuzzleHttp\Psr7\Request;
+use Http\Client\Exception as ClientException;
+use Http\Message\MessageFactory;
 use Psr\Log\LoggerInterface;
-use Webservicesnl\Endpoint\Manager;
+use WebservicesNl\Common\Endpoint\Endpoint;
+use WebservicesNl\Common\Endpoint\Manager;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
+use WebservicesNl\Soap\Exception\Converter;
+use WebservicesNl\Soap\Exception\SoapFault;
 
 /**
  * Class AbstractSoapClient.
  */
 class SoapClient extends \SoapClient
 {
-    const NO_XML_FAULTSTRING = 'looks like we got no XML document';
-    const RETRY_MINUTES = 60;
+    const NO_XML_FAULT_STRING = 'looks like we got no XML document';
 
     /**
-     * Guzzle Client for the SOAP calls.
+     * Content types for SOAP versions.
      *
-     * @var CurlClient
+     * @var array(string=>string)
      */
-    private $curlClient;
+    protected static $versionToContentTypeMap = [
+        SOAP_1_1 => 'text/xml; charset=utf-8',
+        SOAP_1_2 => 'application/soap+xml; charset=utf-8',
+    ];
+
+    /**
+     * Guzzle Client for the SOAP calls. (optional).
+     *
+     * @var HttpClient
+     */
+    private $httpClient;
 
     /**
      * LoggerInterface (optional).
      *
      * @var LoggerInterface
      */
-    protected $logger;
-
-//    /**
-//     * @var array
-//     */
-//    private $cookies = [];
+    private $logger;
 
     /**
      * @var Manager
@@ -51,6 +63,8 @@ class SoapClient extends \SoapClient
      * @param SoapSettings    $settings
      * @param Manager         $manager
      * @param LoggerInterface $logger
+     *
+     * @throws NoServerAvailableException
      */
     public function __construct(SoapSettings $settings, Manager $manager, LoggerInterface $logger = null)
     {
@@ -58,68 +72,64 @@ class SoapClient extends \SoapClient
         $this->manager = $manager;
         $this->logger = $logger;
 
-        // do some initialization
-        $this->init();
-    }
-
-    /**
-     *  Setup the native soapClient bit.
-     */
-    private function init()
-    {
         // throws an Exception when no endpoint is met
         $active = $this->manager->getActiveEndpoint();
 
-        // initiate the PHP SoapClient
-        parent::__construct($active->getUrl(), $this->settings->toArray());
+        // initiate the native PHP SoapClient for fetching all the WSDL stuff
+        parent::__construct((string) $active->getUri(), $this->settings->toArray());
     }
 
     /**
-     * @param CurlClient $client
+     * Set a HTTP Client.
+     *
+     * @param HttpClient $client
      */
-    public function setClient(CurlClient $client)
+    public function setClient(HttpClient $client)
     {
-        $this->curlClient = $client;
+        $this->httpClient = $client;
     }
 
     /**
-     * @param string $function_name
-     * @param array  $arguments
-     * @param array  $options
-     * @param array  $input_headers
-     * @param null   $output_headers
+     * Prepares the actual soapCall.
+     *
+     * @param string     $function_name
+     * @param array      $arguments
+     * @param array      $options
+     * @param array      $input_headers
+     * @param array|null $output_headers
      *
      * @return mixed
-     * @throws WebservicesNlServerException|WebservicesNlServerUnavailableException|WebservicesNlServerUnavailableInternalErrorException|WebservicesNlServerUnavailableTemporaryException
+     *
+     * @throws NoServerAvailableException
      */
-    public function soapCall($function_name, $arguments = [], $options = [], $input_headers = [], &$output_headers = null)
-    {
-//        try {
-//            // try all servers until we have a result
-//            while (1) {
-//                try {
-//                    $response = $this->wsCallServer($function_name, $arguments, $options, $input_headers, $output_headers);
-//                    $this->ws_setServerAvailable($this->current_server);
-//
-//                    return $response;
-//                } catch (SoapFault $s) {
-//                    $this->debug_log .= "\t" . $s->getMessage() . "\n";
-//
-//                    if ($this->ws_isServerTimeoutFault($s)) {
-//                        // a timeout occurred, try the next server
-//                        $this->ws_setServerUnavailable($this->current_server);
-//                        $this->ws_switchServer();
-//                    } else {
-//                        throw($s);
-//                    }
-//                }
-//            }
-//        } catch (Exception $e) {
-//            throw($this->ws_convertException($e));
-//        }
+    public function soapCall(
+        $function_name,
+        array $arguments = [],
+        array $options = [],
+        array $input_headers = [],
+        &$output_headers = null
+    ) {
+        $continue = true;
+        $response = null;
+        do {
+            try {
+                $response = parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
+                // if a valid response has been received, stop looping
+                $continue = false;
+            } catch (\Exception $exception) {
+                //@todo handle exception (check timeout, change endpoint, reset client, etc)
+                $endpoint = $this->manager->getActiveEndpoint();
+                $endpoint->setStatus(Endpoint::STATUS_ERROR);
+            }
+        } while ($continue);
+
+        return $response;
     }
 
     /**
+     * Triggers the SOAP request.
+     * When http client is present, sent request by cURL instead of native SOAP request.
+     *
      * @param string $request
      * @param string $location
      * @param string $action
@@ -127,81 +137,119 @@ class SoapClient extends \SoapClient
      * @param bool   $oneWay
      *
      * @return string|void
+     *
+     * @throws \Exception
      */
     public function __doRequest($request, $location, $action, $version = SOAP_1_1, $oneWay = false)
     {
-        // else get next location
-        if ($this->hasClient()) {
-            return $this->doHttpRequest($request, $location, $action);
-        } else {
-            return parent::__doRequest($request, $location, $action, $this->settings->getSoapVersion(), $oneWay);
+        try {
+            if ($this->hasClient() === true) {
+                $response = $this->doHttpRequest(
+                    $request,
+                    $location,
+                    $action,
+                    $this->settings->getSoapVersion()
+                );
+            } else {
+                $response = parent::__doRequest(
+                    $request,
+                    $location,
+                    $action,
+                    $this->settings->getSoapVersion(),
+                    $oneWay
+                );
+                $this->__last_request = $request;
+            }
+
+            return $response;
+        } catch (SoapFault $fault) {
+            return Converter::build()->convertToException($fault);
         }
     }
 
     /**
+     * checks if a HTTP client is present.
+     *
      * @return bool
      */
     public function hasClient()
     {
-        return ($this->curlClient instanceof CurlClient);
+        return $this->httpClient instanceof HttpClient;
     }
 
-    private function doHttpRequest($request, $location, $action)
+    /**
+     * Http version of doRequest.
+     *
+     * @param mixed  $requestBody
+     * @param string $location
+     * @param string $action
+     * @param string $version
+     *
+     * @return string
+     *
+     * @throws InputException
+     * @throws \SoapFault
+     */
+    private function doHttpRequest($requestBody, $location, $action, $version)
     {
-        var_dump($request, $location, $action);
-        die;
-//        // HTTP headers
-//        $soapVersion = $soapRequest->getVersion();
-//        $soapAction = $soapRequest->getAction();
-//        if (SOAP_1_1 == $soapVersion) {
-//            $headers = array(
-//                'Content-Type:' . $soapRequest->getContentType(),
-//                'SOAPAction: "' . $soapAction . '"',
-//            );
-//        } else {
-//            $headers = array(
-//                'Content-Type:' . $soapRequest->getContentType() . '; action="' . $soapAction . '"',
-//            );
-//        }
-//
-//        $location = $soapRequest->getLocation();
-//        $content = $soapRequest->getContent();
-//        $headers = $this->filterRequestHeaders($soapRequest, $headers);
-//        $options = $this->filterRequestOptions($soapRequest);
-//        // execute HTTP request with cURL
-//        $responseSuccessfull = $this->curl->exec(
-//            $location,
-//            $content,
-//            $headers,
-//            $options
-//        );
-//        // tracing enabled: store last request header and body
-//        if ($this->tracingEnabled === true) {
-//            $this->lastRequestHeaders = $this->curl->getRequestHeaders();
-//            $this->lastRequest = $soapRequest->getContent();
-//        }
-//
-//        // in case of an error while making the http request throw a soapFault
-//        if ($responseSuccessfull === false) {
-//            // get error message from curl
-//            $faultstring = $this->curl->getErrorMessage();
-//            throw new \SoapFault('HTTP', $faultstring);
-//        }
-//
-//        // tracing enabled: store last response header and body
-//        if ($this->tracingEnabled === true) {
-//            $this->lastResponseHeaders = $this->curl->getResponseHeaders();
-//            $this->lastResponse = $this->curl->getResponseBody();
-//        }
-//        // wrap response data in SoapResponse object
-//        $soapResponse = SoapResponse::create(
-//            $this->curl->getResponseBody(),
-//            $soapRequest->getLocation(),
-//            $soapRequest->getAction(),
-//            $soapRequest->getVersion(),
-//            $this->client->getResponseContentType()
-//        );
-//
-//        return $soapResponse;
+        $method = self::determineMethod($requestBody);
+        $contentType = self::getContentTypeForVersion($version);
+        $headers = [sprintf('Content-Type: %s; action="%s"', $contentType, $action)];
+
+        try {
+            // build the request
+            $requestObj = new Request($method, $location, $headers, $requestBody);
+            $response = $this->httpClient->send($requestObj);
+        } catch (ClientException $exception) {
+            throw new \SoapFault('Sender', $exception->getMessage());
+        } catch (\Exception $exception) {
+            throw new \SoapFault('Server', $exception->getMessage());
+        }
+
+        return (string) $response->getBody();
+    }
+
+    /**
+     * Determines methods.
+     * For Soap it's either GET or POST.
+     *
+     * @param mixed $request
+     *
+     * @return string
+     */
+    private static function determineMethod($request)
+    {
+        return ($request === null || (is_string($request) && trim($request) === '')) ? 'GET' : 'POST';
+    }
+
+    /**
+     * Get content type for given SOAP version.
+     *
+     * @param string $version SOAP version constant SOAP_1_1|SOAP_1_2
+     *
+     * @throws InputException
+     *
+     * @return string
+     */
+    private static function getContentTypeForVersion($version)
+    {
+        if (!in_array($version, [SOAP_1_1, SOAP_1_2], true)) {
+            throw new InputException("The 'version' argument has to be either 'SOAP_1_1' or 'SOAP_1_2'!");
+        }
+
+        return self::$versionToContentTypeMap[$version];
+    }
+
+    /**
+     * We don't allow cookies.
+     *
+     * @param string $name
+     * @param null   $value
+     *
+     * @throws \BadMethodCallException
+     */
+    public function __setCookie($name, $value = null)
+    {
+        throw new \BadMethodCallException('No more cookies for you!');
     }
 }

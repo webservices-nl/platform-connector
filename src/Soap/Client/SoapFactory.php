@@ -1,33 +1,42 @@
 <?php
 
-namespace Webservicesnl\Soap\Client;
+namespace WebservicesNl\Soap\Client;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Subscriber\Log\LogSubscriber;
-use Psr\Log\LoggerAwareInterface;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Webservicesnl\Endpoint\Manager as EndpointManager;
-use Webservicesnl\Soap\Client\Config\ConfigFactory;
+use WebservicesNl\Common\Client\ClientFactoryInterface;
+use WebservicesNl\Common\Endpoint\Manager as EndpointManager;
+use WebservicesNl\Common\Exception\Client\Input\InvalidException;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
+use WebservicesNl\Soap\Config\ConfigFactory;
 
 /**
  * Class SoapFactory.
+ *
+ * Create a SoapClient for a given platform (mainly webservices)
  */
-class SoapFactory implements LoggerAwareInterface
+class SoapFactory implements ClientFactoryInterface
 {
     use LoggerAwareTrait;
 
     /**
-     * Default settings
+     * Default settings.
+     *
      * @var array
      */
     protected static $defaultSettings = [
-        'password'      => null,
-        'platform'      => null,
-        'protocol'      => 'soap',
-        'soapHeaders'   => [],
-        'username'      => null,
-        'useHttpClient' => true,
+        'endpointTimeout' => 60,
+        'password'        => null,
+        'platform'        => null,
+        'protocol'        => 'soap',
+        'soapHeaders'     => [],
+        'username'        => null,
+        'useHttpClient'   => true,
     ];
 
     /**
@@ -36,25 +45,27 @@ class SoapFactory implements LoggerAwareInterface
     protected $platform;
 
     /**
-     * @var SoapSettings
-     */
-    protected $soapSettings;
-
-    /**
      * SoapBuilder constructor.
      *
-     * @param string          $platform
-     * @param LoggerInterface $logger
+     * @param string               $platform
+     * @param LoggerInterface|null $logger
+     *
+     * @throws InputException
      */
     public function __construct($platform, LoggerInterface $logger = null)
     {
-        $this->platform = $platform;
+        if (!ConfigFactory::hasConfig($platform)) {
+            throw new InputException($platform . ' is not a valid platform');
+        }
+        $this->platform = ucfirst($platform);
         $this->logger = $logger;
     }
 
     /**
-     * @param                      $platform
+     * @param string               $platform
      * @param LoggerInterface|null $logger
+     *
+     * @throws InputException
      *
      * @return static
      */
@@ -64,38 +75,42 @@ class SoapFactory implements LoggerAwareInterface
     }
 
     /**
-     * Build SoapClient
+     * Build SoapClient.
      *
      * @param array $settings
+     *
+     * @throws InputException
+     * @throws NoServerAvailableException
+     * @throws InvalidException
+     * @throws \InvalidArgumentException
      *
      * @return SoapClient
      */
     public function create(array $settings = [])
     {
-        $settings = $settings + self::$defaultSettings;
-        $soapSettings = SoapSettings::loadFromArray($settings);
-        $config = ConfigFactory::config($this->platform, $settings);
+        $soapSettings = SoapSettings::loadFromArray($settings += self::$defaultSettings);
+        $platformConfig = ConfigFactory::config($this->platform, $soapSettings);
 
         // add endpoint manager
-        $manager = new EndpointManager();
-        foreach ($config['endPoints'] as $endPoint) {
+        $manager = new EndpointManager($settings);
+        foreach ($platformConfig['endPoints'] as $endPoint) {
             $manager->createEndpoint($endPoint);
         }
 
         $soapClient = new SoapClient($soapSettings, $manager, $this->getLogger());
-        $soapHeaders = array_merge($config['soapHeaders'], $settings['soapHeaders']);
+        $soapHeaders = array_merge($platformConfig['soapHeaders'], $settings['soapHeaders']);
         $soapClient->__setSoapHeaders($soapHeaders);
 
-        // add a Curl client
+        // add a curl client
         if ($settings['useHttpClient'] === true) {
-            $client = $this->createCurlClient($manager->getActiveEndpoint()->getUrl());
+            $client = $this->createCurlClient((string) $manager->getActiveEndpoint()->getUri());
             $soapClient->setClient($client);
         }
 
         if ($this->hasLogger() === true) {
-            $this->getLogger()->info("Creating a SoapClient for platform '$this->platform'", $settings);
-            $this->getLogger()->debug("Created EndpointManager", ['endpoint' => print_r($manager, true)]);
-            $this->getLogger()->debug("Created SoapClient", ['soapclient' => print_r($soapClient, true)]);
+            $this->getLogger()->info("Creating a SoapClient for platform $this->platform");
+            $this->getLogger()->debug('Created EndpointManager', ['endpoint' => print_r($manager, true)]);
+            $this->getLogger()->debug('Created SoapClient', ['soapclient' => print_r($soapClient, true)]);
         }
 
         return $soapClient;
@@ -114,7 +129,7 @@ class SoapFactory implements LoggerAwareInterface
      */
     public function hasLogger()
     {
-        return ($this->getLogger() instanceof LoggerInterface);
+        return $this->getLogger() instanceof LoggerInterface;
     }
 
     /**
@@ -124,27 +139,17 @@ class SoapFactory implements LoggerAwareInterface
      */
     private function createCurlClient($wsdl)
     {
-        $client = new Client(['base_url' => $wsdl]);
+        $stack = null;
         if ($this->getLogger() instanceof LoggerInterface) {
-            $client->getEmitter()->attach(new LogSubscriber($this->getLogger()));
+            $stack = HandlerStack::create();
+            $stack->push(
+                Middleware::log(
+                    $this->getLogger(),
+                    new MessageFormatter('{req_body} - {res_body}')
+                )
+            );
         }
 
-        return $client;
-    }
-
-    /**
-     * @return SoapSettings
-     */
-    public function getSoapSettings()
-    {
-        return $this->soapSettings;
-    }
-
-    /**
-     * @param SoapSettings $soapSettings
-     */
-    public function setSoapSettings($soapSettings)
-    {
-        $this->soapSettings = $soapSettings;
+        return new Client(['base_url' => $wsdl, 'handler' => $stack]);
     }
 }

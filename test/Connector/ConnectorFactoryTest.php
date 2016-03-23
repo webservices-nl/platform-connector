@@ -1,9 +1,11 @@
 <?php
 
-namespace Webservicesnl\Test\Connector;
+namespace WebservicesNl\Test\Connector;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use Webservicesnl\Connector\ConnectorFactory;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Connector\ConnectorFactory;
+use WebservicesNl\Connector\WebservicesConnector;
 
 class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,12 +26,40 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         FactoryMuffin::loadFactories(dirname(__DIR__) . '/Factories');
     }
 
+    /**
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Could not load classes for platform: 'Fake' and protocol: ''
+     * @throws InputException
+     */
+    public function testInstanceWithBadPlatform()
+    {
+        ConnectorFactory::build()->create('Fake', null);
+    }
+
+    /**
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Could not load classes for platform: 'Webservices' and protocol: 'FakeProtocol'
+     * @throws InputException
+     */
+    public function testInstanceWithBadProtocol()
+    {
+        ConnectorFactory::build()->create('Webservices', 'FakeProtocol');
+    }
+
+    /**
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
+     */
     public function testInstance()
     {
-        $client = ConnectorFactory::create('webservices', 'soap', ['username' => 'lala', 'password' => 'hihi']);
+        $protocol = 'soap';
 
-        $this->assertInstanceOf('Webservicesnl\Connector\WebservicesConnector', $client);
-        $this->assertInstanceOf('Webservicesnl\Connector\Adapter\SoapAdapter', $client->getAdapter());
+        $client = ConnectorFactory::build(['username' => 'lala', 'password' => 'hihi'])
+            ->create(WebservicesConnector::PLATFORM_NAME, 'soap');
 
+        static::assertInstanceOf('WebservicesNl\Connector\WebservicesConnector', $client);
+        static::assertInstanceOf('WebservicesNl\Connector\Adapter\SoapAdapter', $client->getAdapter());
+        static::assertEquals($protocol, $client->getAdapter()->getProtocol());
+        static::assertEquals(WebservicesConnector::PLATFORM_NAME, $client->getPlatform());
     }
 }

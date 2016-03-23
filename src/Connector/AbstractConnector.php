@@ -1,16 +1,17 @@
 <?php
 
-namespace Webservicesnl\Connector;
+namespace WebservicesNl\Connector;
 
-use Webservicesnl\Connector\Adapter\AdapterInterface;
+use WebservicesNl\Connector\Adapter\AdapterInterface;
 
 /**
  * Class BaseConnector.
- *
- * @package Webservicesnl\Connector
+ * This a base class, it drops the base...
  */
-abstract class BaseConnector implements ConnectorInterface
+abstract class AbstractConnector implements ConnectorInterface
 {
+    const PLATFORM_NAME = 'abstract';
+
     /**
      * @var AdapterInterface
      */
@@ -27,7 +28,7 @@ abstract class BaseConnector implements ConnectorInterface
     }
 
     /**
-     * @return AdapterInterface
+     * {@inheritdoc}
      */
     public function getAdapter()
     {
@@ -35,10 +36,10 @@ abstract class BaseConnector implements ConnectorInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getType()
+    public function getPlatform()
     {
-       return basename(str_replace('\\', '/', get_called_class()));
+        return static::PLATFORM_NAME;
     }
 }

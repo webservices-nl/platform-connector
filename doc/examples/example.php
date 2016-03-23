@@ -1,6 +1,6 @@
 <?php
 
-use Webservicesnl\Connector\ConnectorFactory;
+use WebservicesNl\Connector\ConnectorFactory;
 
 $client = ConnectorFactory::create('webservices', 'soap', ['username' => 'johndoe', 'password' => 'topsecret']);
 
