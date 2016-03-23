@@ -2,11 +2,10 @@
 
 namespace WebservicesNl\Test\Soap\Client;
 
-use League\FactoryMuffin\Facade as FactoryMuffin;
-use Monolog\Logger;
 use Monolog\Handler\TestHandler;
-use WebservicesNl\Soap\Client\Config\WebservicesConfig;
+use Monolog\Logger;
 use WebservicesNl\Soap\Client\SoapFactory;
+use WebservicesNl\Soap\Config\Webservices\Config as WebservicesConfig;
 
 /**
  * Class SoapClientFactoryTest.
@@ -14,24 +13,10 @@ use WebservicesNl\Soap\Client\SoapFactory;
 class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
-     */
-    public static function setupBeforeClass()
-    {
-        FactoryMuffin::setCustomSaver(function () {
-            return true;
-        });
-        FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
-            $name = 'set' . ucfirst(strtolower($name));
-            if (method_exists($object, $name)) {
-                $object->{$name}($value);
-            }
-        });
-        FactoryMuffin::loadFactories(dirname(dirname(__DIR__)) . '/Factories');
-    }
-
-    /**
-     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutArguments()
     {
@@ -42,6 +27,11 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
+     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutMandatoryValues()
     {
@@ -50,6 +40,11 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testInstanceWithLoggerAndGuzzle()
     {
@@ -60,8 +55,8 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
         $soapClient = SoapFactory::build($platform, $logger)->create(
             [
-                'username' => 'johndoe',
-                'password' => 'fakePassword',
+                'username'    => 'johndoe',
+                'password'    => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
                 '',
             ]
@@ -77,7 +72,10 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutLogger()
     {
@@ -87,10 +85,39 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testInstanceWithoutGuzzle()
     {
         $soapClient = SoapFactory::build('Webservices')->create(
+            [
+                'username'      => 'johndoe',
+                'password'      => 'fake',
+                'useHttpClient' => false,
+            ]
+        );
+
+        static::assertFalse($soapClient->hasClient());
+    }
+    
+    /**
+     *
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage fakePlatform is not a valid platform
+     *
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \PHPUnit_Framework_AssertionFailedError
+     */
+    public function testInstanceWithBadPlatform()
+    {
+        $soapClient = SoapFactory::build('fakePlatform')->create(
             [
                 'username'      => 'johndoe',
                 'password'      => 'fake',

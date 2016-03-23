@@ -14,7 +14,7 @@ use WebservicesNl\Common\Endpoint\Manager as EndpointManager;
 use WebservicesNl\Common\Exception\Client\Input\InvalidException;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
-use WebservicesNl\Soap\Client\Config\ConfigFactory;
+use WebservicesNl\Soap\Config\ConfigFactory;
 
 /**
  * Class SoapFactory.

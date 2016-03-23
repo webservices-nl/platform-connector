@@ -92,11 +92,11 @@ class SoapClient extends \SoapClient
     /**
      * Prepares the actual soapCall
      *
-     * @param string $function_name
-     * @param array  $arguments
-     * @param array  $options
-     * @param array  $input_headers
-     * @param null   $output_headers
+     * @param string     $function_name
+     * @param array      $arguments
+     * @param array      $options
+     * @param array      $input_headers
+     * @param array|null $output_headers
      *
      * @return mixed
      *
@@ -145,13 +145,24 @@ class SoapClient extends \SoapClient
     {
         try {
             if ($this->hasClient() === true) {
-                $request = $this->doHttpRequest($request, $location, $action, $this->settings->getSoapVersion());
+                $response = $this->doHttpRequest(
+                    $request,
+                    $location,
+                    $action,
+                    $this->settings->getSoapVersion()
+                );
+            } else {
+                $response = parent::__doRequest(
+                    $request,
+                    $location,
+                    $action,
+                    $this->settings->getSoapVersion(),
+                    $oneWay
+                );
+                $this->__last_request = $request;
             }
 
-            $request = parent::__doRequest($request, $location, $action, $this->settings->getSoapVersion(), $oneWay);
-            $this->__last_request = $request;
-
-            return $request;
+            return $response;
         } catch (SoapFault $fault) {
             return Converter::build()->convertToException($fault);
         }

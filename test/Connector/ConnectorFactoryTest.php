@@ -3,6 +3,7 @@
 namespace WebservicesNl\Test\Connector;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
 use WebservicesNl\Connector\WebservicesConnector;
 
@@ -28,7 +29,8 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not load classes for platform: 'Fake' and protocol: ''
-    */
+     * @throws InputException
+     */
     public function testInstanceWithBadPlatform()
     {
         ConnectorFactory::build()->create('Fake', null);
@@ -37,6 +39,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not load classes for platform: 'Webservices' and protocol: 'FakeProtocol'
+     * @throws InputException
      */
     public function testInstanceWithBadProtocol()
     {
@@ -45,6 +48,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      */
     public function testInstance()
     {
