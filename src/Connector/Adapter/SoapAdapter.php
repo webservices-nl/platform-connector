@@ -36,6 +36,7 @@ class SoapAdapter extends AbstractAdapter implements AdapterInterface
      * @param mixed  $args
      *
      * @throws NoServerAvailableException
+     *
      * @return mixed
      */
     public function call($functionName, $args)

@@ -26,7 +26,7 @@ class SoapClient extends \SoapClient
      *
      * @var array(string=>string)
      */
-    static protected $versionToContentTypeMap = [
+    protected static $versionToContentTypeMap = [
         SOAP_1_1 => 'text/xml; charset=utf-8',
         SOAP_1_2 => 'application/soap+xml; charset=utf-8',
     ];
@@ -76,11 +76,11 @@ class SoapClient extends \SoapClient
         $active = $this->manager->getActiveEndpoint();
 
         // initiate the native PHP SoapClient for fetching all the WSDL stuff
-        parent::__construct((string)$active->getUri(), $this->settings->toArray());
+        parent::__construct((string) $active->getUri(), $this->settings->toArray());
     }
 
     /**
-     * Set a HTTP Client
+     * Set a HTTP Client.
      *
      * @param HttpClient $client
      */
@@ -90,7 +90,7 @@ class SoapClient extends \SoapClient
     }
 
     /**
-     * Prepares the actual soapCall
+     * Prepares the actual soapCall.
      *
      * @param string     $function_name
      * @param array      $arguments
@@ -120,7 +120,6 @@ class SoapClient extends \SoapClient
                 //@todo handle exception (check timeout, change endpoint, reset client, etc)
                 $endpoint = $this->manager->getActiveEndpoint();
                 $endpoint->setStatus(Endpoint::STATUS_ERROR);
-
             }
         } while ($continue);
 
@@ -129,7 +128,7 @@ class SoapClient extends \SoapClient
 
     /**
      * Triggers the SOAP request.
-     * When http client is present, sent request by cURL instead of native SOAP request
+     * When http client is present, sent request by cURL instead of native SOAP request.
      *
      * @param string $request
      * @param string $location
@@ -207,12 +206,12 @@ class SoapClient extends \SoapClient
             throw new \SoapFault('Server', $exception->getMessage());
         }
 
-        return (string)$response->getBody();
+        return (string) $response->getBody();
     }
 
     /**
      * Determines methods.
-     * For Soap it's either GET or POST
+     * For Soap it's either GET or POST.
      *
      * @param mixed $request
      *
@@ -228,8 +227,9 @@ class SoapClient extends \SoapClient
      *
      * @param string $version SOAP version constant SOAP_1_1|SOAP_1_2
      *
-     * @return string
      * @throws InputException
+     *
+     * @return string
      */
     private static function getContentTypeForVersion($version)
     {

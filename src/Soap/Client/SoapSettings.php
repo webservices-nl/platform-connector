@@ -153,7 +153,7 @@ class SoapSettings
     private $retryMinutes = 60;
 
     /**
-     * All possible SOAP SSL methods
+     * All possible SOAP SSL methods.
      *
      * @var array
      */
@@ -190,7 +190,7 @@ class SoapSettings
     private $typeMap;
 
     /**
-     * Soap Version (either SOAP_1_1 or SOAP_1_2)
+     * Soap Version (either SOAP_1_1 or SOAP_1_2).
      *
      * @var int
      */
@@ -221,6 +221,7 @@ class SoapSettings
      * @param array $options
      *
      * @return SoapSettings
+     *
      * @throws InputException
      */
     public static function loadFromArray(array $options)
@@ -282,7 +283,7 @@ class SoapSettings
     }
 
     /**
-     * Returns class mapping
+     * Returns class mapping.
      *
      * @return array|null
      */

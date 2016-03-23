@@ -43,8 +43,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $detail = new \stdClass();
         $detail->errorCode = 'FakeClass';
         $soapFault = new \SoapFault('Server', 'some detailed error message', null, $detail);
-        $exception = $converter->convertToException($soapFault);
-        //self::assertInstanceOf($errorClassFQ, $exception);
+        $converter->convertToException($soapFault);
     }
 
     /**

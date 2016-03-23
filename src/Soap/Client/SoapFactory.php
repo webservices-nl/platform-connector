@@ -8,7 +8,6 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-
 use WebservicesNl\Common\Client\ClientFactoryInterface;
 use WebservicesNl\Common\Endpoint\Manager as EndpointManager;
 use WebservicesNl\Common\Exception\Client\Input\InvalidException;
@@ -67,6 +66,7 @@ class SoapFactory implements ClientFactoryInterface
      * @param LoggerInterface|null $logger
      *
      * @throws InputException
+     *
      * @return static
      */
     public static function build($platform, LoggerInterface $logger = null)
@@ -80,10 +80,10 @@ class SoapFactory implements ClientFactoryInterface
      * @param array $settings
      *
      * @throws InputException
-     *
      * @throws NoServerAvailableException
      * @throws InvalidException
      * @throws \InvalidArgumentException
+     *
      * @return SoapClient
      */
     public function create(array $settings = [])
@@ -103,7 +103,7 @@ class SoapFactory implements ClientFactoryInterface
 
         // add a curl client
         if ($settings['useHttpClient'] === true) {
-            $client = $this->createCurlClient((string)$manager->getActiveEndpoint()->getUri());
+            $client = $this->createCurlClient((string) $manager->getActiveEndpoint()->getUri());
             $soapClient->setClient($client);
         }
 

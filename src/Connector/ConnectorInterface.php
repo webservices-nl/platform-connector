@@ -11,7 +11,7 @@ use WebservicesNl\Connector\Adapter\AdapterInterface;
 interface ConnectorInterface
 {
     /**
-     * Return this Connectors AdapterInterface
+     * Return this Connectors AdapterInterface.
      *
      * @return AdapterInterface
      */

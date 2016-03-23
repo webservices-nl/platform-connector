@@ -3,7 +3,7 @@
 namespace WebservicesNl\Connector\Adapter;
 
 /**
- * Class AbstractAdapter
+ * Class AbstractAdapter.
  */
 abstract class AbstractAdapter
 {

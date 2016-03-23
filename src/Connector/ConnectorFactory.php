@@ -21,7 +21,7 @@ class ConnectorFactory implements LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * Generic settings (eg credentials)
+     * Generic settings (eg credentials).
      *
      * @var array
      */
