@@ -10,34 +10,19 @@ use WebservicesNl\Soap\Client\SoapClient;
  *
  * SoapAdapter for a ConnectInterface
  */
-class SoapAdapter extends AbstractAdapter implements AdapterInterface
+class SoapAdapter extends AbstractAdapter
 {
     const PROTOCOL_NAME = 'soap';
 
     /**
-     * @var SoapClient
-     */
-    protected $client;
-
-    /**
-     * SoapAdapter constructor.
-     *
-     * @param SoapClient $client
-     */
-    public function __construct(SoapClient $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
      * {@inheritdoc}
-     *
      * @param string $functionName
      * @param mixed  $args
      *
      * @throws NoServerAvailableException
-     *
      * @return mixed
+     * @throws \SoapFault
+     * @throws \Exception
      */
     public function call($functionName, $args)
     {
@@ -45,6 +30,14 @@ class SoapAdapter extends AbstractAdapter implements AdapterInterface
             return $this->client->{$functionName}($args);
         }
 
-        return $this->client->soapCall($functionName, $args);
+        return $this->getClient()->soapCall($functionName, $args);
+    }
+
+    /**
+     * @return SoapClient
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace WebservicesNl\Connector\Adapter;
 
+use WebservicesNl\Common\Client\ClientInterface;
+
 /**
  * Interface AdapterInterface.
  *
@@ -25,4 +27,9 @@ interface AdapterInterface
      * @return string
      */
     public function getProtocol();
+
+    /**
+     * @return ClientInterface
+     */
+    public function getClient();
 }

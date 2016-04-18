@@ -18,7 +18,7 @@ League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapSettings', [
     },
     'connectionTimeout' => 'numberBetween|6;60',
     'context'           => '',
-    'encoding'          => '',
+    'encoding'          => 'UTF-8',
     'exceptions'        => '',
     'features'          => function () {
         $values = [SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS];
@@ -27,20 +27,18 @@ League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapSettings', [
     },
     'keepAlive'         => 'boolean',
     'localCert'         => null,
+    'login'             => 'userName',
     'passphrase'        => 'sentence',
-    'password'          => 'fakePassword',
+    'password'          => 'word',
     'proxyHost'         => '',
     'proxyLogin'        => '',
-    'proxyPassword'     => 'fakePassword',
+    'proxyPassword'     => 'word',
     'proxyPort'         => 'numberBetween|1000;2000',
-    'retryMinutes'      => 'numberBetween|10;120',
     'soapVersion'       => SOAP_1_1,
-    'responseTimeout'   => 'numberBetween|20;60',
     'sslMethod'         => function () {
         return array_rand(SoapSettings::$sslMethods);
     },
     'typeMap'           => null,
     'uri'               => '',
-    'userAgent'         => 'bla',
-    'username'          => 'userName',
+    'userAgent'         => 'userAgent',
 ]);

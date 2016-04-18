@@ -6,8 +6,7 @@ use WebservicesNl\Common\Exception\Client\InputException;
 
 /**
  * Class SoapSettings.
- *
- * Class for all the soapClient settings
+ * Container for all the SoapClient settings.
  *
  * @link http://php.net/manual/en/soapclient.soapclient.php
  *
@@ -24,7 +23,6 @@ use WebservicesNl\Common\Exception\Client\InputException;
 class SoapSettings
 {
     const DEFAULT_CONNECTION_TIMEOUT = 5;
-    const DEFAULT_RESPONSE_TIMEOUT = 20;
     const USER_AGENT = 'WebservicesNlSoapClient/PHP/2.0';
 
     /**
@@ -101,6 +99,13 @@ class SoapSettings
     private $keepAlive = true;
 
     /**
+     * login username for HTTP Authentication. (optional).
+     *
+     * @var string
+     */
+    private $login;
+
+    /**
      * path to cert_key.pem.
      *
      * @var string
@@ -137,20 +142,6 @@ class SoapSettings
      * @var string
      */
     private $proxyPort;
-
-    /**
-     * Response timeout in seconds. (Webservices specific).
-     *
-     * @var int
-     */
-    private $responseTimeout = self::DEFAULT_RESPONSE_TIMEOUT;
-
-    /**
-     * Threshold when to try server again after failure (in minutes).
-     *
-     * @var int
-     */
-    private $retryMinutes = 60;
 
     /**
      * All possible SOAP SSL methods.
@@ -211,26 +202,15 @@ class SoapSettings
     private $userAgent = self::USER_AGENT;
 
     /**
-     * @var string
-     */
-    private $username;
-
-    /**
      * Load config object from array.
      *
      * @param array $options
      *
      * @return SoapSettings
-     *
-     * @throws InputException
      */
     public static function loadFromArray(array $options)
     {
         $options = array_filter($options);
-        if (!array_key_exists('username', $options) || !array_key_exists('password', $options)) {
-            throw new InputException('Not all mandatory config credentials are set');
-        }
-
         $config = new static();
         foreach ($options as $key => $value) {
             $name = 'set' . ucfirst(strtolower($key));
@@ -457,6 +437,14 @@ class SoapSettings
     /**
      * @return string
      */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @return string
+     */
     public function getLocalCert()
     {
         return $this->localCert;
@@ -480,6 +468,14 @@ class SoapSettings
     public function getPassphrase()
     {
         return $this->passphrase;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
     }
 
     /**
@@ -597,26 +593,6 @@ class SoapSettings
     /**
      * @return int
      */
-    public function getResponseTimeout()
-    {
-        return $this->responseTimeout;
-    }
-
-    /**
-     * @param int $responseTimeout
-     *
-     * @return SoapSettings
-     */
-    public function setResponseTimeout($responseTimeout)
-    {
-        $this->responseTimeout = $responseTimeout;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
     public function getSoapVersion()
     {
         return $this->soapVersion;
@@ -719,43 +695,10 @@ class SoapSettings
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return SoapSettings
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function toArray()
     {
         return get_object_vars($this);
-    }
-
-    /**
-     * @return int
-     */
-    public function getRetryMinutes()
-    {
-        return $this->retryMinutes;
-    }
-
-    /**
-     * @param int $retryMinutes
-     */
-    public function setRetryMinutes($retryMinutes)
-    {
-        $this->retryMinutes = $retryMinutes;
     }
 }

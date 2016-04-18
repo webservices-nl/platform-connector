@@ -1,9 +1,9 @@
 <?php
 
-namespace WebservicesNl\Test\Soap\Client\Config\Webservices;
+namespace WebservicesNl\Test\Soap\Client\Config\Platform\Webservices;
 
 use WebservicesNl\Common\Exception\Exception;
-use WebservicesNl\Soap\Config\Webservices\Converter;
+use WebservicesNl\Soap\Config\Platform\Webservices\Converter;
 
 /**
  * Class ConverterTest
@@ -27,7 +27,6 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             $exception = $converter->convertToException($soapFault);
             self::assertInstanceOf($errorClassFQ, $exception);
         } catch (Exception $e) {
-
             self::assertInstanceOf($errorClassFQ, $e);
         }
     }
