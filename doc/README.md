@@ -8,15 +8,39 @@ https://ws1.webservices.nl/documentation
 
 ## Prerequisites:
 - PHP: 5.4+
-- composer
+- composer (https://getcomposer.org)
 
 ## Install
-``` composer require webservices-nl/soap-client  ```
+Please composer to install this library.
+
+```bash 
+composer require webservices-nl/soap-client 
+```
+
+## Usage
+```php
+ 
+ // create a soap connector to webservices
+ $soap = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('soap', 'webservices');
+              
+ // create a xmlrpc connector to webservices
+ $rpc = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('xmlrpc', 'webservices');
+
+ // create a soap connector to KvK
+ $rpcConnector = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('soap', 'kvk');
+
+```
 
 ## Run tests?
 This client has been tested on PHP 5.4, 5.5, 5.6 and 7.0
-``` phpunit ```
 
-Any questions, remarks, bugs?
-    - tech@webservices.nl
-    - support.webservices.nl
+```bash
+
+composer install --dev 
+phpunit
+
+```
+
+Any questions, remarks, bugs? Please mail us.
+- technical questions: <mailto:tech@webservices.nl>
+- support questions: <mailto:support.webservices.nl>
