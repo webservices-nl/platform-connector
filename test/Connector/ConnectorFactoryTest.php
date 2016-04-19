@@ -2,48 +2,37 @@
 
 namespace WebservicesNl\Test\Connector;
 
-use League\FactoryMuffin\Facade as FactoryMuffin;
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
-use WebservicesNl\Connector\WebservicesConnector;
+use WebservicesNl\Connector\Platform\Webservices\Connector;
 
+/**
+ * Class ConnectorFactoryTest
+ *
+ * @package WebservicesNl\Test\Connector
+ */
 class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
-     */
-    public static function setupBeforeClass()
-    {
-        FactoryMuffin::setCustomSaver(function () {
-            return true;
-        });
-        FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
-            $name = 'set' . ucfirst(strtolower($name));
-            if (method_exists($object, $name)) {
-                $object->{$name}($value);
-            }
-        });
-        FactoryMuffin::loadFactories(dirname(__DIR__) . '/Factories');
-    }
-
-    /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not load classes for platform: 'Fake' and protocol: ''
+     * @expectedExceptionMessage Could not find a platformConfig for Fake
      * @throws InputException
      */
     public function testInstanceWithBadPlatform()
     {
-        ConnectorFactory::build()->create('Fake', null);
+        ConnectorFactory::build(['username' => 'bla', 'password' => 'secret'])->create(null, 'Fake');
     }
 
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not load classes for platform: 'Webservices' and protocol: 'FakeProtocol'
+     * @expectedExceptionMessage Could not find a factory for Nope
      * @throws InputException
      */
     public function testInstanceWithBadProtocol()
     {
-        ConnectorFactory::build()->create('Webservices', 'FakeProtocol');
+        ConnectorFactory::build(['username' => 'bla', 'password' => 'secret'])->create('Nope', 'Webservices');
     }
 
     /**
@@ -53,13 +42,29 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     public function testInstance()
     {
         $protocol = 'soap';
+        $platform = 'webservices';
+        $connector = ConnectorFactory::build(['username' => 'lala', 'password' => 'hoho'])
+            ->create($protocol, $platform);
 
-        $client = ConnectorFactory::build(['username' => 'lala', 'password' => 'hihi'])
-            ->create(WebservicesConnector::PLATFORM_NAME, 'soap');
+        static::assertInstanceOf('WebservicesNl\Connector\Platform\Webservices\Connector', $connector);
+        static::assertInstanceOf('WebservicesNl\Connector\Adapter\SoapAdapter', $connector->getAdapter());
+        static::assertEquals($protocol, $connector->getAdapter()->getProtocol());
+        static::assertEquals(Connector::PLATFORM_NAME, $connector->getPlatform());
+    }
 
-        static::assertInstanceOf('WebservicesNl\Connector\WebservicesConnector', $client);
-        static::assertInstanceOf('WebservicesNl\Connector\Adapter\SoapAdapter', $client->getAdapter());
-        static::assertEquals($protocol, $client->getAdapter()->getProtocol());
-        static::assertEquals(WebservicesConnector::PLATFORM_NAME, $client->getPlatform());
+    /**
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
+     */
+    public function testInstanceWithLogger()
+    {
+        $testHandler = new TestHandler();
+        $logger = new Logger(__CLASS__);
+        $logger->pushHandler($testHandler);
+
+        $factory = ConnectorFactory::build([]);
+        $factory->setLogger($logger);
+
+        static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
     }
 }

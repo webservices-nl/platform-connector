@@ -3,6 +3,7 @@
 namespace WebservicesNl\Test\Soap\Client;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Soap\Client\SoapSettings;
 
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
@@ -27,33 +28,13 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Not all mandatory config credentials are set
-     */
-    public function testInstantiationWithoutCredentials()
-    {
-        SoapSettings::loadFromArray([]);
-    }
-
-    /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not a valid timeout
+     * @throws InputException
      */
     public function testSettingsConnectionTimeout()
     {
         $settings = new SoapSettings();
         $settings->setConnectionTimeout('bla');
-    }
-
-    /**
-     *
-     */
-    public function testInstantiationWithCredentials()
-    {
-        $options = ['username' => 'john', 'password' => 'secret'];
-        $settings = SoapSettings::loadFromArray($options);
-
-        static::assertNotEmpty($settings->getPassword(), 'SoapSettings should have a password');
-        static::assertNotEmpty($settings->getUsername(), 'SoapSettings should have a username');
     }
 
     /**

@@ -2,52 +2,50 @@
 
 namespace WebservicesNl\Soap\Config;
 
-use WebservicesNl\Common\Config\ConfigInterface;
+use WebservicesNl\Connector\Platform\PlatformConfigInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
-use WebservicesNl\Soap\Client\SoapSettings;
+use WebservicesNl\Soap\Client\SoapConfig;
 
 /**
  * Class ConfigFactory.
- *
  * Returns Config class for a given platform
  */
 class ConfigFactory
 {
-    const FQCN = __NAMESPACE__ . '\%1$s\Config';
+    const FQCN = __NAMESPACE__ . '\Platform\%1$s\Config';
 
     /**
-     * Return platform configuration for given platform.
+     * Return a Soap configuration for given platformConfig.
      *
-     * @param string             $platform
-     * @param SoapSettings|array $settings
+     * @param PlatformConfigInterface $platform
      *
-     * @return mixed
-     *
+     * @return SoapConfig
      * @throws InputException
      */
-    public static function config($platform, $settings)
+    public static function config(PlatformConfigInterface $platform)
     {
-        if (!self::hasConfig($platform)) {
-            throw new InputException("Could not find a platform config for '$platform'");
+        $platformName = $platform->getPlatformName();
+        if (self::hasConfig($platformName) === false) {
+            throw new InputException("Could not find a platform config for '$platformName'");
         }
 
-        /** @var ConfigInterface $platformClassFQCN */
-        $platformClassFQCN = sprintf(self::FQCN, ucfirst($platform));
+        /** @var SoapConfig $soapConfig */
+        $soapConfig = sprintf(self::FQCN, ucfirst($platformName));
 
-        // return config file with settings vars in place
-        return $platformClassFQCN::configure($settings);
+        // return instance of config class with settings in place
+        return $soapConfig::configure($platform);
     }
 
     /**
      * Check if config exists.
      *
-     * @param string $platform
+     * @param string $className
      *
      * @return bool
      */
-    public static function hasConfig($platform)
+    public static function hasConfig($className)
     {
-        $platformClassFQCN = sprintf(self::FQCN, ucfirst($platform));
+        $platformClassFQCN = sprintf(self::FQCN, ucfirst($className));
 
         return class_exists($platformClassFQCN);
     }

@@ -11,34 +11,14 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a platform config for ''
-     *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     */
-    public function testInstanceWithoutArguments()
-    {
-        ConfigFactory::config(null, null);
-    }
-
-    /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Not all mandatory config credentials are set
-     *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     */
-    public function testInstanceWithArguments()
-    {
-        ConfigFactory::config('Webservices', []);
-    }
-
-    /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a platform config for 'FakePlatform'
-     *
+     * @expectedExceptionMessage Could not find a platform config for 'Fake'
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceWithBadPlatform()
     {
-        ConfigFactory::config('FakePlatform', []);
+        $config = \Mockery::mock('WebservicesNl\Connector\Platform\PlatformConfigInterface');
+        $config->shouldReceive('getPlatformName')->andReturn('Fake');
+
+        ConfigFactory::config($config);
     }
 }
