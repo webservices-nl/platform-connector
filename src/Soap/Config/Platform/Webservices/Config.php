@@ -22,9 +22,8 @@ class Config extends SoapConfig
      * @var array
      */
     protected static $endPoints = [
-        'https://dev.webservices.nl/~peter/WebservicesNl/Services/tronco/local/www/api/soap',
-        'https://ws1.webservices.nl/soap_doclit',
-        'https://ws2.webservices.nl/soap_doclit',
+        'https://ws1.webservices.nl/soap',
+        'https://ws2.webservices.nl/soap',
     ];
 
     /**
