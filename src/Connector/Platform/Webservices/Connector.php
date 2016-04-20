@@ -7,7 +7,10 @@ use WebservicesNl\Connector\AbstractConnector;
 
 /**
  * Class WebservicesConnector.
- * Proxy class for calling everything Webservices regardless of the underlying protocol.
+ *
+ * Proxy for calling everything Webservices regardless of the underlying protocol.
+ * All webservice related functions are mapped here. Note that for BC reasons old deprecated functions are listed here
+ * just as well. When possible please use the latest version.
  *
  * @link https://webview.webservices.nl/documentation
  */

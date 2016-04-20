@@ -8,7 +8,8 @@ use WebservicesNl\Soap\Client\SoapConfig;
 
 /**
  * Class ConfigFactory.
- * Returns Config class for a given platform
+ *
+ * Returns Config class for a given platform. Configured with platform and user credentials.
  */
 class ConfigFactory
 {

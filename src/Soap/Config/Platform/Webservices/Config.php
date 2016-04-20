@@ -7,7 +7,8 @@ use WebservicesNl\Soap\Client\SoapConfig;
 
 /**
  * Class WebservicesConfig.
- * Container for all settings to connect to Webservices platform.
+ *
+ * Container for all settings to connect to Webservices platform. User credentials and time out settings. etc
  */
 class Config extends SoapConfig
 {
@@ -109,7 +110,7 @@ class Config extends SoapConfig
      */
     public function toArray()
     {
-        return [
+        return array_filter([
             'converter'          => $this->getConverter(),
             'connection_timeout' => $this->getPlatformConfig()->getConnectionTimeout(),
             'endpoints'          => self::$endPoints,
@@ -118,7 +119,7 @@ class Config extends SoapConfig
             'soap_headers'       => (array)$this->getSoapHeaders(),
             'timeout'            => $this->getPlatformConfig()->getResponseTimeout(),
             'username'           => $this->getPlatformConfig()->getUserName(),
-        ];
+        ]);
     }
 
     /**

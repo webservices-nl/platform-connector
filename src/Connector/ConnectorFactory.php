@@ -12,9 +12,10 @@ use WebservicesNl\Connector\Adapter\AdapterInterface;
 use WebservicesNl\Connector\Platform\PlatformConfigInterface;
 
 /**
- * Class ConnectorFactory.
+ * ConnectorFactory for creating platform connector.
+ *
  * Helps with creating a connector for a given platform over a certain protocol.
- * Provide some user settings and afterwards create platforms like a boss
+ * Provide some user settings and afterwards create platforms like a boss.
  */
 class ConnectorFactory implements LoggerAwareInterface
 {

@@ -7,7 +7,9 @@ use WebservicesNl\Common\Exception\ServerException;
 use WebservicesNl\Soap\Exception\ConverterInterface;
 
 /**
- * Class Webservice SoapConverter.
+ * Webservice SoapConverter.
+ *
+ * Converts generic Soap fault back into PHP exception with Webservices domain logic exceptions.
  */
 class Converter implements ConverterInterface
 {

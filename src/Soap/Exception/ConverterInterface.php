@@ -4,6 +4,8 @@ namespace WebservicesNl\Soap\Exception;
 
 /**
  * Interface ConverterInterface
+ *
+ * Webservices Exception converters. Converts PHP exceptions into a 'error' and back into Exception.
  */
 interface ConverterInterface
 {

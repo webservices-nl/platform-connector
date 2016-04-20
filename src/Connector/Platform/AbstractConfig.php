@@ -3,7 +3,10 @@
 namespace WebservicesNl\Connector\Platform;
 
 /**
- * Class AbstractConfig
+ * AbstractConfig.
+ *
+ * Abstract Platform config object.
+ * Holds all data for connecting to any platform exposed through the Webservices API.
  */
 abstract class AbstractConfig implements PlatformConfigInterface
 {

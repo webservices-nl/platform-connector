@@ -6,8 +6,9 @@ use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\Platform\AbstractConfig;
 
 /**
- * Class WebservicesConfig
- * Webservice config file for connecting to the Webservices Platform
+ * Class WebservicesConfig.
+ *
+ * Webservice config file for connecting to the Webservices Platform.
  */
 class Config extends AbstractConfig
 {

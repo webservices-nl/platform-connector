@@ -5,7 +5,10 @@ namespace WebservicesNl\Connector\Adapter;
 use WebservicesNl\Common\Client\ClientInterface;
 
 /**
- * Class AbstractAdapter.
+ * AbstractAdapter.
+ *
+ * AbstractAdapter, base class for extending all Connector interface Adapters (adapter pattern).
+ *
  */
 abstract class AbstractAdapter implements AdapterInterface
 {

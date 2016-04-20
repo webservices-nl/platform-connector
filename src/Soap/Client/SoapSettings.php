@@ -6,12 +6,9 @@ use WebservicesNl\Common\Exception\Client\InputException;
 
 /**
  * Class SoapSettings.
- * Container for all the SoapClient settings.
  *
- * @link http://php.net/manual/en/soapclient.soapclient.php
- *
- * For HTTP authentication, the login and password options can be used to supply credentials.
- * For making an HTTP connection through a proxy server, the options
+ * Container for all the SoapClient settings. For HTTP authentication, the login and password options can be used to
+ * supply credentials. For making an HTTP connection through a proxy server, the options are:
  *  - proxy_host
  *  - proxy_port
  *  - proxy_login
@@ -19,6 +16,7 @@ use WebservicesNl\Common\Exception\Client\InputException;
  *
  *  For HTTPS client certificate authentication use local_cert and passphrase options
  *
+ * @link http://php.net/manual/en/soapclient.soapclient.php
  */
 class SoapSettings
 {
@@ -41,6 +39,8 @@ class SoapSettings
     private $cacheWsdl = WSDL_CACHE_NONE;
 
     /**
+     * Optional Class map.
+     *
      * @var array | null
      */
     private $classMap;
@@ -48,7 +48,7 @@ class SoapSettings
     /**
      * The compression option allows to use compression of HTTP SOAP requests and responses.
      *
-     * @var null
+     * @var int
      */
     private $compression = SOAP_COMPRESSION_ACCEPT;
 
@@ -176,7 +176,6 @@ class SoapSettings
      *               "type_name" => "book",
      *               "from_xml"  => "some_function_name" callback accepting one string parameter
      *               "to_xml"    => "some_function_name" callback accepting one string parameter")
-     *
      */
     private $typeMap;
 
@@ -223,6 +222,8 @@ class SoapSettings
     }
 
     /**
+     * Return the Authentication flag
+     *
      * @return int
      */
     public function getAuthentication()
@@ -231,6 +232,8 @@ class SoapSettings
     }
 
     /**
+     * Set the authentication flag
+     *
      * @param int $authentication
      *
      * @return SoapSettings
@@ -243,6 +246,8 @@ class SoapSettings
     }
 
     /**
+     * Return the Cache WSDL bitflag
+     *
      * @return int
      */
     public function getCacheWsdl()
@@ -273,7 +278,7 @@ class SoapSettings
     }
 
     /**
-     * @param array|null $classMap
+     * @param array $classMap
      *
      * @return SoapSettings
      */
@@ -285,6 +290,9 @@ class SoapSettings
     }
 
     /**
+     * Return Compression flag
+     *
+     * @return int
      */
     public function getCompression()
     {
@@ -292,7 +300,7 @@ class SoapSettings
     }
 
     /**
-     * @param null $compression
+     * @param int $compression
      *
      * @return SoapSettings
      */

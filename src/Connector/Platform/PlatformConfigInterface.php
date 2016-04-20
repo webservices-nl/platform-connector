@@ -4,12 +4,13 @@ namespace WebservicesNl\Connector\Platform;
 
 /**
  * Interface PlatformConfigInterface.
+ *
  * All platform specific settings go here.
  */
 interface PlatformConfigInterface
 {
     /**
-     * return class name.
+     * Return class name.
      * optional return as Fully Qualified Class Name
      *
      * @param bool $FQCN

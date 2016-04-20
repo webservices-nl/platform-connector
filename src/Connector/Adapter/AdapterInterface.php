@@ -5,9 +5,10 @@ namespace WebservicesNl\Connector\Adapter;
 use WebservicesNl\Common\Client\ClientInterface;
 
 /**
- * Interface AdapterInterface.
+ * AdapterInterface.
  *
- * Contract for the connector adapters
+ * Contract for the connector adapters.
+ * In order to switch out protocols, all client have an protocol adapter.
  */
 interface AdapterInterface
 {

@@ -14,7 +14,7 @@ use WebservicesNl\Soap\Helper\GuzzleClientFactory;
 
 /**
  * Class SoapFactory.
- * Create a SoapClient for a given platform (mainly webservices)
+ * Managing class (factory) for creating a PHP SoapClient for a given platform (mainly webservices)
  */
 class SoapFactory implements ClientFactoryInterface
 {
@@ -41,8 +41,10 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * @param PlatformConfigInterface $platformConfig
-     * @param LoggerInterface|null    $loggerInterface
+     * Static function (LSB) for building this class.
+     *
+     * @param PlatformConfigInterface $platformConfig  PlatformConfig to create soapConfig Object
+     * @param LoggerInterface|null    $loggerInterface optional logger interface
      *
      * @throws InputException
      * @return static
@@ -53,15 +55,16 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * Build a soap client.
+     * Creates the soap client based on settings and injected SoapConfig.
      *
-     * @param array $settings
+     * @param array $settings additional settings go here
      *
      * @return SoapClient
      * @throws InputException
      */
     public function create(array $settings = [])
     {
+        // try to create SoapClient and it's requirements
         try {
             // create soap settings, with given settings and platform settings
             $soapSettings = SoapSettings::loadFromArray($settings);
@@ -100,7 +103,7 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * Returns if this SoapFactory is blessed with a loggerInterface.
+     * Returns wether this instance is blessed with a LoggerInterface.
      *
      * @return bool
      */
@@ -110,10 +113,10 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * Configure guzzle client for this soap factory.
+     * Configure PSR-7 guzzle client for this soap factory.
      *
-     * @param array   $settings
-     * @param Manager $manager
+     * @param array   $settings settings with extra guzzle settings
+     * @param Manager $manager  endpoint Manager
      *
      * @return Client
      * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
@@ -126,9 +129,11 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * @param array $settings
+     * Creates and configures a EndpointManager.
      *
-     * @return Manager
+     * @param array $settings optional settings
+     *
+     * @return Manager Endpoint manager
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws \InvalidArgumentException
      */
@@ -153,6 +158,8 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
+     * Return SoapConfig.
+     *
      * @return SoapConfig
      */
     public function getConfig()

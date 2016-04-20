@@ -2,13 +2,15 @@
 
 namespace WebservicesNl\Connector\Adapter;
 
+use WebservicesNl\Common\Client\ClientInterface;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
 use WebservicesNl\Soap\Client\SoapClient;
 
 /**
- * Class SoapAdapter.
+ * SoapAdapter.
  *
- * SoapAdapter for a ConnectInterface
+ * Soap protocol adapter for a ConnectorInterface to connect to the Webservices API.
+ *
  */
 class SoapAdapter extends AbstractAdapter
 {
@@ -16,8 +18,9 @@ class SoapAdapter extends AbstractAdapter
 
     /**
      * {@inheritdoc}
-     * @param string $functionName
-     * @param mixed  $args
+     *
+     * @param string $functionName name of the function call
+     * @param mixed  $args         arguments for the function call
      *
      * @throws NoServerAvailableException
      * @return mixed
@@ -34,7 +37,9 @@ class SoapAdapter extends AbstractAdapter
     }
 
     /**
-     * @return SoapClient
+     * {@inheritdoc}
+     *
+     * @return SoapClient|ClientInterface
      */
     public function getClient()
     {

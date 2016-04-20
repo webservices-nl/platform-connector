@@ -12,14 +12,16 @@ use WebservicesNl\Common\Client\ClientFactoryInterface;
 use WebservicesNl\Connector\Platform\PlatformConfigInterface;
 
 /**
- * Class HttpClientFactory.
+ * HttpClientFactory.
+ *
+ * Helper class the Webservices connector generator with instantiating a PSR-7 curl client.
  */
 class GuzzleClientFactory implements ClientFactoryInterface
 {
     use LoggerAwareTrait;
 
     /**
-     * @var string
+     * @var PlatformConfigInterface
      */
     private $platform;
 
@@ -36,6 +38,8 @@ class GuzzleClientFactory implements ClientFactoryInterface
     }
 
     /**
+     * Create a static instance (LSB) of HttpClientFactory.
+     *
      * @param PlatformConfigInterface $platform
      * @param LoggerInterface         $logger
      *
@@ -47,7 +51,9 @@ class GuzzleClientFactory implements ClientFactoryInterface
     }
 
     /**
-     * @param array $settings
+     * Create and configure a http curl client.
+     *
+     * @param array $settings additional settings
      *
      * @return Client
      */
@@ -73,6 +79,8 @@ class GuzzleClientFactory implements ClientFactoryInterface
     }
 
     /**
+     * Returns this LoggerInterface
+     *
      * @return LoggerInterface
      */
     public function getLogger()

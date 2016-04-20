@@ -8,6 +8,8 @@ use WebservicesNl\Soap\Exception\ConverterInterface;
 
 /**
  * Class SoapConfig
+ *
+ * Soap config object that holds all data for a specific SOAP connection
  */
 class SoapConfig implements ConfigInterface
 {

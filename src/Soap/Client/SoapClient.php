@@ -16,7 +16,8 @@ use WebservicesNl\Soap\Exception\ConverterInterface;
 /**
  * Class SoapClient.
  *
- * Extends PHP native SoapClient. Adds PSR7 Client (Guzzle) for making the calls for better timeout management.
+ * Extends the native PHP SoapClient. Adds PSR7 Client (Guzzle) for making the calls for better timeout management.
+ * Also optional loggerInterface (middleware client) helps with tracing and debugging calls.
  */
 class SoapClient extends \SoapClient implements ClientInterface
 {
