@@ -13,6 +13,7 @@ use WebservicesNl\Connector\AbstractConnector;
  * just as well. When possible please use the latest version.
  *
  * @link https://webview.webservices.nl/documentation
+ * @codeCoverageIgnore This is a silly proxy class
  */
 class Connector extends AbstractConnector
 {
