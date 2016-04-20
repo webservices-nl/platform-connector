@@ -2,7 +2,6 @@
 
 namespace WebservicesNl\Test\Soap\Client;
 
-use League\FactoryMuffin\Facade as FactoryMuffin;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use WebservicesNl\Connector\Platform\Webservices\Config;
@@ -14,46 +13,20 @@ use WebservicesNl\Soap\Client\SoapFactory;
 class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
-     */
-    public static function setupBeforeClass()
-    {
-        FactoryMuffin::setCustomSaver(function () {
-            return true;
-        });
-
-        FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
-            $name = 'set' . ucfirst(strtolower($name));
-            if (method_exists($object, $name)) {
-                $object->{$name}($value);
-            }
-        });
-        FactoryMuffin::loadFactories(dirname(dirname(__DIR__)) . '/Factories');
-    }
-
-    /**
-     * @throws \InvalidArgumentException
      * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutMandatoryValues()
     {
         $config = new Config();
-        $client = SoapFactory::build($config)->create([]);
+        $client = SoapFactory::build($config)->create();
 
         self::assertInstanceOf('WebservicesNl\Soap\Client\SoapClient', $client);
     }
 
-
     /**
-     * test instance with Monolog passed
+     * Test instance with Monolog passed
      *
-     * @throws \InvalidArgumentException
      * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testInstanceWithLogger()
     {
@@ -71,7 +44,6 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
                 'username'    => 'johndoe',
                 'password'    => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
-                '',
             ]
         );
 
@@ -84,14 +56,11 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Rest instance with custom SoapHeader
      *
-     * @throws \InvalidArgumentException
      * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithCustomSoapHeader()
     {
-        $soapHeader = new \SoapHeader('http://www.anotherdomain.nl/', 'blahblah', 'topsecret');
+        $soapHeader = new \SoapHeader('http://www.anotherdomain.nl/', 'blahblah', 'banana');
         $config = new Config();
         $factory = SoapFactory::build($config);
 
@@ -109,27 +78,22 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Rest instance with custom endpoint
      *
-     * @throws \InvalidArgumentException
      * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \WebservicesNl\Common\Exception\Client\Input\InvalidException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithCustomEndpoint()
     {
+        $customUrl = 'http://www.webservicex.com/globalweather.asmx?WSDL';
+
         $config = new Config();
         $factory = SoapFactory::build($config);
-
         $soapClient = $factory->create(
             [
-                'username'    => 'johndoe',
-                'password'    => 'fakePassword',
-                'endPoints' => ['http://www.webservicex.com/globalweather.asmx?WSDL'],
+                'username' => 'johndoe',
+                'password' => 'fakePassword',
+                'url'      => $customUrl,
             ]
         );
 
-        self::assertEquals(
-            'http://www.webservicex.com/globalweather.asmx?WSDL',
-            $soapClient->getHttpClient()->getConfig()['base_url']
-        );
+        self::assertEquals($customUrl, $soapClient->getHttpClient()->getConfig()['base_url']);
     }
 }

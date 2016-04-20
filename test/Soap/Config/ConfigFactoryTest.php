@@ -19,6 +19,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
         $config = \Mockery::mock('WebservicesNl\Connector\Platform\PlatformConfigInterface');
         $config->shouldReceive('getPlatformName')->andReturn('Fake');
 
+        /** @var \WebservicesNl\Connector\Platform\PlatformConfigInterface $config */
         ConfigFactory::config($config);
     }
 }

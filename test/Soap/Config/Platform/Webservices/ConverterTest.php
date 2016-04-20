@@ -46,6 +46,17 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \DomainException
+     * @expectedExceptionMessage Not yet implemented
+     * @throws \DomainException
+     */
+    public function testConvertFromException()
+    {
+        $converter = Converter::build();
+        $converter->convertFromException(new Exception());
+    }
+
+    /**
      * @return string
      */
     public function getFaults()
