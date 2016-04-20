@@ -55,7 +55,7 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * Creates the soap client based on settings and injected SoapConfig.
+     * Creates a SoapClient with configured SoapConfig object and given additional settings.
      *
      * @param array $settings additional settings go here
      *
@@ -64,22 +64,18 @@ class SoapFactory implements ClientFactoryInterface
      */
     public function create(array $settings = [])
     {
-        // try to create SoapClient and it's requirements
-        try {
-            // create soap settings, with given settings and platform settings
-            $soapSettings = SoapSettings::loadFromArray($settings);
+        // create soap settings, with given settings and platform settings
+        $soapSettings = SoapSettings::loadFromArray($settings);
 
-            // create a manager for endpoint management
-            $manager = $this->createEndpointManager($settings);
+        // create a manager for endpoint management
+        $manager = $this->createEndpointManager($settings);
 
-            // replace the native soap client transport with a curl client
-            $curlClient = $this->createCurlClient($soapSettings->toArray(), $manager);
+        // replace the native soap client transport with a curl client
 
-            // build a SoapClient (extends the native soap client)
-            $soapClient = new SoapClient($soapSettings, $manager, $curlClient);
-        } catch (\Exception $e) {
-            throw new InputException('Could not create client. Reason: ' . $e->getMessage());
-        }
+        $curlClient = $this->createCurlClient($soapSettings->toArray(), $manager);
+
+        // build a SoapClient (extends the native soap client)
+        $soapClient = new SoapClient($soapSettings, $manager, $curlClient);
 
         // set custom headers
         $soapHeaders = array_key_exists('soapHeaders', $settings) ?
@@ -103,7 +99,7 @@ class SoapFactory implements ClientFactoryInterface
     }
 
     /**
-     * Returns wether this instance is blessed with a LoggerInterface.
+     * Returns whether this instance is blessed with a LoggerInterface.
      *
      * @return bool
      */
@@ -131,26 +127,30 @@ class SoapFactory implements ClientFactoryInterface
     /**
      * Creates and configures a EndpointManager.
      *
+     * If url key is present in settings array, this url will be set to the active endpoint
+     *
      * @param array $settings optional settings
      *
      * @return Manager Endpoint manager
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \InvalidArgumentException
+     * @throws InputException
      */
     private function createEndpointManager(array $settings = [])
     {
+        // get the default end points from config object
         $endPoints = $this->getConfig()->getEndPoints();
-        if (array_key_exists('endPoints', $settings)) {
-            $endPoints = $settings['endPoints'] + $endPoints;
+
+        // merge defaults urls with custom url if present, custom url is set to active
+        if (array_key_exists('url', $settings) && filter_var($settings['url'], FILTER_VALIDATE_URL) !== false) {
+            array_unshift($endPoints, $settings['url']);
         }
 
-        // create a manager
+        // Create EndPoint Manager
         $manager = new Manager();
         foreach ($endPoints as $endPoint) {
             $manager->createEndpoint($endPoint);
         }
 
-        if ($this->hasLogger()) {
+        if ($this->hasLogger() === true) {
             $this->logger->info('Created endpoint manager', ['endpoint count' => $manager->getEndpoints()->count()]);
         }
 
