@@ -36,6 +36,16 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Not all mandatory config credentials are set
+     * @throws InputException
+     */
+    public function testInstanceWithMissingArguments()
+    {
+        ConnectorFactory::build(['password' => 'secret'])->create('Nope', 'Webservices');
+    }
+
+    /**
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws InputException
      */

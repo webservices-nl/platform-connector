@@ -4,7 +4,6 @@ namespace WebservicesNl\Platform;
 
 /**
  * AbstractConfig.
- *
  * Abstract Platform config object.
  * Holds all data for connecting to any platform exposed through the Webservices API.
  */
@@ -24,21 +23,8 @@ abstract class AbstractConfig implements PlatformConfigInterface
     /**
      * {@inheritdoc}
      */
-    abstract public function loadFromArray(array $settings = []);
-
-    /**
-     * {@inheritdoc}
-     */
     public function getPlatformName()
     {
         return static::PLATFORM_NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return get_object_vars($this);
     }
 }

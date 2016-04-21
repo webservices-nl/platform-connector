@@ -11,6 +11,7 @@ use WebservicesNl\Protocol\Soap\Client\SoapClient;
  *
  * Soap protocol adapter for a ConnectorInterface to connect to the Webservices API.
  *
+ * @codeCoverageIgnore This is a silly proxy class
  */
 class SoapAdapter extends AbstractAdapter
 {

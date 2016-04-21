@@ -1,6 +1,6 @@
 <?php
 
-namespace WebservicesNl\Test\Connector;
+namespace WebservicesNl\Test\Platform\Webservices;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\TestHandler;
