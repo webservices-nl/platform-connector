@@ -42,7 +42,8 @@
   "autoload": {
     "psr-4": {
       "WebservicesNl\\Connector\\": "src/Connector/",
-      "WebservicesNl\\Soap\\": "src/Soap/"
+      "WebservicesNl\\Platform\\": "src/Platform/",
+      "WebservicesNl\\Protocol\\": "src/Protocol/"
     }
   },
   "autoload-dev": {
