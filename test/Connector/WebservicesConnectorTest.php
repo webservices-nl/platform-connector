@@ -34,7 +34,7 @@ class WebservicesConnectorTest extends \PHPUnit_Framework_TestCase
 
         $logger->setHandlers([$streamHandler, $testHandler]);
 
-        /** @var \WebservicesNl\Connector\Platform\Webservices\Connector $connector */
+        /** @var \WebservicesNl\Platform\Webservices\Connector $connector */
         $factory = ConnectorFactory::build($settings);
         $factory->setLogger($logger);
 

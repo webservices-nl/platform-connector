@@ -2,11 +2,11 @@
 
 namespace WebservicesNl\Connector;
 
-use WebservicesNl\Connector\Adapter\AdapterInterface;
+use WebservicesNl\Connector\ProtocolAdapter\AdapterInterface;
 
 /**
  * Class BaseConnector.
- * 
+ *
  * Platform connector parent.
  */
 abstract class AbstractConnector implements ConnectorInterface

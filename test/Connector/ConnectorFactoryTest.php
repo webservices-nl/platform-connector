@@ -6,7 +6,7 @@ use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
-use WebservicesNl\Connector\Platform\Webservices\Connector;
+use WebservicesNl\Platform\Webservices\Connector;
 
 /**
  * Class ConnectorFactoryTest
@@ -46,8 +46,8 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $connector = ConnectorFactory::build(['username' => 'lala', 'password' => 'hoho'])
             ->create($protocol, $platform);
 
-        static::assertInstanceOf('WebservicesNl\Connector\Platform\Webservices\Connector', $connector);
-        static::assertInstanceOf('WebservicesNl\Connector\Adapter\SoapAdapter', $connector->getAdapter());
+        static::assertInstanceOf('WebservicesNl\Platform\Webservices\Connector', $connector);
+        static::assertInstanceOf('WebservicesNl\Connector\ProtocolAdapter\SoapAdapter', $connector->getAdapter());
         static::assertEquals($protocol, $connector->getAdapter()->getProtocol());
         static::assertEquals(Connector::PLATFORM_NAME, $connector->getPlatform());
     }

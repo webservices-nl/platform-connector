@@ -5,21 +5,23 @@ namespace WebservicesNl\Connector;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use WebservicesNl\Common\Client\ClientFactoryInterface;
-use WebservicesNl\Common\Client\ClientInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
-use WebservicesNl\Connector\Adapter\AdapterInterface;
-use WebservicesNl\Connector\Platform\PlatformConfigInterface;
+use WebservicesNl\Connector\Client\ClientFactoryInterface;
+use WebservicesNl\Connector\Client\ClientInterface;
+use WebservicesNl\Connector\ProtocolAdapter\AdapterInterface;
+use WebservicesNl\Platform\PlatformConfigInterface;
 
 /**
  * ConnectorFactory for creating platform connector.
- *
  * Helps with creating a connector for a given platform over a certain protocol.
  * Provide some user settings and afterwards create platforms like a boss.
  */
 class ConnectorFactory implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
+
+    const PLATFORM_PATH = '';
+    const PROTOCOL_PATH = '';
 
     /**
      * Generic user settings (eg credentials).
@@ -49,7 +51,7 @@ class ConnectorFactory implements LoggerAwareInterface
     }
 
     /**
-     * Creates a Adapter for given platform and client.
+     * Creates an adapter for given platform and client.
      * Wrap the client inside a platform adapter
      *
      * @param ClientInterface $client
@@ -60,7 +62,7 @@ class ConnectorFactory implements LoggerAwareInterface
     private function buildAdapter(ClientInterface $client)
     {
         // Build an adapter for client (as proxy between the connector and the client)
-        $adapterFQCN = sprintf(__NAMESPACE__ . '\\Adapter\\' . ucfirst($client->getProtocolName()) . 'Adapter');
+        $adapterFQCN = sprintf(__NAMESPACE__ . '\\ProtocolAdapter\\' . ucfirst($client->getProtocolName()) . 'Adapter');
 
         /** @var AdapterInterface $platFormAdapter */
         return new $adapterFQCN($client);
@@ -97,7 +99,7 @@ class ConnectorFactory implements LoggerAwareInterface
     {
         $adapter = $this->buildAdapter($client);
         $connectorName = $config->getConnectorName();
-        
+
         return new $connectorName($adapter);
     }
 
@@ -121,7 +123,7 @@ class ConnectorFactory implements LoggerAwareInterface
     private function createClientFactory($protocolName, PlatformConfigInterface $config)
     {
         $protocolName = ucfirst($protocolName);
-        $clientFactory = sprintf('WebservicesNl\\%1$s\\Client\\%1$sFactory', $protocolName);
+        $clientFactory = sprintf('WebservicesNl\\Protocol\\%1$s\\Client\\%1$sFactory', $protocolName);
         if (!class_exists($clientFactory)) {
             throw new InputException("Could not find a factory for $protocolName");
         }
@@ -142,7 +144,7 @@ class ConnectorFactory implements LoggerAwareInterface
     {
         // create platform config from string
         $platformName = ucfirst($platformName);
-        $platformConfig = implode("\\", [__NAMESPACE__, 'Platform', $platformName, 'Config']);
+        $platformConfig = sprintf('WebservicesNl\\Platform\\%1$s\\PlatformConfig', $platformName);
         if (!class_exists($platformConfig)) {
             throw new InputException("Could not find a platformConfig for $platformName");
         }

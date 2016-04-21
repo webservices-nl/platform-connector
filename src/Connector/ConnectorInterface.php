@@ -2,7 +2,7 @@
 
 namespace WebservicesNl\Connector;
 
-use WebservicesNl\Connector\Adapter\AdapterInterface;
+use WebservicesNl\Connector\ProtocolAdapter\AdapterInterface;
 
 /**
  * Interface ConnectorInterface.

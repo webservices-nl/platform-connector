@@ -1,6 +1,6 @@
 <?php
 
-League\FactoryMuffin\Facade::define('WebservicesNl\Connector\Platform\Webservices\Config', [
+League\FactoryMuffin\Facade::define('WebservicesNl\Platform\Webservices\PlatformConfig', [
     'connectionTimeout' => 'numberBetween|10;120',
     'password'          => 'word',
     'userName'          => 'userName',
@@ -8,13 +8,13 @@ League\FactoryMuffin\Facade::define('WebservicesNl\Connector\Platform\Webservice
     'responseTimeout'   => 'numberBetween|20;30',
 ]);
 
-League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapConfig', [
+League\FactoryMuffin\Facade::define('WebservicesNl\Protocol\Soap\Client\SoapConfig', [
     'converter'      => function () {
-        return new \WebservicesNl\Soap\Config\Platform\Webservices\Converter();
+        return new \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter();
     },
-    'endPoints'      => WebservicesNl\Soap\Client\SoapConfig::getEndPoints(),
+    'endPoints'      => WebservicesNl\Protocol\Soap\Client\SoapConfig::getEndPoints(),
     'platformConfig' => function () {
-        return League\FactoryMuffin\Facade::instance('WebservicesNl\Connector\Platform\Webservices\Config');
+        return League\FactoryMuffin\Facade::instance('WebservicesNl\Platform\Webservices\Config');
     },
     'soapHeaders'    => [],
 ]);
