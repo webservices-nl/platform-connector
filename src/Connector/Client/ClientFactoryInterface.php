@@ -2,12 +2,13 @@
 
 namespace WebservicesNl\Connector\Client;
 
+use Psr\Log\LoggerInterface;
 use WebservicesNl\Platform\PlatformConfigInterface;
 
 /**
  * Interface ClientFactoryInterface.
  *
- * Contract for ClientFactories used by the platform generator
+ * Contract for protocol ClientFactories (used by the platform generator)
  */
 interface ClientFactoryInterface
 {
@@ -28,4 +29,11 @@ interface ClientFactoryInterface
      * @return ClientInterface
      */
     public function create(array $settings = []);
+
+    /**
+     * Sets a logger (PSR-7).
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger);
 }

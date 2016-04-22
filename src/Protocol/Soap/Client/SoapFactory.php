@@ -3,14 +3,12 @@
 namespace WebservicesNl\Protocol\Soap\Client;
 
 use GuzzleHttp\Client;
-use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-use WebservicesNl\Connector\Client\ClientFactoryInterface;
 use WebservicesNl\Common\Endpoint\Manager;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
-
+use WebservicesNl\Connector\Client\AbstractClientFactory;
 use WebservicesNl\Platform\PlatformConfigInterface;
 use WebservicesNl\Protocol\Soap\Config\ConfigFactory as SoapConfigFactory;
 use WebservicesNl\Protocol\Soap\Helper\GuzzleClientFactory;
@@ -19,10 +17,8 @@ use WebservicesNl\Protocol\Soap\Helper\GuzzleClientFactory;
  * Class SoapFactory.
  * Managing class (factory) for creating a PHP SoapClient for a given platform (mainly webservices)
  */
-class SoapFactory implements ClientFactoryInterface
+class SoapFactory extends AbstractClientFactory
 {
-    use LoggerAwareTrait;
-
     /**
      * @var SoapConfig
      */
