@@ -1,10 +1,10 @@
-# Webservices PHP Connector
+# Webservices Platform Connector
 
-All services offered by Webservices.nl are available as methods in this class.
-The methods __getServerState and __setServerState can be used to prevent timeouts when a server is unavailable.
+The goal of this project is to create a easy to implement connector to the Webservices platform. 
+This connector currently support only SOAP to connect to Webservices.nl, but in the future will support various 
+protocols that Webservices.nl offers to connect over. Like REST, XML-RPC etc.
 
-All parameters are expected to be in UTF-8 encoding, output is in UTF-8 as well. For documentation see: 
-https://ws1.webservices.nl/documentation
+Current implementation features a proxy class, that independently of protocol, can be used for type hinted connector.
 
 ## Prerequisites:
 - PHP: 5.4+
@@ -14,24 +14,30 @@ https://ws1.webservices.nl/documentation
 Please composer to install this library.
 
 ```bash 
-composer require webservices-nl/soap-client 
+composer require webservices-nl/platform-connector
 ```
 
 ## Usage
+
 ```php
  
- // create a soap connector to webservices
- $soap = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('soap', 'webservices');
+ // instantiate a connector factory, and build a connector
+ $connector = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret']);
+ $soapClient = $connector->create('soap', 'webservices');
+ 
+ // call the different functions with ease...
+ $response = $soapClient->getAccountEditV2();
               
- // create a xmlrpc connector to webservices
- $rpc = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('xmlrpc', 'webservices');
-
- // create a soap connector to KvK
- $rpcConnector = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret'])->create('soap', 'kvk');
+ // create a other protocol connector to webservices (not implemented yet)
+ $rpcClient  = $connector->create('rpc', 'webservices');
+ $restClient = $connector->create('rest', 'webservices');
 
 ```
 
-## Run tests?
+All services offered by Webservices.nl are available as methods in this class.  All parameters are expected to be in 
+UTF-8 encoding, output is in UTF-8 as well. For documentation see: https://ws1.webservices.nl/documentation
+
+#### Unit test
 This client has been tested on PHP 5.4, 5.5, 5.6 and 7.0
 
 ```bash
