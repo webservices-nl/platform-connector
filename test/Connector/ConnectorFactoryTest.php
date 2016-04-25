@@ -72,8 +72,9 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $logger = new Logger(__CLASS__);
         $logger->pushHandler($testHandler);
 
-        $factory = ConnectorFactory::build([]);
+        $factory = ConnectorFactory::build(['username' => 'something', 'password' => 'secret']);
         $factory->setLogger($logger);
+        $factory->create('soap', 'webservices');
 
         static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
     }

@@ -2,7 +2,7 @@
 
 namespace WebservicesNl\Protocol\Soap\Config\Platform\Webservices;
 
-use WebservicesNl\Platform\Webservices\PlatformConfig as PlatformConfig;
+use WebservicesNl\Platform\Webservices\PlatformConfig;
 use WebservicesNl\Protocol\Soap\Client\SoapConfig;
 
 /**
@@ -29,9 +29,9 @@ class Config extends SoapConfig
     /**
      * Config constructor.
      *
-     * @param platformConfig $config
+     * @param PlatformConfig $config
      */
-    public function __construct(platformConfig $config)
+    public function __construct(PlatformConfig $config)
     {
         $this->converter = Converter::build();
         $this->soapHeaders[] = new \SoapHeader(

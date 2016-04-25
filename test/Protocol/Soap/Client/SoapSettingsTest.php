@@ -7,9 +7,8 @@ use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Protocol\Soap\Client\SoapSettings;
 
 /**
- * Class SoapSettingsTest
+ * Class SoapSettingsTest.
  *
- * @package WebservicesNl\Test\Protocol\Soap\Client
  */
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,6 +34,7 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not a valid timeout
+     *
      * @throws InputException
      */
     public function testSettingsConnectionTimeout()

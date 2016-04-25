@@ -3,8 +3,6 @@
 namespace WebservicesNl\Protocol\Soap\Client;
 
 use GuzzleHttp\Client;
-use Psr\Log\LoggerInterface;
-
 use WebservicesNl\Common\Endpoint\Manager;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
@@ -94,16 +92,6 @@ class SoapFactory extends AbstractClientFactory
         }
 
         return $soapClient;
-    }
-
-    /**
-     * Returns whether this instance is blessed with a LoggerInterface.
-     *
-     * @return bool
-     */
-    public function hasLogger()
-    {
-        return $this->logger instanceof LoggerInterface;
     }
 
     /**

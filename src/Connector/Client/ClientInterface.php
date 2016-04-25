@@ -16,6 +16,10 @@ interface ClientInterface
 
     /**
      * Make a request.
+     *
+     * @param array $args
+     *
+     * @return mixed
      */
-    public function call();
+    public function call(array $args = []);
 }

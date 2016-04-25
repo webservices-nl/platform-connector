@@ -7,9 +7,8 @@ use WebservicesNl\Platform\Webservices\PlatformConfig;
 use WebservicesNl\Protocol\Soap\Client\SoapConfig;
 
 /**
- * Class SoapConfigTest
+ * Class SoapConfigTest.
  *
- * @package WebservicesNl\Test\Protocol\Soap\Client
  */
 class SoapConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +36,7 @@ class SoapConfigTest extends \PHPUnit_Framework_TestCase
         /** @var PlatformConfig $platFormConfig */
         $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
         $soapConfig = new SoapConfig($platFormConfig);
-        
+
         self::assertFalse($soapConfig->hasConverter());
         self::assertEmpty($soapConfig->getSoapHeaders());
         self::assertEquals($platFormConfig, $soapConfig->getPlatformConfig());

@@ -26,7 +26,22 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance with Monolog passed
+     * Test instance with Monolog passed.
+     *
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     */
+    public function testInstanceWithoutLogger()
+    {
+        $config = new PlatformConfig();
+        $factory = SoapFactory::build($config);
+
+        static::assertFalse($factory->hasLogger());
+    }
+
+    /**
+     * Test instance with Monolog passed.
      *
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws \InvalidArgumentException
@@ -37,28 +52,30 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         $handler = new TestHandler();
         $logger = new Logger('unit-test', [$handler]);
 
-        $soapHeader = new \SoapHeader('http://www.somedomain.nl/', 'lala', 'hihi');
-
         $config = new PlatformConfig();
         $factory = SoapFactory::build($config);
         $factory->setLogger($logger);
 
         $soapClient = $factory->create(
             [
-                'username'    => 'johndoe',
-                'password'    => 'fakePassword',
-                'soapHeaders' => [$soapHeader],
+                'username' => 'johndoe',
+                'password' => 'fakePassword',
             ]
         );
 
         static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $factory);
+        static::assertTrue($factory->hasLogger());
         static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $soapClient);
         static::assertTrue($handler->hasInfoThatContains('Creating a SoapClient to connect to platform Webservices'));
         static::assertTrue($handler->hasDebugThatContains('Created SoapClient'));
+        static::assertInstanceOf(
+            'WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter',
+            $soapClient->getConverter()
+        );
     }
 
     /**
-     * Rest instance with custom SoapHeader
+     * Rest instance with custom SoapHeader.
      *
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws \InvalidArgumentException
@@ -72,8 +89,8 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 
         $soapClient = $factory->create(
             [
-                'username'    => 'johndoe',
-                'password'    => 'fakePassword',
+                'username' => 'johndoe',
+                'password' => 'fakePassword',
                 'soapHeaders' => [$soapHeader],
             ]
         );
@@ -82,7 +99,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Rest instance with custom endpoint
+     * Rest instance with custom endpoint.
      *
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws \InvalidArgumentException
@@ -98,7 +115,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
             [
                 'username' => 'johndoe',
                 'password' => 'fakePassword',
-                'url'      => $customUrl,
+                'url' => $customUrl,
             ]
         );
 
