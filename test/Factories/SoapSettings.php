@@ -1,8 +1,8 @@
 <?php
 
-use WebservicesNl\Soap\Client\SoapSettings;
+use WebservicesNl\Protocol\Soap\Client\SoapSettings;
 
-League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapSettings', [
+League\FactoryMuffin\Facade::define('WebservicesNl\Protocol\Soap\Client\SoapSettings', [
     'authentication'    => function () {
         $values = [SOAP_AUTHENTICATION_BASIC, SOAP_AUTHENTICATION_DIGEST];
 
@@ -19,7 +19,7 @@ League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapSettings', [
     'connectionTimeout' => 'numberBetween|6;60',
     'context'           => '',
     'encoding'          => 'UTF-8',
-    'exceptions'        => '',
+    'exceptions'        => false,
     'features'          => function () {
         $values = [SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS];
 
@@ -33,8 +33,10 @@ League\FactoryMuffin\Facade::define('WebservicesNl\Soap\Client\SoapSettings', [
     'proxyHost'         => '',
     'proxyLogin'        => '',
     'proxyPassword'     => 'word',
-    'proxyPort'         => 'numberBetween|1000;2000',
-    'soapVersion'       => SOAP_1_1,
+    'proxyPort'   => 'numberBetween|1000;2000',
+    'soapVersion' => function () {
+        return SOAP_1_1;
+    },
     'sslMethod'         => function () {
         return array_rand(SoapSettings::$sslMethods);
     },

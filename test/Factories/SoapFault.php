@@ -2,7 +2,7 @@
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
 
-FactoryMuffin::define('WebservicesNl\Soap\Exception\SoapFault', [
+FactoryMuffin::define('WebservicesNl\Protocol\Soap\Exception\SoapFault', [
     'detail'       => 'sentence',
     'faultActor'   => 'something',
     'faultCode'    => 'Server',

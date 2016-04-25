@@ -1,17 +1,20 @@
 <?php
 
-use WebservicesNl\Connector\Platform\Webservices\Config as PlatformConfig;
+League\FactoryMuffin\Facade::define('WebservicesNl\Platform\Webservices\PlatformConfig', [
+    'connectionTimeout' => 'numberBetween|10;120',
+    'password'          => 'word',
+    'userName'          => 'userName',
+    'retryMinutes'      => 'numberBetween|60;120',
+    'responseTimeout'   => 'numberBetween|20;30',
+]);
 
-League\FactoryMuffin\Facade::define('WebservicesNl\Connector\Platform\Webservices\Config', [
-    'endPoints'      => function () {
-        return [$faker = League\FactoryMuffin\Facade::getFaker()->url];
+League\FactoryMuffin\Facade::define('WebservicesNl\Protocol\Soap\Client\SoapConfig', [
+    'converter'      => function () {
+        return new \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter();
     },
+    'endPoints'      => WebservicesNl\Protocol\Soap\Client\SoapConfig::getEndPoints(),
     'platformConfig' => function () {
-        $password = League\FactoryMuffin\Facade::getFaker()->word;
-        $username = League\FactoryMuffin\Facade::getFaker()->userName;
-
-        return new PlatformConfig(['username' => $username, 'password' => $password]);
+        return League\FactoryMuffin\Facade::instance('WebservicesNl\Platform\Webservices\Config');
     },
     'soapHeaders'    => [],
-    'converter'      => WebservicesNl\Soap\Config\Platform\Webservices\Converter::build(),
 ]);

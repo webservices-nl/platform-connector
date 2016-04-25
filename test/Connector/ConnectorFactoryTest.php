@@ -6,7 +6,7 @@ use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
-use WebservicesNl\Connector\Platform\Webservices\Connector;
+use WebservicesNl\Platform\Webservices\Connector;
 
 /**
  * Class ConnectorFactoryTest
@@ -36,6 +36,16 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
+     * @expectedExceptionMessage Not all mandatory config credentials are set
+     * @throws InputException
+     */
+    public function testInstanceWithMissingArguments()
+    {
+        ConnectorFactory::build(['password' => 'secret'])->create('Nope', 'Webservices');
+    }
+
+    /**
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws InputException
      */
@@ -46,8 +56,8 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $connector = ConnectorFactory::build(['username' => 'lala', 'password' => 'hoho'])
             ->create($protocol, $platform);
 
-        static::assertInstanceOf('WebservicesNl\Connector\Platform\Webservices\Connector', $connector);
-        static::assertInstanceOf('WebservicesNl\Connector\Adapter\SoapAdapter', $connector->getAdapter());
+        static::assertInstanceOf('WebservicesNl\Platform\Webservices\Connector', $connector);
+        static::assertInstanceOf('WebservicesNl\Connector\ProtocolAdapter\SoapAdapter', $connector->getAdapter());
         static::assertEquals($protocol, $connector->getAdapter()->getProtocol());
         static::assertEquals(Connector::PLATFORM_NAME, $connector->getPlatform());
     }
@@ -62,8 +72,9 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $logger = new Logger(__CLASS__);
         $logger->pushHandler($testHandler);
 
-        $factory = ConnectorFactory::build([]);
+        $factory = ConnectorFactory::build(['username' => 'something', 'password' => 'secret']);
         $factory->setLogger($logger);
+        $factory->create('soap', 'webservices');
 
         static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
     }
