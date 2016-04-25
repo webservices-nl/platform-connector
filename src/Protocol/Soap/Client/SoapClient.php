@@ -26,10 +26,12 @@ class SoapClient extends \SoapClient implements ClientInterface
     use LoggerAwareTrait;
 
     const PROTOCOL = 'soap';
+    
     /**
      * @var ConverterInterface
      */
     private $converter;
+    
     /**
      * Guzzle Client for the SOAP calls.
      *
