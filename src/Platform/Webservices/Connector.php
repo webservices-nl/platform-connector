@@ -64,13 +64,13 @@ class Connector extends AbstractConnector
             'accountEditV2',
             [
                 'accountid'        => $accountId,
-                 'address'          => $address,
-                 'contactname'      => $contactName,
-                 'contactemail'     => $contactEmail,
-                 'telephone'        => $telephone,
-                 'fax'              => $fax,
-                 'description'      => $description,
-                 'balancethreshold' => (float)$balanceThreshold,
+                'address'          => $address,
+                'contactname'      => $contactName,
+                'contactemail'     => $contactEmail,
+                'telephone'        => $telephone,
+                'fax'              => $fax,
+                'description'      => $description,
+                'balancethreshold' => (float)$balanceThreshold,
             ]
         );
     }
@@ -2599,43 +2599,43 @@ class Connector extends AbstractConnector
      * geoLocationRDToAddress.
      * Note that this method may return a different street than geoLocationRDToAddress.
      *
-     * @param int $x rd X of the location
-     * @param int $y rd Y of the location
+     * @param int $posX rd X of the location
+     * @param int $posY rd Y of the location
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationRDToAddressV2
      * @return \StdClass <GeoLocationAddressV2>
      */
-    public function geoLocationRDToAddressV2($x, $y)
+    public function geoLocationRDToAddressV2($posX, $posY)
     {
-        return $this->getAdapter()->call('geoLocationRDToAddressV2', ['x' => $x, 'y' => $y]);
+        return $this->getAdapter()->call('geoLocationRDToAddressV2', ['x' => $posX, 'y' => $posY]);
     }
 
     /**
      * Convert a latitude/longitude coordinate to a RD ('Rijksdriehoeksmeting') coordinate.
      *
-     * @param int $x part of the RD coordinate
-     * @param int $y part of the RD coordinate
+     * @param int $posX part of the RD coordinate
+     * @param int $posY part of the RD coordinate
      *
      * @link  https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationLatLonToRD
      * @return \StdClass <RDCoordinates>
      */
-    public function geoLocationRDToLatLon($x, $y)
+    public function geoLocationRDToLatLon($posX, $posY)
     {
-        return $this->getAdapter()->call('geoLocationRDToLatLon', ['x' => $x, 'y' => $y]);
+        return $this->getAdapter()->call('geoLocationRDToLatLon', ['x' => $posX, 'y' => $posY]);
     }
 
     /**
      * Returns the postcode of the address closest to  Rijksdriehoeksmeting coordinate in the Netherlands
      *
-     * @param int $x part of the RD coordinate
-     * @param int $y part of the RD coordinate
+     * @param int $posX part of the RD coordinate
+     * @param int $posY part of the RD coordinate
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationRDToPostcode
      * @return \StdClass postcode
      */
-    public function geoLocationRDToPostcode($x, $y)
+    public function geoLocationRDToPostcode($posX, $posY)
     {
-        return $this->getAdapter()->call('geoLocationRDToPostcode', ['x' => $x, 'y' => $y]);
+        return $this->getAdapter()->call('geoLocationRDToPostcode', ['x' => $posX, 'y' => $posY]);
     }
 
     /**
@@ -4716,24 +4716,24 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @param $xfrom
-     * @param $yfrom
-     * @param $xto
-     * @param $yto
+     * @param $xFrom
+     * @param $yFrom
+     * @param $xTo
+     * @param $yTo
      * @param $routeType
      * @param $english
      *
      * @return \StdClass
      */
-    public function routePlannerRDDescription($xfrom, $yfrom, $xto, $yto, $routeType, $english)
+    public function routePlannerRDDescription($xFrom, $yFrom, $xTo, $yTo, $routeType, $english)
     {
         return $this->getAdapter()->call(
             'routePlannerRDDescription',
             [
-                'xfrom'     => $xfrom,
-                'yfrom'     => $yfrom,
-                'xto'       => $xto,
-                'yto'       => $yto,
+                'xfrom'     => $xFrom,
+                'yfrom'     => $yFrom,
+                'xto'       => $xTo,
+                'yto'       => $yTo,
                 'routetype' => $routeType,
                 'english'   => $english,
             ]
@@ -4741,24 +4741,24 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @param $xfrom
-     * @param $yfrom
-     * @param $xto
-     * @param $yto
+     * @param $xFrom
+     * @param $yFrom
+     * @param $xTo
+     * @param $yTo
      * @param $routeType
      * @param $english
      *
      * @return \StdClass
      */
-    public function routePlannerRDDescriptionCoordinatesRD($xfrom, $yfrom, $xto, $yto, $routeType, $english)
+    public function routePlannerRDDescriptionCoordinatesRD($xFrom, $yFrom, $xTo, $yTo, $routeType, $english)
     {
         return $this->getAdapter()->call(
             'routePlannerRDDescriptionCoordinatesRD',
             [
-                'xfrom'     => $xfrom,
-                'yfrom'     => $yfrom,
-                'xto'       => $xto,
-                'yto'       => $yto,
+                'xfrom'     => $xFrom,
+                'yfrom'     => $yFrom,
+                'xto'       => $xTo,
+                'yto'       => $yTo,
                 'routetype' => $routeType,
                 'english'   => $english,
             ]
@@ -4766,23 +4766,23 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @param $xfrom
-     * @param $yfrom
-     * @param $xto
-     * @param $yto
+     * @param $xFrom
+     * @param $yFrom
+     * @param $xTo
+     * @param $yTo
      * @param $routeType
      *
      * @return \StdClass
      */
-    public function routePlannerRDInformation($xfrom, $yfrom, $xto, $yto, $routeType)
+    public function routePlannerRDInformation($xFrom, $yFrom, $xTo, $yTo, $routeType)
     {
         return $this->getAdapter()->call(
             'routePlannerRDInformation',
             [
-                'xfrom'     => $xfrom,
-                'yfrom'     => $yfrom,
-                'xto'       => $xto,
-                'yto'       => $yto,
+                'xfrom'     => $xFrom,
+                'yfrom'     => $yFrom,
+                'xto'       => $xTo,
+                'yto'       => $yTo,
                 'routetype' => $routeType,
             ]
         );

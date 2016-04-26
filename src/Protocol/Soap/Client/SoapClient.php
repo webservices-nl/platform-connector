@@ -220,7 +220,7 @@ class SoapClient extends \SoapClient implements ClientInterface
     }
 
     /**
-     * @return httpClient
+     * @return HttpClient
      */
     public function getHttpClient()
     {
