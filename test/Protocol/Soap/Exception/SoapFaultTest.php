@@ -42,7 +42,7 @@ class SoapFaultTest extends \PHPUnit_Framework_TestCase
         /** @var SoapFault $soapFault */
         $soapFault = FactoryMuffin::instance('WebservicesNl\Protocol\Soap\Exception\SoapFault');
 
-        self::assertInstanceOf('\SoapFault', $soapFault);
-        self::assertInstanceOf('\WebservicesNl\Protocol\Soap\Exception\SoapFault', $soapFault);
+        static::assertInstanceOf('\SoapFault', $soapFault);
+        static::assertInstanceOf('\WebservicesNl\Protocol\Soap\Exception\SoapFault', $soapFault);
     }
 }

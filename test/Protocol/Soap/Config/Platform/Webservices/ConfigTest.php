@@ -38,14 +38,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         /** @var \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config $config */
         $config = WebservicesConfig::configure($platformConfig);
 
-        self::assertEquals($config->getUserName(), $platformConfig->getUserName());
-        self::assertEquals($config->getPassword(), $platformConfig->getPassword());
-        self::assertEquals($config->getRetryMinutes(), $platformConfig->getRetryMinutes());
-        self::assertEquals($config->getResponseTimeout(), $platformConfig->getResponseTimeout());
-        self::assertEquals($config->getConnectionTimeout(), $platformConfig->getConnectionTimeout());
+        static::assertEquals($config->getUserName(), $platformConfig->getUserName());
+        static::assertEquals($config->getPassword(), $platformConfig->getPassword());
+        static::assertEquals($config->getRetryMinutes(), $platformConfig->getRetryMinutes());
+        static::assertEquals($config->getResponseTimeout(), $platformConfig->getResponseTimeout());
+        static::assertEquals($config->getConnectionTimeout(), $platformConfig->getConnectionTimeout());
 
-        self::assertInstanceOf('\WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config', $config);
-        self::assertInstanceOf(
+        static::assertInstanceOf('\WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config', $config);
+        static::assertInstanceOf(
             '\WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter',
             $config->getConverter()
         );
@@ -63,8 +63,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $resultArray = $soapConfig->toArray();
 
-        self::assertArrayHasKey('username', $resultArray);
-        self::assertCount(8, $resultArray);
+        static::assertArrayHasKey('username', $resultArray);
+        static::assertCount(8, $resultArray);
     }
 
     /**
@@ -85,8 +85,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $resultArray = $soapConfig->toArray();
 
-        self::assertArrayNotHasKey('username', $resultArray);
-        self::assertNull($soapConfig->getUserName());
-        self::assertCount(7, $resultArray);
+        static::assertArrayNotHasKey('username', $resultArray);
+        static::assertNull($soapConfig->getUserName());
+        static::assertCount(7, $resultArray);
     }
 }

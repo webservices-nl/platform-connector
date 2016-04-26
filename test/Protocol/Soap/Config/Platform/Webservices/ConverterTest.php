@@ -25,9 +25,9 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
         try {
             $exception = $converter->convertToException($soapFault);
-            self::assertInstanceOf($errorClassFQ, $exception);
+            static::assertInstanceOf($errorClassFQ, $exception);
         } catch (Exception $e) {
-            self::assertInstanceOf($errorClassFQ, $e);
+            static::assertInstanceOf($errorClassFQ, $e);
         }
     }
 

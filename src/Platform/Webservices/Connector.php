@@ -62,14 +62,15 @@ class Connector extends AbstractConnector
     ) {
         return $this->getAdapter()->call(
             'accountEditV2',
-            ['accountid'        => $accountId,
-             'address'          => $address,
-             'contactname'      => $contactName,
-             'contactemail'     => $contactEmail,
-             'telephone'        => $telephone,
-             'fax'              => $fax,
-             'description'      => $description,
-             'balancethreshold' => (float)$balanceThreshold,
+            [
+                'accountid'        => $accountId,
+                 'address'          => $address,
+                 'contactname'      => $contactName,
+                 'contactemail'     => $contactEmail,
+                 'telephone'        => $telephone,
+                 'fax'              => $fax,
+                 'description'      => $description,
+                 'balancethreshold' => (float)$balanceThreshold,
             ]
         );
     }
@@ -541,16 +542,17 @@ class Connector extends AbstractConnector
     ) {
         return $this->getAdapter()->call(
             'addressReeksFullParameterSearch',
-            ['province'          => $province,
-             'district'          => $district,
-             'city'              => $city,
-             'street'            => $street,
-             'houseNo'           => $houseNo,
-             'houseNoAddition'   => $houseNoAddition,
-             'nbcode'            => $nbCode,
-             'lettercombination' => $letterCombination,
-             'addresstype'       => $addressType,
-             'page'              => $page,
+            [
+                'province'          => $province,
+                'district'          => $district,
+                'city'              => $city,
+                'street'            => $street,
+                'houseNo'           => $houseNo,
+                'houseNoAddition'   => $houseNoAddition,
+                'nbcode'            => $nbCode,
+                'lettercombination' => $letterCombination,
+                'addresstype'       => $addressType,
+                'page'              => $page,
             ]
         );
     }
@@ -574,13 +576,15 @@ class Connector extends AbstractConnector
     {
         return $this->getAdapter()->call(
             'addressReeksParameterSearch',
-            ['province'        => $province,
-             'district'        => $district,
-             'city'            => $city,
-             'street'          => $street,
-             'houseNo'         => $houseNo,
-             'houseNoAddition' => $houseNoAddition,
-             'page'            => $page]
+            [
+                'province'        => $province,
+                'district'        => $district,
+                'city'            => $city,
+                'street'          => $street,
+                'houseNo'         => $houseNo,
+                'houseNoAddition' => $houseNoAddition,
+                'page'            => $page,
+            ]
         );
     }
 

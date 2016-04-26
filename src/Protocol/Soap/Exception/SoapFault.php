@@ -72,27 +72,6 @@ class SoapFault extends \SoapFault
     public $headerFault;
 
     /**
-     * SoapFault constructor.
-     *
-     * @param string $message
-     * @param int    $detail
-     */
-    public function __construct($message, $detail)
-    {
-        $this->message = $message;
-        $this->detail = $detail;
-
-        parent::SoapFault(
-            $this->getFaultCode(),
-            $this->getFaultString(),
-            $this->getFaultActor(),
-            $this->getDetail(),
-            $this->getFaultName(),
-            $this->getHeaderFault()
-        );
-    }
-
-    /**
      * @return string
      */
     public function getFaultCode()

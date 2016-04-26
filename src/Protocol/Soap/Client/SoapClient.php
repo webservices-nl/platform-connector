@@ -2,7 +2,7 @@
 
 namespace WebservicesNl\Protocol\Soap\Client;
 
-use GuzzleHttp\Client as httpClient;
+use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
@@ -66,12 +66,12 @@ class SoapClient extends \SoapClient implements ClientInterface
      *
      * @param SoapSettings $settings
      * @param Manager      $manager
-     * @param              $client
+     * @param HttpClient   $client
      *
      * @throws NoServerAvailableException
      * @throws \InvalidArgumentException
      */
-    public function __construct(SoapSettings $settings, Manager $manager, $client)
+    public function __construct(SoapSettings $settings, Manager $manager, HttpClient $client)
     {
         $this->settings = $settings;
         $this->manager = $manager;
@@ -134,7 +134,7 @@ class SoapClient extends \SoapClient implements ClientInterface
         $functionName = $args['functionName'];
         unset($args['functionName']);
 
-        return $this->soapCall($functionName, $args);
+        return $this->__soapCall($functionName, $args);
     }
 
     /**
@@ -170,7 +170,7 @@ class SoapClient extends \SoapClient implements ClientInterface
     /**
      * Http version of doRequest.
      *
-     * @param mixed  $requestBody
+     * @param string $requestBody
      * @param string $location
      * @param string $action
      *
@@ -263,11 +263,11 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @return mixed
      * @throws \Exception|\SoapFault
      */
-    public function soapCall(
+    public function __soapCall(
         $function_name,
-        array $arguments = [],
-        array $options = [],
-        array $input_headers = [],
+        $arguments = [],
+        $options = [],
+        $input_headers = [],
         &$output_headers = null
     ) {
         $this->log('Called:' . $function_name, LogLevel::INFO, ['arguments' => $arguments]);

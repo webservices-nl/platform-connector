@@ -34,7 +34,7 @@ class SoapAdapter extends AbstractAdapter
             return $this->client->{$functionName}($args);
         }
 
-        return $this->getClient()->soapCall($functionName, $args);
+        return $this->getClient()->__soapCall($functionName, $args);
     }
 
     /**

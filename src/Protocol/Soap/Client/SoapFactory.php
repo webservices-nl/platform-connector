@@ -67,7 +67,6 @@ class SoapFactory extends AbstractClientFactory
         $manager = $this->createEndpointManager($settings);
 
         // replace the native soap client transport with a curl client
-
         $curlClient = $this->createCurlClient($soapSettings->toArray(), $manager);
 
         // build a SoapClient (extends the native soap client)
@@ -84,9 +83,7 @@ class SoapFactory extends AbstractClientFactory
 
         if ($this->hasLogger() === true) {
             $soapClient->setLogger($this->logger);
-            $this->logger->info(
-                'Creating a SoapClient to connect to platform ' . $this->config->getPlatformConfig()->getPlatformName()
-            );
+            $this->logger->info('Created SoapClient for ' . $this->config->getPlatformConfig()->getPlatformName());
             $this->logger->debug('Created SoapClient', ['SoapClient' => print_r($soapClient, true)]);
             $this->logger->debug('Settings', ['settings' => (array)$settings]);
         }
@@ -101,13 +98,18 @@ class SoapFactory extends AbstractClientFactory
      * @param Manager $manager  endpoint Manager
      *
      * @return Client
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws NoServerAvailableException
      */
     private function createCurlClient(array $settings, Manager $manager)
     {
         $settings['url'] = (string)$manager->getActiveEndpoint()->getUri();
 
-        return GuzzleClientFactory::build($this->config->getPlatformConfig(), $this->logger)->create($settings);
+        $factory = GuzzleClientFactory::build($this->config->getPlatformConfig());
+        if ($this->hasLogger() === true) {
+            $factory->setLogger($this->logger);
+        }
+        
+        return $factory->create($settings);
     }
 
     /**

@@ -22,7 +22,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         $config = new PlatformConfig();
         $client = SoapFactory::build($config)->create();
 
-        self::assertInstanceOf('WebservicesNl\Protocol\Soap\Client\SoapClient', $client);
+        static::assertInstanceOf('WebservicesNl\Protocol\Soap\Client\SoapClient', $client);
     }
 
     /**
@@ -66,7 +66,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
         static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $factory);
         static::assertTrue($factory->hasLogger());
         static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $soapClient);
-        static::assertTrue($handler->hasInfoThatContains('Creating a SoapClient to connect to platform Webservices'));
+        static::assertTrue($handler->hasInfoThatContains('Created SoapClient for Webservices'));
         static::assertTrue($handler->hasDebugThatContains('Created SoapClient'));
         static::assertInstanceOf(
             'WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter',
@@ -119,6 +119,6 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        self::assertEquals($customUrl, $soapClient->getHttpClient()->getConfig()['base_url']);
+        static::assertEquals($customUrl, $soapClient->getHttpClient()->getConfig()['base_url']);
     }
 }

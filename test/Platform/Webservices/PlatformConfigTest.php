@@ -35,11 +35,11 @@ class PlatformConfigTest extends \PHPUnit_Framework_TestCase
         /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
         $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
 
-        self::assertTrue(class_exists($platFormConfig->getClassName(true)));
-        self::assertEquals($platFormConfig->getPlatformName(), PlatformConfig::PLATFORM_NAME);
-        self::assertTrue(is_array($platFormConfig->toArray()));
+        static::assertTrue(class_exists($platFormConfig->getClassName(true)));
+        static::assertEquals($platFormConfig->getPlatformName(), PlatformConfig::PLATFORM_NAME);
+        static::assertTrue(is_array($platFormConfig->toArray()));
 
-        self::assertEquals($platFormConfig->getConnectorName(), 'WebservicesNl\Platform\Webservices\Connector');
+        static::assertEquals($platFormConfig->getConnectorName(), 'WebservicesNl\Platform\Webservices\Connector');
     }
 
     /**
@@ -53,8 +53,8 @@ class PlatformConfigTest extends \PHPUnit_Framework_TestCase
         $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
         $platFormConfig->loadFromArray(['password' => 'secret', 'username' => 'johndoe']);
 
-        self::assertEquals($platFormConfig->getUserName(), 'johndoe');
-        self::assertEquals($platFormConfig->getPassword(), 'secret');
+        static::assertEquals($platFormConfig->getUserName(), 'johndoe');
+        static::assertEquals($platFormConfig->getPassword(), 'secret');
     }
 
     /**
