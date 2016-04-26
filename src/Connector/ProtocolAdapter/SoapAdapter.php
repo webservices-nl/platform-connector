@@ -15,8 +15,6 @@ use WebservicesNl\Protocol\Soap\Client\SoapClient;
  */
 class SoapAdapter extends AbstractAdapter
 {
-    const PROTOCOL_NAME = 'soap';
-
     /**
      * {@inheritdoc}
      *
@@ -30,11 +28,12 @@ class SoapAdapter extends AbstractAdapter
      */
     public function call($functionName, $args)
     {
-        if (in_array($functionName, get_class_methods('SoapClient'), false)) {
-            return $this->client->{$functionName}($args);
+        $class = ['\SoapClient', $functionName];
+        if (is_callable($class, true) === true) {
+            return $this->getClient()->{$functionName}($args);
         }
 
-        return $this->getClient()->soapCall($functionName, $args);
+        return $this->getClient()->__soapCall($functionName, $args);
     }
 
     /**

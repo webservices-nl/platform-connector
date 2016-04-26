@@ -36,7 +36,7 @@ class Converter implements ConverterInterface
     /**
      * @param \Exception $exception
      *
-     * @return mixed|void
+     * @return void
      * @throws \DomainException
      */
     public function convertFromException(\Exception $exception)

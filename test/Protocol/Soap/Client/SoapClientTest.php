@@ -100,7 +100,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setLogger($this->logger);
-        $instance->soapCall('login');
+        $instance->__soapCall('login');
 
         static::assertNotNull($this->manager->getActiveEndpoint()->getLastConnected());
         static::assertEquals('soap', $instance->getProtocolName());
@@ -130,7 +130,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setLogger($this->logger);
-        $instance->soapCall('login');
+        $instance->__soapCall('login');
     }
 
     /**
@@ -190,7 +190,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setConverter(new Converter());
         $instance->setLogger($this->logger);
-        $instance->soapCall('login');
+        $instance->__soapCall('login');
     }
 
     /**
@@ -217,7 +217,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setConverter(new Converter());
         $instance->setLogger($this->logger);
-        $instance->soapCall('login');
+        $instance->__soapCall('login');
     }
 
     /**
@@ -243,7 +243,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setLogger($this->logger);
-        $instance->soapCall('login');
+        $instance->__soapCall('login');
     }
 
     /**
@@ -268,6 +268,6 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 
         $instance = new SoapClient($this->settings, $this->manager, $curlClient);
         $instance->setLogger($this->logger);
-        $instance->soapCall('/login');
+        $instance->__soapCall('/login');
     }
 }

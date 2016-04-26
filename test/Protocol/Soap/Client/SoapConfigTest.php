@@ -37,15 +37,19 @@ class SoapConfigTest extends \PHPUnit_Framework_TestCase
         $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
         $soapConfig = new SoapConfig($platFormConfig);
 
-        self::assertFalse($soapConfig->hasConverter());
-        self::assertEmpty($soapConfig->getSoapHeaders());
-        self::assertEquals($platFormConfig, $soapConfig->getPlatformConfig());
-        self::assertAttributeInstanceOf('WebservicesNl\Platform\Webservices\PlatformConfig', 'platformConfig', $soapConfig);
-        self::assertEquals($soapConfig::getEndPoints(), SoapConfig::getEndPoints());
-        self::assertCount(5, $soapConfig->toArray());
+        static::assertFalse($soapConfig->hasConverter());
+        static::assertEmpty($soapConfig->getSoapHeaders());
+        static::assertEquals($platFormConfig, $soapConfig->getPlatformConfig());
+        static::assertAttributeInstanceOf(
+            'WebservicesNl\Platform\Webservices\PlatformConfig',
+            'platformConfig',
+            $soapConfig
+        );
+        static::assertEquals($soapConfig::getEndPoints(), SoapConfig::getEndPoints());
+        static::assertCount(5, $soapConfig->toArray());
 
         $static = SoapConfig::configure($platFormConfig);
 
-        self::assertEquals($static, $soapConfig);
+        static::assertEquals($static, $soapConfig);
     }
 }

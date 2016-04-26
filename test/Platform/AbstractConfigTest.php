@@ -38,8 +38,8 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
         /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
         $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
 
-        self::assertTrue(class_exists($platFormConfig->getClassName(true)));
-        self::assertEquals($platFormConfig->getPlatformName(), $platFormConfig::PLATFORM_NAME);
-        self::assertTrue(is_array($platFormConfig->toArray()));
+        static::assertTrue(class_exists($platFormConfig->getClassName(true)));
+        static::assertEquals($platFormConfig->getPlatformName(), $platFormConfig::PLATFORM_NAME);
+        static::assertTrue(is_array($platFormConfig->toArray()));
     }
 }

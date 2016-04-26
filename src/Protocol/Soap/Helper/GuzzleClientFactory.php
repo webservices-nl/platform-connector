@@ -8,16 +8,18 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use WebservicesNl\Connector\Client\ClientFactoryInterface;
 use WebservicesNl\Platform\PlatformConfigInterface;
 
 /**
  * HttpClientFactory.
+ *
  * Helper class the Webservices connector generator with instantiating a PSR-7 curl client.
  */
-class GuzzleClientFactory implements ClientFactoryInterface
+class GuzzleClientFactory
 {
     use LoggerAwareTrait;
+    
+    //use hasLoggerTrait;
 
     /**
      * @var PlatformConfigInterface
@@ -28,25 +30,22 @@ class GuzzleClientFactory implements ClientFactoryInterface
      * HttpClientFactory constructor.
      *
      * @param PlatformConfigInterface $platform
-     * @param LoggerInterface|null    $logger
      */
-    public function __construct(PlatformConfigInterface $platform, LoggerInterface $logger = null)
+    public function __construct(PlatformConfigInterface $platform)
     {
         $this->platform = $platform;
-        $this->logger = $logger;
     }
 
     /**
      * Create a static instance (LSB) of HttpClientFactory.
      *
      * @param PlatformConfigInterface $platform
-     * @param LoggerInterface         $logger
      *
      * @return GuzzleClientFactory
      */
-    public static function build(PlatformConfigInterface $platform, LoggerInterface $logger = null)
+    public static function build(PlatformConfigInterface $platform)
     {
-        return new static($platform, $logger);
+        return new static($platform);
     }
 
     /**

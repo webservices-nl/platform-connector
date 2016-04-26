@@ -8,12 +8,11 @@ use WebservicesNl\Protocol\Soap\Client\SoapConfig;
 
 /**
  * Class ConfigFactory.
- *
  * Returns Config class for a given platform. Configured with platform and user credentials.
  */
 class ConfigFactory
 {
-    const FQCN = __NAMESPACE__ . '\Platform\%1$s\Config';
+    const FQCN = 'WebservicesNl\\Protocol\\Soap\\Config\\Platform\\%1$s\\Config';
 
     /**
      * Return a Soap configuration for given platformConfig.

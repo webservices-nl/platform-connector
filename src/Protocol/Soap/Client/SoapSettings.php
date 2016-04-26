@@ -359,7 +359,7 @@ class SoapSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEncoding()
     {
@@ -367,7 +367,7 @@ class SoapSettings
     }
 
     /**
-     * @param mixed $encoding
+     * @param string $encoding
      *
      * @return SoapSettings
      */
@@ -407,7 +407,7 @@ class SoapSettings
     }
 
     /**
-     * Set SoapFeatures bitmask.
+     * Set SoapFeatures bit mask.
      *
      * @param int $features
      *
