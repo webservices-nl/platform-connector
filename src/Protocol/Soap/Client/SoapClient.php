@@ -158,7 +158,7 @@ class SoapClient extends \SoapClient implements ClientInterface
      * Determines methods.
      * For Soap it's either GET or POST.
      *
-     * @param mixed $request
+     * @param string|null $request
      *
      * @return string
      */

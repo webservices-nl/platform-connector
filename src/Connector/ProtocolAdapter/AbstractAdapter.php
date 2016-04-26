@@ -12,8 +12,6 @@ use WebservicesNl\Connector\Client\ClientInterface;
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
-    const PROTOCOL_NAME = 'abstract';
-
     /**
      * @var ClientInterface
      */
@@ -21,6 +19,8 @@ abstract class AbstractAdapter implements AdapterInterface
     
     /**
      * Constructor.
+     *
+     * take care the sending the message over the client and protocol related crap
      *
      * @param ClientInterface $client
      */
