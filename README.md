@@ -45,8 +45,7 @@ UTF-8 encoding, output is in UTF-8 as well. For documentation see: https://ws1.w
 This client has been tested on PHP 5.5, 5.6 and 7.0. To run tests:
 
 ```bash
-composer install;
-vendor/bin phpunit;
+$ ./vendor/bin phpunit
 ```
 
 Any questions, remarks, bugs? Please mail us.
