@@ -38,7 +38,7 @@ All services offered by Webservices.nl are available as methods in this class.  
 UTF-8 encoding, output is in UTF-8 as well. For documentation see: https://ws1.webservices.nl/documentation
 
 #### Unit test
-This client has been tested on PHP 5.4, 5.5, 5.6 and 7.0
+This client has been tested on PHP 5.5, 5.6 and 7.0
 
 ```bash
 
