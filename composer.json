@@ -1,6 +1,6 @@
 {
-  "name": "webservices-nl/soap-client",
-  "description": "Soap client wrapper for Webservices.nl written in PHP",
+  "name": "webservices-nl/platform-connector",
+  "description": "platform connector generator for Webservices.nl",
   "keywords": [
     "soap",
     "soapclient",
