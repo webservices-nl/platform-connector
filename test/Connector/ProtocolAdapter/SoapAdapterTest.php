@@ -24,4 +24,19 @@ class SoapAdapterTest extends \PHPUnit_Framework_TestCase
         static::assertEquals($protocolName, $instance->getProtocol());
         static::assertAttributeInstanceOf('WebservicesNl\Connector\Client\ClientInterface', 'client', $instance);
     }
+
+    public function testAdapter()
+    {
+        $client = \Mockery::mock('WebservicesNl\Connector\Client\ClientInterface');
+        $client->shouldReceive('__soapCall')
+            ->withArgs(['filter', ['alnum', "Hello_world!"]])
+            ->andReturn('Hello world');
+
+        $client->shouldReceive('filter')->withArgs(['filter', ['alnum', "Hello_world!"]])->andReturn('Hello world');
+
+        $instance = new SoapAdapter($client);
+        $result = $instance->call('filter', ['alnum', 'Hello_world!']);
+
+        static::assertEquals('Hello world', $result);
+    }
 }
