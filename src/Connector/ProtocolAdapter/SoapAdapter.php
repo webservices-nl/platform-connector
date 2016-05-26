@@ -10,8 +10,6 @@ use WebservicesNl\Protocol\Soap\Client\SoapClient;
  * SoapAdapter.
  *
  * Soap protocol adapter for a ConnectorInterface to connect to the Webservices API.
- *
- * @codeCoverageIgnore This is a silly proxy class
  */
 class SoapAdapter extends AbstractAdapter
 {
@@ -21,16 +19,17 @@ class SoapAdapter extends AbstractAdapter
      * @param string $functionName name of the function call
      * @param mixed  $args         arguments for the function call
      *
-     * @throws NoServerAvailableException
      * @return mixed
+     * @throws NoServerAvailableException
      * @throws \SoapFault
      * @throws \Exception
      */
     public function call($functionName, $args)
     {
-        $class = ['\SoapClient', $functionName];
-        if (is_callable($class, true) === true) {
-            return $this->getClient()->{$functionName}($args);
+        if (method_exists($this->getClient(), $functionName) === true) {
+            // @codeCoverageIgnoreStart
+            return $this->getClient()->$functionName($args);
+            // @codeCoverageIgnoreEnd
         }
 
         return $this->getClient()->__soapCall($functionName, $args);
