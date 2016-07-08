@@ -3,7 +3,7 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/build.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/build-status/master)
+[![Build Status](https://travis-ci.org/webservices-nl/platform-connector.svg?branch=master)](https://travis-ci.org/webservices-nl/platform-connector)
 
 The goal of this project is to create a easy to implement connector to the Webservices platform. This connector currently supports SOAP to connect to Webservices.nl API's. 
 

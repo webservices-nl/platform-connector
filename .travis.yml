@@ -14,7 +14,7 @@ install: composer update --prefer-source $COMPOSER_FLAGS --no-interaction
 
 script:
 - vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
-- vendor/bin/phpcs --standard=PSR2 src tests
+./vendor/bin/phpcs --standard=PSR2 --ignore=Platform/Webservices/Connector.php src/
 
 notifications:
   email:
