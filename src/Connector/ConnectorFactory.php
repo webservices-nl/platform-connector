@@ -82,15 +82,16 @@ class ConnectorFactory implements LoggerAwareInterface
     {
         $config = $this->createPlatformConfig($platformName);
 
-        // instantiate client factory for given protocol and pass along platform config. Ask Factory build a client
+        // instantiate client factory for given protocol and pass along platform config.
         $factory = $this->createProtocolFactory($protocolName, $config);
         if ($this->getLogger() instanceof LoggerInterface) {
             $factory->setLogger($this->getLogger());
         }
 
+        // build a client (leg Soap Client, RPC client)
         $client = $factory->create($this->userSettings);
 
-        // wrap the client in a connector
+        // add the client to the wrapper (eg platform connector)
         return $this->buildConnector($client, $config);
     }
 
