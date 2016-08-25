@@ -19,8 +19,6 @@ class GuzzleClientFactory
 {
     use LoggerAwareTrait;
     
-    //use hasLoggerTrait;
-
     /**
      * @var PlatformConfigInterface
      */
@@ -69,7 +67,7 @@ class GuzzleClientFactory
             [
                 'base_url'           => (string)$settings['url'],
                 'handler'            => $stack,
-                'exceptions'         => (bool)$settings['exceptions'],
+                'exceptions'         => false,
                 'timeout'            => (float)$settings['responseTimeout'],
                 'connection_timeout' => (float)$settings['connectionTimeout'],
             ]
