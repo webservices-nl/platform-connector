@@ -10,8 +10,8 @@ namespace WebservicesNl\Platform;
 interface PlatformConfigInterface
 {
     /**
-     * Return class name.
-     * optional return as Fully Qualified Class Name
+     * Return concrete class name.
+     * Optional return as Fully Qualified Class Name.
      *
      * @param bool $FQCN
      *
