@@ -70,7 +70,6 @@ class PlatformConfig extends AbstractConfig
         return $this;
     }
 
-
     /**
      * Get the connection timeout.
      *
@@ -132,7 +131,7 @@ class PlatformConfig extends AbstractConfig
     }
 
     /**
-     * Return the retry minutes
+     * Return the retry minutes.
      *
      * @return int
      */
@@ -173,6 +172,7 @@ class PlatformConfig extends AbstractConfig
 
     /**
      * {@inheritdoc}
+     *
      * @return array
      */
     public function toArray()
@@ -190,6 +190,7 @@ class PlatformConfig extends AbstractConfig
 
     /**
      * {@inheritdoc}
+     *
      * @return string
      */
     public function getConnectorName()

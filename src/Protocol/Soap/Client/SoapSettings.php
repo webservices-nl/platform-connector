@@ -222,7 +222,7 @@ class SoapSettings
     }
 
     /**
-     * Return the Authentication flag
+     * Return the Authentication flag.
      *
      * @return int
      */
@@ -232,7 +232,7 @@ class SoapSettings
     }
 
     /**
-     * Set the authentication flag
+     * Set the authentication flag.
      *
      * @param int $authentication
      *
@@ -246,7 +246,7 @@ class SoapSettings
     }
 
     /**
-     * Return the Cache WSDL bitflag
+     * Return the Cache WSDL bit flag.
      *
      * @return int
      */
@@ -290,7 +290,7 @@ class SoapSettings
     }
 
     /**
-     * Return Compression flag
+     * Return Compression flag.
      *
      * @return int
      */

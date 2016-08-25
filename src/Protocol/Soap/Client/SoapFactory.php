@@ -13,7 +13,7 @@ use WebservicesNl\Protocol\Soap\Helper\GuzzleClientFactory;
 
 /**
  * Class SoapFactory.
- * Managing class (factory) for creating a PHP SoapClient for a given platform (mainly webservices)
+ * Managing class (factory) for creating a PHP SoapClient for a given platform (mainly WebservicesNl).
  */
 class SoapFactory extends AbstractClientFactory
 {
@@ -38,7 +38,7 @@ class SoapFactory extends AbstractClientFactory
     /**
      * Static function (LSB) for building this class.
      *
-     * @param PlatformConfigInterface $platformConfig  PlatformConfig to create soapConfig Object
+     * @param PlatformConfigInterface $platformConfig
      *
      * @throws InputException
      * @return static
@@ -85,7 +85,7 @@ class SoapFactory extends AbstractClientFactory
             $soapClient->setLogger($this->logger);
             $this->logger->info('Created SoapClient for ' . $this->config->getPlatformConfig()->getPlatformName());
             $this->logger->debug('Created SoapClient', ['SoapClient' => print_r($soapClient, true)]);
-            $this->logger->debug('Settings', ['settings' => (array)$settings]);
+            $this->logger->debug('Settings', ['settings' => (array) $settings]);
         }
 
         return $soapClient;
@@ -102,13 +102,13 @@ class SoapFactory extends AbstractClientFactory
      */
     private function createCurlClient(array $settings, Manager $manager)
     {
-        $settings['url'] = (string)$manager->getActiveEndpoint()->getUri();
+        $settings['url'] = (string) $manager->getActiveEndpoint()->getUri();
 
         $factory = GuzzleClientFactory::build($this->config->getPlatformConfig());
         if ($this->hasLogger() === true) {
             $factory->setLogger($this->logger);
         }
-        
+
         return $factory->create($settings);
     }
 
@@ -120,6 +120,8 @@ class SoapFactory extends AbstractClientFactory
      * @param array $settings optional settings
      *
      * @return Manager Endpoint manager
+     *
+     * @throws \InvalidArgumentException
      * @throws InputException
      */
     private function createEndpointManager(array $settings = [])

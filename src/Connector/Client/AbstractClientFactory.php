@@ -6,7 +6,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
 /**
- * AbstractClientFactory
+ * AbstractClientFactory.
  *
  * Base ClientFactory.
  */

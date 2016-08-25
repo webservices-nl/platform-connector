@@ -7,7 +7,7 @@ use WebservicesNl\Platform\PlatformConfigInterface;
 use WebservicesNl\Protocol\Soap\Exception\ConverterInterface;
 
 /**
- * Class SoapConfig
+ * Class SoapConfig.
  *
  * Soap config object that holds all data for a specific SOAP connection
  */
@@ -69,7 +69,7 @@ class SoapConfig implements ConfigInterface
     }
 
     /**
-     * Return array with Endpoints
+     * Return array with Endpoints.
      *
      * @return array
      */
@@ -103,7 +103,7 @@ class SoapConfig implements ConfigInterface
     }
 
     /**
-     * Return config as an array
+     * Return config as an array.
      *
      * @return array
      */
