@@ -19,7 +19,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     {
         $converter = Converter::build();
         $detail = new \stdClass();
-        $detail->errorCode = $errorCode;
+        $detail->errorcode = $errorCode;
         $soapFault = new \SoapFault('Server', 'some detailed error message', null, $detail);
         $errorClassFQ = 'WebservicesNl\Common\Exception\\' . str_replace('.', '\\', $errorCode) . 'Exception';
 
@@ -40,7 +40,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     {
         $converter = Converter::build();
         $detail = new \stdClass();
-        $detail->errorCode = 'FakeClass';
+        $detail->errorcode = 'FakeClass';
         $soapFault = new \SoapFault('Server', 'some detailed error message', null, $detail);
         $converter->convertToException($soapFault);
     }

@@ -26,12 +26,12 @@ class SoapClient extends \SoapClient implements ClientInterface
     use LoggerAwareTrait;
 
     const PROTOCOL = 'soap';
-    
+
     /**
      * @var ConverterInterface
      */
     private $converter;
-    
+
     /**
      * Guzzle Client for the SOAP calls.
      *
@@ -50,7 +50,7 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @var SoapSettings;
      */
     private $settings;
-    
+
     /**
      * Content types for SOAP versions.
      *
@@ -79,10 +79,10 @@ class SoapClient extends \SoapClient implements ClientInterface
 
         // throws an Exception when no endpoint is met
         $active = $this->manager->getActiveEndpoint();
-        $this->log('Initial endpoint is ' . (string)$active->getUri(), LogLevel::INFO);
+        $this->log('Initial endpoint is ' . (string) $active->getUri(), LogLevel::INFO);
 
         // initiate the native PHP SoapClient for fetching all the WSDL stuff
-        parent::__construct((string)$active->getUri()->withQuery('wsdl'), $this->settings->toArray());
+        parent::__construct((string) $active->getUri()->withQuery('wsdl'), $this->settings->toArray());
     }
 
     /**
@@ -105,7 +105,7 @@ class SoapClient extends \SoapClient implements ClientInterface
     {
         $active = $this->manager->getActiveEndpoint();
         try {
-            $response = $this->doHttpRequest($request, (string)$active->getUri(), $action);
+            $response = $this->doHttpRequest($request, (string) $active->getUri(), $action);
             $this->manager->updateLastConnected();
 
             return $response;
@@ -119,7 +119,7 @@ class SoapClient extends \SoapClient implements ClientInterface
     }
 
     /**
-     * Proxy function to SoapCall
+     * Proxy function to SoapCall.
      *
      * @param array $args
      *
@@ -130,7 +130,7 @@ class SoapClient extends \SoapClient implements ClientInterface
     public function call(array $args = [])
     {
         $args += ['functionName' => ''];
-        
+
         $functionName = $args['functionName'];
         unset($args['functionName']);
 
@@ -191,11 +191,11 @@ class SoapClient extends \SoapClient implements ClientInterface
             $requestObj = new Request($method, $location, $headers, $requestBody);
             $response = $this->httpClient->send($requestObj);
             // Throw a SoapFault if the response was received, but it can't be read into valid XML
-            if ($response->getStatusCode() > 399 && @simplexml_load_string((string)$response->getBody()) === false) {
+            if ($response->getStatusCode() > 399 && @simplexml_load_string((string) $response->getBody()) === false) {
                 throw new \SoapFault('Server', 'Invalid SoapResponse');
             }
-            
-            return (string)$response->getBody();
+
+            return (string) $response->getBody();
         } catch (ClientException $e) {
             // if a client exception is thrown, the guzzle instance, is configured to throw exceptions
             $code = ($e->getResponse() !== null) ? 'Server' : 'Client.Input';

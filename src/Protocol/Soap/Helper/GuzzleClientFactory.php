@@ -18,7 +18,7 @@ use WebservicesNl\Platform\PlatformConfigInterface;
 class GuzzleClientFactory
 {
     use LoggerAwareTrait;
-    
+
     /**
      * @var PlatformConfigInterface
      */
@@ -75,7 +75,7 @@ class GuzzleClientFactory
     }
 
     /**
-     * Returns this LoggerInterface
+     * Returns this LoggerInterface.
      *
      * @return LoggerInterface
      */

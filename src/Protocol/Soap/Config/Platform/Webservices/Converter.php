@@ -21,7 +21,7 @@ class Converter implements ConverterInterface
      */
     public function convertToException($fault)
     {
-        $errorClassName = isset($fault->{'detail'}->{'errorCode'}) ? $fault->{'detail'}->{'errorCode'} : 'Server';
+        $errorClassName = isset($fault->{'detail'}->{'errorcode'}) ? $fault->{'detail'}->{'errorcode'} : 'Server';
         $errorClassFQ = 'WebservicesNl\Common\Exception\\' . str_replace('.', '\\', $errorClassName) . 'Exception';
 
         // should we throw an error about throwing an error? or just create a default error?

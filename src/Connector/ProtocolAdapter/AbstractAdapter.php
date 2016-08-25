@@ -16,7 +16,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @var ClientInterface
      */
     protected $client;
-    
+
     /**
      * Constructor.
      *

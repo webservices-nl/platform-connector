@@ -55,7 +55,6 @@ class Config extends SoapConfig
         return $this->converter;
     }
 
-
     /**
      * @return int
      */

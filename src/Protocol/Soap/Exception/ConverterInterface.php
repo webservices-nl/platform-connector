@@ -3,7 +3,7 @@
 namespace WebservicesNl\Protocol\Soap\Exception;
 
 /**
- * Interface ConverterInterface
+ * Interface ConverterInterface.
  *
  * Webservices Exception converters. Converts PHP exceptions into a 'error' and back into Exception.
  */
@@ -19,7 +19,7 @@ interface ConverterInterface
     public function convertToException($error);
 
     /**
-     * Converts a Domain specific exception into protocol generic exception
+     * Converts a Domain specific exception into protocol generic exception.
      *
      * @param \Exception $exception
      *
