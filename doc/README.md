@@ -1,21 +1,34 @@
 # Webservices Platform Connector
-## PHP platform connector for the Webservices.nl API's
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/build.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/build-status/master)
+[![Build Status](https://travis-ci.org/webservices-nl/platform-connector.svg?branch=master)](https://travis-ci.org/webservices-nl/platform-connector)
 
-The goal of this project is to create a easy to implement connector to the Webservices platform. This connector currently supports SOAP to connect to Webservices.nl API's. 
+>This factory abstracts protocol specific's implementations for connecting to the Webservices.nl API. Providing an unified service layer independent of protocol.
 
-Note: protocol support will be extended with (XML-RPC, REST) to connect to Webservices API. Current implementation 
-features a proxy class, that independent of protocol, can be used for type hinted function calls.
 
-### Prerequisites:
-- PHP: 5.5+
-- composer (https://getcomposer.org)
+The purpose of this library is to connect to any of the Webservices.nl API's (platforms) in a uniform way. 
+Regardless of transport protocol it ships a proxy class for type hinted function calls to Webservices.nl function calls. 
+
+##### Supported protocols
+Webservices.nl support multiple protocols for connecting. Soap, XML-RPC, HTTP-RPC/REST. This library has support for multiple transfer protocols. 
+
+##### Soap
+This library ships a SoapClient that extends the native PHP ```SoapClient``` with a curl client for better timeout management. Also converts native PHP ```SoapFault``` into custom platform exceptions where possible.
+
+##### XML-RPC
+Scheduled to be released.
+
+##### REST
+Scheduled to be released.
+
+### Pre-requisites
+- PHP 5.5<=
+- [composer](https://getcomposer.org)
+- PSR-log LoggerInterface (optional) 
 
 ### Install
-Please use composer to install this library.
+Please use composer to install this library. Or download the latest [zip](https://github.com/webservices-nl/platform-connector/archive/master.zip)
 
 ```bash 
 composer require webservices-nl/platform-connector
@@ -25,29 +38,32 @@ composer require webservices-nl/platform-connector
 
 ```php
  
- // instantiate a connector factory, and build a connector
- $connector = ConnectorFactory::build(['username' => 'myusername', 'password' => 'secret']);
- $soapClient = $connector->create('soap', 'webservices');
+ // Instantiate a ConnectorFactory with your given Webservices.nl credentials.
+ $factory = ConnectorFactory::build(
+  [
+    'username' => 'myusername',
+    'password' => 'secret'
+  ],
+  LoggerInterface (optional)
+ );
  
- // call the different functions with ease...
- $response = $soapClient->getAccountEditV2();
-              
- // create a other protocol connector to webservices (not implemented yet)
- $rpcClient  = $connector->create('rpc', 'webservices');
- $restClient = $connector->create('rest', 'webservices');
-
+ // build a client
+ $client = $factory->create('soap', 'webservices');
+ 
+ // make type hinted function calls to any of the Webservices.nl API's
+ $response = $client->getAccountEditV2();
 ```
 
-All services offered by Webservices.nl are available as methods in this class.  All parameters are expected to be in 
-UTF-8 encoding, output is in UTF-8 as well. For documentation see: https://ws1.webservices.nl/documentation
+All parameters are expected to be in UTF-8 encoding, output is in UTF-8 as well.
 
 #### Unit test
-This client has been tested on PHP 5.5, 5.6 and 7.0. To run tests:
+This client is fully tested on PHP 5.5, 5.6 and 7.0. To run tests:
 
 ```bash
 $ ./vendor/bin phpunit
 ```
 
-Any questions, remarks, bugs? Please mail us.
+### Further information
+Consult the online [documentation](https://ws1.webservices.nl/documentation). Any questions, remarks, bugs? Please mail us.
 - technical questions: <mailto:tech@webservices.nl>
 - support questions: <mailto:support.webservices.nl>
