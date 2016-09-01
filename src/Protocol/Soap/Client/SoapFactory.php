@@ -13,7 +13,8 @@ use WebservicesNl\Protocol\Soap\Helper\GuzzleClientFactory;
 
 /**
  * Class SoapFactory.
- * Managing class (factory) for creating a PHP SoapClient for a given platform (mainly WebservicesNl).
+ *
+ * Managing Factory for creating SoapClient for given platform (mainly WebservicesNl).
  */
 class SoapFactory extends AbstractClientFactory
 {
@@ -24,6 +25,7 @@ class SoapFactory extends AbstractClientFactory
 
     /**
      * SoapBuilder constructor.
+     * Converts a Platform config into a SoapConfig.
      *
      * @param PlatformConfigInterface $platformConfig
      *
@@ -31,7 +33,6 @@ class SoapFactory extends AbstractClientFactory
      */
     public function __construct(PlatformConfigInterface $platformConfig)
     {
-        // convert a Platform config into a SoapConfig
         $this->config = SoapConfigFactory::config($platformConfig);
     }
 
@@ -77,7 +78,7 @@ class SoapFactory extends AbstractClientFactory
             array_merge($settings['soapHeaders'], $this->config->getSoapHeaders()) : $this->config->getSoapHeaders();
 
         $soapClient->__setSoapHeaders($soapHeaders);
-        if ($this->config->hasConverter()) {
+        if ($this->config->hasConverter() === true) {
             $soapClient->setConverter($this->config->getConverter());
         }
 
@@ -115,7 +116,7 @@ class SoapFactory extends AbstractClientFactory
     /**
      * Creates and configures a EndpointManager.
      *
-     * If url key is present in settings array, this url will be set to the active endpoint
+     * If url key is present in settings array, this url will be set to the active endpoint.
      *
      * @param array $settings optional settings
      *
