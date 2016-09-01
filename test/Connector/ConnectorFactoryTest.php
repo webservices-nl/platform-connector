@@ -66,7 +66,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws InputException
      */
-    public function testInstanceWithLogger()
+    public function testConnectorFactoryInstanceBySettingLogger()
     {
         $testHandler = new TestHandler();
         $logger = new Logger(__CLASS__);
@@ -74,6 +74,22 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = ConnectorFactory::build(['username' => 'something', 'password' => 'secret']);
         $factory->setLogger($logger);
+        $factory->create('soap', 'webservices');
+
+        static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
+    }
+
+    /**
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
+     */
+    public function testConnectorFactoryInstanceByConstruct()
+    {
+        $testHandler = new TestHandler();
+        $logger = new Logger(__CLASS__);
+        $logger->pushHandler($testHandler);
+
+        $factory = ConnectorFactory::build(['username' => 'something', 'password' => 'secret'], $logger);
         $factory->create('soap', 'webservices');
 
         static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
