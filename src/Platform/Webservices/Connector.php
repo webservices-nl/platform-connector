@@ -6,7 +6,7 @@ use WebservicesNl\Common\Exception\Server\Data\NotFoundException;
 use WebservicesNl\Connector\AbstractConnector;
 
 /**
- * Class WebservicesConnector.
+ * Class Connector.
  *
  * Proxy for calling everything Webservices regardless of the underlying protocol.
  * All webservice related functions are mapped here. Note that for BC reasons old deprecated functions are listed here

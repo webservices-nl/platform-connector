@@ -13,8 +13,9 @@ use WebservicesNl\Platform\PlatformConfigInterface;
 
 /**
  * ConnectorFactory for creating platform connector.
- * Helps with creating a connector for a given platform over a certain protocol.
- * Provide some user settings and afterwards create platforms like a boss.
+ *
+ * Factory for creating a client (connector) for given platform over given certain protocol.
+ * Provide user settings for creating new client instances.
  */
 class ConnectorFactory implements LoggerAwareInterface
 {
@@ -35,20 +36,25 @@ class ConnectorFactory implements LoggerAwareInterface
      * ConnectorFactory constructor.
      *
      * @param array $settings
+     * @param LoggerInterface $logger
      */
-    public function __construct(array $settings = [])
+    public function __construct(array $settings = [], LoggerInterface $logger = null)
     {
         $this->userSettings = $settings;
+        if ($logger instanceof LoggerInterface) {
+            $this->setLogger($logger);
+        }
     }
 
     /**
      * @param array $settings
+     * @param LoggerInterface $logger
      *
      * @return static
      */
-    public static function build(array $settings = [])
+    public static function build(array $settings = [], LoggerInterface $logger = null)
     {
-        return new static($settings);
+        return new static($settings, $logger);
     }
 
     /**
@@ -73,7 +79,7 @@ class ConnectorFactory implements LoggerAwareInterface
      * Creates an connection for a given platform.
      *
      * @param string $protocolName type of connection (SOAP, REST etc)
-     * @param string $platformName
+     * @param string $platformName name of platform (webservices)
      *
      * @return ConnectorInterface
      * @throws InputException
@@ -82,13 +88,13 @@ class ConnectorFactory implements LoggerAwareInterface
     {
         $config = $this->createPlatformConfig($platformName);
 
-        // instantiate client factory for given protocol and pass along platform config.
+        // instantiate protocol factory and pass along platform config settings.
         $factory = $this->createProtocolFactory($protocolName, $config);
         if ($this->getLogger() instanceof LoggerInterface) {
             $factory->setLogger($this->getLogger());
         }
 
-        // build a client (leg Soap Client, RPC client)
+        // build a protocol client (eg: Soap client, RPC client)
         $client = $factory->create($this->userSettings);
 
         // add the client to the wrapper (eg platform connector)
