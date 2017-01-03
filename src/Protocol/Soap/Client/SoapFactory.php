@@ -85,8 +85,8 @@ class SoapFactory extends AbstractClientFactory
         if ($this->hasLogger() === true) {
             $soapClient->setLogger($this->logger);
             $this->logger->info('Created SoapClient for ' . $this->config->getPlatformConfig()->getPlatformName());
+            $this->logger->info('Settings', ['settings' => (array) $settings]);
             $this->logger->debug('Created SoapClient', ['SoapClient' => print_r($soapClient, true)]);
-            $this->logger->debug('Settings', ['settings' => (array) $settings]);
         }
 
         return $soapClient;
