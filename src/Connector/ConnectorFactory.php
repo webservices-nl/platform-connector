@@ -88,7 +88,7 @@ class ConnectorFactory implements LoggerAwareInterface
     {
         $config = $this->createPlatformConfig($platformName);
 
-        // instantiate protocol factory and pass along platform config settings.
+        // instantiate client factory for given protocol and pass along platform config.
         $factory = $this->createProtocolFactory($protocolName, $config);
         if ($this->getLogger() instanceof LoggerInterface) {
             $factory->setLogger($this->getLogger());

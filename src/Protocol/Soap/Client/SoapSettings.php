@@ -82,7 +82,7 @@ class SoapSettings
      *
      * @var bool
      */
-    private $exceptions = true;
+    private $exceptions = false;
 
     /**
      * The features option is a bitmask of SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS.
