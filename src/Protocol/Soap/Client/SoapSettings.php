@@ -163,7 +163,7 @@ class SoapSettings
      * (Only PHP 5.5+)
      *
      */
-    private $sslMethod = SOAP_SSL_METHOD_SSLv23;
+    private $sslMethod = SOAP_SSL_METHOD_TLS;
 
     /**
      * @var array|null
