@@ -179,7 +179,7 @@ class PlatformConfig extends AbstractConfig
     {
         return array_filter(
             [
-                'connectionTimoout' => $this->getConnectionTimeout(),
+                'connectionTimeout' => $this->getConnectionTimeout(),
                 'password'          => $this->getPassword(),
                 'responseTimeout'   => $this->getResponseTimeout(),
                 'retryMinutes'      => $this->getRetryMinutes(),

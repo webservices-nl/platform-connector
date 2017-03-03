@@ -24,11 +24,6 @@ use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
 class SoapClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SoapSettings
-     */
-    protected $settings;
-
-    /**
      * @var Manager
      */
     protected $manager;
@@ -69,8 +64,6 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 
         $this->logger->setHandlers([$streamHandler, $this->testHandler]);
 
-        /** @var SoapSettings $settings */
-        $this->settings = FactoryMuffin::instance('WebservicesNl\Protocol\Soap\Client\SoapSettings');
         $this->manager = new Manager();
         $this->manager->createEndpoint('https://ws1.webservices.nl/soap_doclit');
     }
@@ -96,7 +89,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->__soapCall('login');
 
@@ -126,7 +119,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->__soapCall('login');
     }
@@ -155,7 +148,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler]);
 
-        $instance = new SoapClient($this->settings, $manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->call(['functionName' => 'login']);
 
@@ -185,7 +178,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setConverter(new Converter());
         $instance->setLogger($this->logger);
         $instance->__soapCall('login');
@@ -212,7 +205,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler, 'exceptions' => true]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setConverter(new Converter());
         $instance->setLogger($this->logger);
         $instance->__soapCall('login');
@@ -239,7 +232,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->__soapCall('login');
     }
@@ -264,7 +257,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
 
-        $instance = new SoapClient($this->settings, $this->manager, $curlClient);
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->__soapCall('/login');
     }

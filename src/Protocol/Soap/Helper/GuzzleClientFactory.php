@@ -56,7 +56,7 @@ class GuzzleClientFactory
     public function create(array $settings = [])
     {
         $stack = null;
-        $settings = $this->platform->toArray() + $settings;
+        $settings += $this->platform->toArray();
 
         if ($this->getLogger() instanceof LoggerInterface) {
             $stack = HandlerStack::create();
@@ -70,6 +70,9 @@ class GuzzleClientFactory
                 'exceptions'         => false,
                 'timeout'            => (float)$settings['responseTimeout'],
                 'connection_timeout' => (float)$settings['connectionTimeout'],
+                'headers' => [
+                    'User-Agent' => $settings['userAgent']
+                ]
             ]
         );
     }

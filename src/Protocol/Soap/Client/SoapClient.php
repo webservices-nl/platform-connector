@@ -14,6 +14,7 @@ use WebservicesNl\Common\Exception\ClientException as WsClientException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
 use WebservicesNl\Connector\Client\ClientInterface;
 use WebservicesNl\Protocol\Soap\Exception\ConverterInterface;
+use WebservicesNl\Utils\ArrayUtils;
 
 /**
  * PHP SoapClient with curl for HTTP transport.
@@ -70,6 +71,8 @@ class SoapClient extends \SoapClient implements ClientInterface
      *
      * @throws NoServerAvailableException
      * @throws \InvalidArgumentException
+     * @throws \Ddeboer\Transcoder\Exception\ExtensionMissingException
+     * @throws \Ddeboer\Transcoder\Exception\UnsupportedEncodingException
      */
     public function __construct(SoapSettings $settings, Manager $manager, HttpClient $client)
     {
@@ -82,7 +85,8 @@ class SoapClient extends \SoapClient implements ClientInterface
         $this->log('Initial endpoint is ' . (string) $active->getUri(), LogLevel::INFO);
 
         // initiate the native PHP SoapClient for fetching all the WSDL stuff
-        parent::__construct((string) $active->getUri()->withQuery('wsdl'), $this->settings->toArray());
+        $soapSettings = ArrayUtils::toUnderscore($this->settings->toArray());
+        parent::__construct((string) $active->getUri()->withQuery('wsdl'), array_filter($soapSettings));
     }
 
     /**
