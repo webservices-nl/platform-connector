@@ -23,7 +23,7 @@ Scheduled to be released.
 Scheduled to be released.
 
 ### Pre-requisites
-- PHP 5.5<=
+- PHP 5.6<=
 - [composer](https://getcomposer.org)
 - PSR-log LoggerInterface (optional) 
 
