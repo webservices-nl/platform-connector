@@ -86,7 +86,7 @@ class SoapClient extends \SoapClient implements ClientInterface
 
         // initiate the native PHP SoapClient for fetching all the WSDL stuff
         $soapSettings = ArrayUtils::toUnderscore($this->settings->toArray());
-        parent::__construct((string) $active->getUri()->withQuery('wsdl'), $soapSettings);
+        parent::__construct((string) $active->getUri()->withQuery('wsdl'), array_filter($soapSettings));
     }
 
     /**

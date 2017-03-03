@@ -82,7 +82,7 @@ class SoapSettings
      *
      * @var bool
      */
-    private $exceptions = false;
+    private $exceptions = true;
 
     /**
      * The features option is a bitmask of SOAP_SINGLE_ELEMENT_ARRAYS, SOAP_USE_XSI_ARRAY_TYPE, SOAP_WAIT_ONE_WAY_CALLS.
@@ -163,7 +163,7 @@ class SoapSettings
      * (Only PHP 5.5+)
      *
      */
-    private $sslMethod = SOAP_SSL_METHOD_SSLv23;
+    private $sslMethod = SOAP_SSL_METHOD_TLS;
 
     /**
      * @var array|null
