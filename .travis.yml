@@ -14,11 +14,10 @@ install: composer update --prefer-source $COMPOSER_FLAGS --no-interaction
 
 script:
 - ./vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
-- ./vendor/bin/phpcs --standard=PSR2 --ignore=Platform/Webservices/Connector.php src/
 
 notifications:
   email:
-    - support@webservices.nl
+    - tech@webservices.nl
   slack: webservicesnl:pu5cpnpMCo2HXxPlN29DqHwU
 
 after_script:
