@@ -31,7 +31,7 @@
     "webservices-nl/utils": "1.0.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4",
+    "phpunit/phpunit": "^5",
     "mockery/mockery": "^0.9",
     "monolog/monolog": "^1.18",
     "league/factory-muffin": "^2",
