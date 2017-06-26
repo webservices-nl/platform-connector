@@ -35,7 +35,8 @@
     "mockery/mockery": "^0.9",
     "monolog/monolog": "^1.18",
     "league/factory-muffin": "^2",
-    "squizlabs/php_codesniffer": "^2"
+    "friendsofphp/php-cs-fixer": "^2",
+    "sensiolabs/security-checker": "^4"
   },
   "autoload": {
     "psr-4": {

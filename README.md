@@ -1,5 +1,10 @@
 # Webservices Platform Connector
 
+### Internal checks
+[![build status](https://gitlab.fdmg.org/webservices-nl/platform-connector/badges/master/build.svg)](https://gitlab.fdmg.org/webservices-nl/platform-connector/commits/master)
+[![coverage report](https://gitlab.fdmg.org/webservices-nl/platform-connector/badges/master/coverage.svg)](https://gitlab.fdmg.org/webservices-nl/platform-connector/commits/master)
+
+### External checks
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Build Status](https://travis-ci.org/webservices-nl/platform-connector.svg?branch=master)](https://travis-ci.org/webservices-nl/platform-connector)
