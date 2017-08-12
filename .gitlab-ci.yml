@@ -95,7 +95,7 @@ testing:phpunit:
       php7-common
     - sudo ln -s /usr/bin/php7 /usr/bin/php
   script:
-    - php vendor/bin/phpunit --coverage-text --colors=never --exclude-group functional
+    - php vendor/bin/phpunit --coverage-text --colors=never --exclude-group functional --coverage-clover=report/phpunit/clover.xml --log-junit=report/phpunit/junit.xml
   dependencies:
     - build:composer
   artifacts:
