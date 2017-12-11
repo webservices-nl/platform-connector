@@ -93,6 +93,7 @@ testing:phpunit:
       php7-intl
       php7-mcrypt
       php7-common
+      php7-openssl
     - sudo ln -s /usr/bin/php7 /usr/bin/php
   script:
     - php vendor/bin/phpunit --coverage-text --colors=never --exclude-group functional --coverage-clover=report/phpunit/clover.xml --log-junit=report/phpunit/junit.xml
