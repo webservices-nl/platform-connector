@@ -6,7 +6,7 @@ stages:
 
 build:composer:
   stage: build
-  image: php:7.0
+  image: php:7.1
   before_script:
     # Install git&ssh
     - apt-get update -yqq
@@ -57,7 +57,7 @@ reporting:sonarqube-report:
 
 analysis:php-cs-fixer:
   stage: analysis
-  image: php:7.0-alpine
+  image: php:7.1-alpine
   script:
     - vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --allow-risky=yes --dry-run --using-cache=no --path-mode=intersection `git diff --name-only --diff-filter=ACMRTUXB HEAD~..$CI_BUILD_REF`
   dependencies:
@@ -65,7 +65,7 @@ analysis:php-cs-fixer:
 
 analysis:security-checker:
   stage: analysis
-  image: php:7.0-alpine
+  image: php:7.1-alpine
   script:
     - vendor/bin/security-checker security:check composer.lock
   dependencies:
@@ -76,7 +76,7 @@ testing:phpunit:
   image: alpine:3.5
   before_script:
     - wget -O /etc/apk/keys/php-alpine.rsa.pub http://php.codecasts.rocks/php-alpine.rsa.pub
-    - echo "http://php.codecasts.rocks/7.0" >> /etc/apk/repositories
+    - echo "http://php.codecasts.rocks/7.1" >> /etc/apk/repositories
     - apk add --update sudo sqlite
     - >
       apk add --update
@@ -93,6 +93,7 @@ testing:phpunit:
       php7-intl
       php7-mcrypt
       php7-common
+      php7-openssl
     - sudo ln -s /usr/bin/php7 /usr/bin/php
   script:
     - php vendor/bin/phpunit --coverage-text --colors=never --exclude-group functional --coverage-clover=report/phpunit/clover.xml --log-junit=report/phpunit/junit.xml
