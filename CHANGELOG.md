@@ -8,6 +8,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - RPC protocol module
 - REST protocol module
 
+## [0.0.9] (2018-10-02)
+- Corrected typo
+- updated composer,
+- applied php-cs-fixer codestyle check
+
 ## [0.0.8] (2016-03-21)
 - updated webservices-nl/utils dependency
 - Extended support for setting curl client agent support (soap config)
