@@ -1536,6 +1536,23 @@ class Connector extends AbstractConnector
     }
 
     /**
+     * Get the extract data and document for a business dossier.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param bool   $includeSource When set the original source is added to the response
+     *
+     * @return \StdClass <DutchBusinessExtractDocumentV3>
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractDocumentDataV3
+     */
+    public function dutchBusinessGetExtractDocumentDataV3($dossierNumber, $includeSource = false)
+    {
+        return $this->getAdapter()->call(
+            'dutchBusinessGetExtractDocumentDataV3',
+            ['dossier_number' => $dossierNumber, 'include_source' => $includeSource]
+        );
+    }
+
+    /**
      * Get a list of historical business-extract references for the given company or organisation.
      * Each business-extract reference in the history contains a summary of the changes relative to the previous
      * business-extract reference in the history. The business-extract history also contains an forecast that indicates

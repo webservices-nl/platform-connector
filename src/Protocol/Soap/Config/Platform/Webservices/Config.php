@@ -109,14 +109,14 @@ class Config extends SoapConfig
     public function toArray()
     {
         return array_filter([
-            'converter'          => $this->getConverter(),
+            'converter' => $this->getConverter(),
             'connection_timeout' => $this->getPlatformConfig()->getConnectionTimeout(),
-            'endpoints'          => self::$endPoints,
-            'password'           => $this->getPlatformConfig()->getPassword(),
-            'retry_minutes'      => $this->getPlatformConfig()->getRetryMinutes(),
-            'soap_headers'       => (array)$this->getSoapHeaders(),
-            'timeout'            => $this->getPlatformConfig()->getResponseTimeout(),
-            'username'           => $this->getPlatformConfig()->getUserName(),
+            'endpoints' => self::$endPoints,
+            'password' => $this->getPlatformConfig()->getPassword(),
+            'retry_minutes' => $this->getPlatformConfig()->getRetryMinutes(),
+            'soap_headers' => (array) $this->getSoapHeaders(),
+            'timeout' => $this->getPlatformConfig()->getResponseTimeout(),
+            'username' => $this->getPlatformConfig()->getUserName(),
         ]);
     }
 

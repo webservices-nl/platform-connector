@@ -55,8 +55,9 @@ class PlatformConfig extends AbstractConfig
      *
      * @param array $settings
      *
-     * @return PlatformConfig
      * @throws InputException
+     *
+     * @return PlatformConfig
      */
     public function loadFromArray(array $settings = [])
     {
@@ -180,10 +181,10 @@ class PlatformConfig extends AbstractConfig
         return array_filter(
             [
                 'connectionTimeout' => $this->getConnectionTimeout(),
-                'password'          => $this->getPassword(),
-                'responseTimeout'   => $this->getResponseTimeout(),
-                'retryMinutes'      => $this->getRetryMinutes(),
-                'userName'          => $this->getUserName(),
+                'password' => $this->getPassword(),
+                'responseTimeout' => $this->getResponseTimeout(),
+                'retryMinutes' => $this->getRetryMinutes(),
+                'userName' => $this->getUserName(),
             ]
         );
     }

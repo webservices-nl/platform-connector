@@ -19,8 +19,9 @@ class ConfigFactory
      *
      * @param PlatformConfigInterface $platform
      *
-     * @return SoapConfig
      * @throws InputException
+     *
+     * @return SoapConfig
      */
     public static function config(PlatformConfigInterface $platform)
     {
