@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa1a976af95ea48fae9e0234e320280f",
+    "content-hash": "3dfc4f659884e4724f30eb9f9a223992",
     "packages": [
         {
             "name": "ddeboer/transcoder",
