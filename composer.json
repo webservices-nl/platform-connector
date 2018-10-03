@@ -25,10 +25,11 @@
   "require": {
     "php": "^7.1",
     "ext-xml": "*",
+    "ext-soap": "*",
     "guzzlehttp/guzzle": "^6",
     "psr/log": "^1.0",
-    "webservices-nl/common": "^1.0",
-    "webservices-nl/utils": "^1.0"
+    "webservices-nl/common": "^1",
+    "webservices-nl/utils": "^1"
   },
   "require-dev": {
     "phpunit/phpunit": "^5",
