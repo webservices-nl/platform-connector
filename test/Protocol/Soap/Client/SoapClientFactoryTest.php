@@ -107,7 +107,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstanceWithCustomEndpoint()
     {
-        $customUrl = 'http://www.webservicex.com/globalweather.asmx?WSDL';
+        $customUrl = 'http://www.thomas-bayer.com/axis2/services/BLZService?wsdl';
 
         $config = new PlatformConfig();
         $factory = SoapFactory::build($config);

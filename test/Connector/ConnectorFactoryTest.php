@@ -10,14 +10,13 @@ use WebservicesNl\Platform\Webservices\Connector;
 
 /**
  * Class ConnectorFactoryTest
- *
- * @package WebservicesNl\Test\Connector
  */
 class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not find a platformConfig for Fake
+     *
      * @throws InputException
      */
     public function testInstanceWithBadPlatform()
@@ -28,6 +27,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not find a factory for Nope
+     *
      * @throws InputException
      */
     public function testInstanceWithBadProtocol()
@@ -38,6 +38,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
+     *
      * @throws InputException
      */
     public function testInstanceWithMissingArguments()

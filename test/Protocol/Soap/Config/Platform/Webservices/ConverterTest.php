@@ -34,6 +34,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\ServerException
      * @expectedExceptionMessage Could not convert errorCode: 'FakeClass'
+     *
      * @throws \WebservicesNl\Common\Exception\ServerException
      */
     public function testConverterBad()
@@ -48,6 +49,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \DomainException
      * @expectedExceptionMessage Not yet implemented
+     *
      * @throws \DomainException
      */
     public function testConvertFromException()

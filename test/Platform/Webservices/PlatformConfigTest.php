@@ -7,9 +7,6 @@ use WebservicesNl\Platform\Webservices\PlatformConfig;
 
 class PlatformConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -60,6 +57,7 @@ class PlatformConfigTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Not all mandatory config credentials are set
+     *
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceLoadFromArrayWithMissingValues()

@@ -12,6 +12,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \WebservicesNl\Common\Exception\Client\InputException
      * @expectedExceptionMessage Could not find a platform config for 'Fake'
+     *
      * @throws \WebservicesNl\Common\Exception\Client\InputException
      */
     public function testInstanceWithBadPlatform()
@@ -19,7 +20,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
         $config = \Mockery::mock('WebservicesNl\Platform\PlatformConfigInterface');
         $config->shouldReceive('getPlatformName')->andReturn('Fake');
 
-        /** @var \WebservicesNl\Platform\PlatformConfigInterface $config */
+        /* @var \WebservicesNl\Platform\PlatformConfigInterface $config */
         ConfigFactory::config($config);
     }
 }

@@ -9,9 +9,6 @@ use League\FactoryMuffin\Facade as FactoryMuffin;
  */
 class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -26,7 +23,6 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
         });
         FactoryMuffin::loadFactories(dirname(__DIR__) . '/Factories');
     }
-
 
     /**
      * @throws \WebservicesNl\Common\Exception\Client\InputException

@@ -38,9 +38,6 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
      */
     protected $testHandler;
 
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {

@@ -10,9 +10,6 @@ use WebservicesNl\Connector\ProtocolAdapter\SoapAdapter;
  */
 class SoapAdapterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public function testInstance()
     {
         $protocolName = 'lalala';
@@ -29,10 +26,10 @@ class SoapAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $client = \Mockery::mock('WebservicesNl\Connector\Client\ClientInterface');
         $client->shouldReceive('__soapCall')
-            ->withArgs(['filter', ['alnum', "Hello_world!"]])
+            ->withArgs(['filter', ['alnum', 'Hello_world!']])
             ->andReturn('Hello world');
 
-        $client->shouldReceive('filter')->withArgs(['filter', ['alnum', "Hello_world!"]])->andReturn('Hello world');
+        $client->shouldReceive('filter')->withArgs(['filter', ['alnum', 'Hello_world!']])->andReturn('Hello world');
 
         $instance = new SoapAdapter($client);
         $result = $instance->call('filter', ['alnum', 'Hello_world!']);

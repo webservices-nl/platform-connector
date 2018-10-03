@@ -28,9 +28,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         FactoryMuffin::loadFactories(dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/Factories');
     }
 
-    /**
-     *
-     */
     public function testConfigCreationWithWebservicesConfig()
     {
         /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
@@ -51,9 +48,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     *
-     */
     public function testConfigCreationIsConvertedToArray()
     {
         /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
@@ -67,9 +61,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         static::assertCount(8, $resultArray);
     }
 
-    /**
-     *
-     */
     public function testConfigArrayIsBorked()
     {
         /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
@@ -77,7 +68,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             '\WebservicesNl\Platform\Webservices\PlatformConfig',
             ['userName' => function () {
                 return null;
-            },]
+            }, ]
         );
 
         /** @var \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config $soapConfig */
