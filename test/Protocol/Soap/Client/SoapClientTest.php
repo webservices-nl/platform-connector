@@ -2,18 +2,23 @@
 
 namespace WebservicesNl\Test\Protocol\Soap\Client;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use InvalidArgumentException;
 use League\FactoryMuffin\Facade as FactoryMuffin;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Psr\Log\LogLevel;
 use WebservicesNl\Common\Endpoint\Manager;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
+use WebservicesNl\Common\Exception\ServerException;
 use WebservicesNl\Protocol\Soap\Client\SoapClient;
 use WebservicesNl\Protocol\Soap\Client\SoapSettings;
 use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
@@ -66,11 +71,10 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstance()
     {
@@ -95,17 +99,15 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @expectedExceptionMessage No active server available
-     *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceBadCall()
     {
+        $this->expectException(NoServerAvailableException::class);
+        $this->expectExceptionMessage('No active server available');
         // Create a mock and queue successful response.
         $mock = new MockHandler(
             [
@@ -122,11 +124,11 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws InputException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceBadCallWithMultipleEndpoints()
     {
@@ -154,17 +156,17 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\ServerException
-     * @expectedExceptionMessage Invalid SoapResponse
-     *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceWithErrorResponse()
     {
+        $this->expectException(ServerException::class);
+        $this->expectExceptionMessage('Invalid SoapResponse');
+
+
         // Create a mock and queue successful response.
         $mock = new MockHandler(
             [
@@ -182,16 +184,15 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\ServerException
-     *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceWithErrorResponseAndExceptionsAreConverted()
     {
+        $this->expectException(ServerException::class);
+
         // Create a mock and queue successful response.
         $mock = new MockHandler(
             [
@@ -209,16 +210,14 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SoapFault
-     *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceWithoutConverter()
     {
+        $this->expectException(\SoapFault::class);
         // Create a mock and queue successful response.
         $mock = new MockHandler(
             [
@@ -235,16 +234,14 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SoapFault
-     *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \SoapFault
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoServerAvailableException
+     * @throws SoapFault
      */
     public function testSoapClientInstanceWithBadRequest()
     {
+        $this->expectException(\SoapFault::class);
         $mock = new MockHandler(
             [
                 new Response(202, ['Content-Length' => 0]),

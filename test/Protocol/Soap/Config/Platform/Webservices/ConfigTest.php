@@ -3,7 +3,9 @@
 namespace WebservicesNl\Test\Protocol\Soap\Config\Platform\Webservices;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Platform\Webservices\PlatformConfig;
 use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config as WebservicesConfig;
+use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
 
 /**
  * Class WebservicesConfigTest.
@@ -15,7 +17,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public static function setupBeforeClass()
     {
-        FactoryMuffin::setCustomSaver(function () {
+        FactoryMuffin::setCustomSaver(
+                /** @noinspection StaticClosureCanBeUsedInspection */ function () {
             return true;
         });
 
@@ -30,9 +33,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testConfigCreationWithWebservicesConfig()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
-        $platformConfig = FactoryMuffin::instance('\WebservicesNl\Platform\Webservices\PlatformConfig');
-        /** @var \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config $config */
+        /** @var PlatformConfig $platformConfig */
+        $platformConfig = FactoryMuffin::instance(PlatformConfig::class);
+        /** @var WebservicesConfig $config */
         $config = WebservicesConfig::configure($platformConfig);
 
         static::assertEquals($config->getUserName(), $platformConfig->getUserName());
@@ -41,18 +44,18 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         static::assertEquals($config->getResponseTimeout(), $platformConfig->getResponseTimeout());
         static::assertEquals($config->getConnectionTimeout(), $platformConfig->getConnectionTimeout());
 
-        static::assertInstanceOf('\WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config', $config);
+        static::assertInstanceOf(WebservicesConfig::class, $config);
         static::assertInstanceOf(
-            '\WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter',
+            Converter::class,
             $config->getConverter()
         );
     }
 
     public function testConfigCreationIsConvertedToArray()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
-        $platformConfig = FactoryMuffin::instance('\WebservicesNl\Platform\Webservices\PlatformConfig');
-        /** @var \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config $soapConfig */
+        /** @var PlatformConfig $platformConfig */
+        $platformConfig = FactoryMuffin::instance(PlatformConfig::class);
+        /** @var WebservicesConfig $soapConfig */
         $soapConfig = WebservicesConfig::configure($platformConfig);
 
         $resultArray = $soapConfig->toArray();
@@ -63,15 +66,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testConfigArrayIsBorked()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platformConfig */
+        /** @var PlatformConfig $platformConfig */
         $platformConfig = FactoryMuffin::instance(
-            '\WebservicesNl\Platform\Webservices\PlatformConfig',
+            PlatformConfig::class,
             ['userName' => function () {
                 return null;
             }, ]
         );
 
-        /** @var \WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Config $soapConfig */
+        /** @var WebservicesConfig $soapConfig */
         $soapConfig = WebservicesConfig::configure($platformConfig);
 
         $resultArray = $soapConfig->toArray();

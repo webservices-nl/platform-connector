@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.0.9] (2018-10-02)
 - Corrected typo
 - updated composer,
-- applied php-cs-fixer codestyle check
+- applied php-cs-fixer codestyle check  
 
 ## [0.0.8] (2016-03-21)
 - updated webservices-nl/utils dependency
