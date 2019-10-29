@@ -1,5 +1,6 @@
 # Webservices Platform Connector
 
+### External checks
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Build Status](https://travis-ci.org/webservices-nl/platform-connector.svg?branch=master)](https://travis-ci.org/webservices-nl/platform-connector)
@@ -14,7 +15,7 @@ Regardless of transport protocol it ships a proxy class for type hinted function
 Webservices.nl support multiple protocols for connecting. Soap, XML-RPC, HTTP-RPC/REST. This library has support for multiple transfer protocols. 
 
 ##### Soap
-This library ships a SoapClient that extends the native PHP ```SoapClient``` with a curl client for better timeout management. Also converts native PHP ```SoapFault``` into custom platform exceptions where possible.
+This library ships a SoapClient that extends the native PHP `SoapClient` with a curl client for better timeout management. Also converts native PHP ```SoapFault``` into custom platform exceptions where possible.
 
 ##### XML-RPC
 Scheduled to be released.
@@ -30,9 +31,7 @@ Scheduled to be released.
 ### Install
 Please use composer to install this library. Or download the latest [zip](https://github.com/webservices-nl/platform-connector/archive/master.zip)
 
-```bash 
-composer require webservices-nl/platform-connector
-```
+` composer require webservices-nl/platform-connector `
 
 ### Usage
 
@@ -51,19 +50,17 @@ composer require webservices-nl/platform-connector
  $client = $factory->create('soap', 'webservices');
  
  // make type hinted function calls to any of the Webservices.nl API's
- $response = $client->getAccountEditV2();
+ $response = $client->accountEditV2();
 ```
 
 All parameters are expected to be in UTF-8 encoding, output is in UTF-8 as well.
 
 #### Unit test
-This client is fully tested on PHP 5.5, 5.6 and 7.0. To run tests:
+This client is fully tested on PHP 5.6+ and 7+ To run tests:
 
-```bash
-$ ./vendor/bin phpunit
-```
+` ./vendor/bin phpunit `
 
 ### Further information
-Consult the online [documentation](https://ws1.webservices.nl/documentation). Any questions, remarks, bugs? Please mail us.
+Consult the online [documentation](https://webview.webservices.nl/documentation). Any questions, remarks, bugs? Please mail us.
 - technical questions: <mailto:tech@webservices.nl>
 - support questions: <mailto:support.webservices.nl>

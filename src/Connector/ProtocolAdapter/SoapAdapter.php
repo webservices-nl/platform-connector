@@ -19,10 +19,11 @@ class SoapAdapter extends AbstractAdapter
      * @param string $functionName name of the function call
      * @param mixed  $args         arguments for the function call
      *
-     * @return mixed
      * @throws NoServerAvailableException
      * @throws \SoapFault
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function call($functionName, $args)
     {

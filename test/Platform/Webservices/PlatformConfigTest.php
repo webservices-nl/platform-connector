@@ -2,18 +2,13 @@
 
 namespace WebservicesNl\Test\Platform\Webservices;
 
-use InvalidArgumentException;
 use League\FactoryMuffin\Facade as FactoryMuffin;
-use PHPUnit_Framework_TestCase;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Platform\Webservices\Connector;
 use WebservicesNl\Platform\Webservices\PlatformConfig;
 
-class PlatformConfigTest extends PHPUnit_Framework_TestCase
+class PlatformConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -30,7 +25,7 @@ class PlatformConfigTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function testInstance()
     {
@@ -46,7 +41,7 @@ class PlatformConfigTest extends PHPUnit_Framework_TestCase
 
     /**
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function testInstanceLoadFromArray()
     {

@@ -5,6 +5,6 @@ use WebservicesNl\Common\Endpoint\Endpoint;
 
 FactoryMuffin::define(Endpoint::class, [
     'lastConnected' => 'dateTime',
-    'status'        => Endpoint::STATUS_DISABLED,
-    'url'           => 'url',
+    'status' => Endpoint::STATUS_DISABLED,
+    'url' => 'url',
 ]);

@@ -110,11 +110,11 @@ class SoapConfig implements ConfigInterface
     public function toArray()
     {
         return [
-            'converter'      => $this->getConverter(),
-            'endpoints'      => static::$endPoints,
+            'converter' => $this->getConverter(),
+            'endpoints' => static::$endPoints,
             'platformConfig' => $this->platformConfig->toArray(),
-            'retry_minutes'  => static::DEFAULT_RESPONSE_TIMEOUT,
-            'soap_headers'   => (array)$this->getSoapHeaders(),
+            'retry_minutes' => static::DEFAULT_RESPONSE_TIMEOUT,
+            'soap_headers' => (array) $this->getSoapHeaders(),
         ];
     }
 }

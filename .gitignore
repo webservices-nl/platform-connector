@@ -1,4 +1,5 @@
 vendor/
-ansible/
-composer.lock
 phpunit.xml
+/report/
+/.idea
+/.php_cs.cache

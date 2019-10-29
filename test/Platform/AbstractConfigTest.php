@@ -11,9 +11,6 @@ use WebservicesNl\Platform\Webservices\PlatformConfig;
  */
 class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -28,7 +25,6 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
         });
         FactoryMuffin::loadFactories(dirname(__DIR__) . '/Factories');
     }
-
 
     /**
      * @throws InvalidArgumentException

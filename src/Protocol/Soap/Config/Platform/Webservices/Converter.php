@@ -16,8 +16,9 @@ class Converter implements ConverterInterface
     /**
      * @param \SoapFault $fault
      *
-     * @return WebserviceException
      * @throws ServerException
+     *
+     * @return WebserviceException
      */
     public function convertToException($fault)
     {
@@ -29,15 +30,16 @@ class Converter implements ConverterInterface
             throw new ServerException("Could not convert errorCode: '$errorClassName'");
         }
 
-        /** @var WebserviceException $exception */
+        /* @var WebserviceException $exception */
         return new $errorClassFQ($fault->getMessage(), $fault->getCode());
     }
 
     /**
      * @param \Exception $exception
      *
-     * @return void
      * @throws \DomainException
+     *
+     * @return void
      */
     public function convertFromException(\Exception $exception)
     {

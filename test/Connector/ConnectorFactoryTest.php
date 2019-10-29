@@ -4,16 +4,14 @@ namespace WebservicesNl\Test\Connector;
 
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
 use WebservicesNl\Connector\ProtocolAdapter\SoapAdapter;
 use WebservicesNl\Platform\Webservices\Connector;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ConnectorFactoryTest
- *
- * @package WebservicesNl\Test\Connector
  */
 class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,7 +79,6 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws InputException
      * @throws InputException
      */
     public function testConnectorFactoryInstanceByConstruct()
