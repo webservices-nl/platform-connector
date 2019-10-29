@@ -166,7 +166,6 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $this->expectException(ServerException::class);
         $this->expectExceptionMessage('Invalid SoapResponse');
 
-
         // Create a mock and queue successful response.
         $mock = new MockHandler(
             [

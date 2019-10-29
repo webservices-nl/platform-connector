@@ -56,7 +56,7 @@ Please use composer to install this library. Or download the latest [zip](https:
 All parameters are expected to be in UTF-8 encoding, output is in UTF-8 as well.
 
 #### Unit test
-This client is fully tested on PHP 5.+ and 7+ To run tests:
+This client is fully tested on PHP 5.6+ and 7+ To run tests:
 
 ` ./vendor/bin phpunit `
 

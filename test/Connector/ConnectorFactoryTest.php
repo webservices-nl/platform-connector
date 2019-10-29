@@ -4,11 +4,11 @@ namespace WebservicesNl\Test\Connector;
 
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
 use WebservicesNl\Connector\ProtocolAdapter\SoapAdapter;
 use WebservicesNl\Platform\Webservices\Connector;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class ConnectorFactoryTest

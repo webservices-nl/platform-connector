@@ -18,9 +18,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(
-                /** @noinspection StaticClosureCanBeUsedInspection */ function () {
-            return true;
-        });
+/** @noinspection StaticClosureCanBeUsedInspection */ function () {
+    return true;
+});
 
         FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
             $name = 'set' . ucfirst(strtolower($name));

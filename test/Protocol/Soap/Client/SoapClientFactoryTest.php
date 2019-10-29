@@ -4,13 +4,13 @@ namespace WebservicesNl\Test\Protocol\Soap\Client;
 
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
 use WebservicesNl\Platform\Webservices\PlatformConfig;
+use WebservicesNl\Protocol\Soap\Client\SoapClient;
 use WebservicesNl\Protocol\Soap\Client\SoapFactory;
 use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
-use Psr\Log\LoggerInterface;
-use WebservicesNl\Protocol\Soap\Client\SoapClient;
 
 /**
  * Class SoapClientFactoryTest.
