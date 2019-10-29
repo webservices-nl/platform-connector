@@ -36,7 +36,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function testConverterBad()
     {
-        $this->expectException(\WebservicesNl\Common\Exception\ServerException\ServerException::class);
+        $this->expectException(\WebservicesNl\Common\Exception\ServerException::class);
         $this->expectExceptionMessage('Could not convert errorCode: \'FakeClass\'');
 
         $converter = Converter::build();

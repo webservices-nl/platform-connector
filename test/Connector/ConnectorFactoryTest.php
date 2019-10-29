@@ -43,7 +43,7 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
     public function testInstanceWithMissingArguments()
     {
         $this->expectException(InputException::class);
-        $this->expectExceptionMessage(' Not all mandatory config credentials are set');
+        $this->expectExceptionMessage('Not all mandatory config credentials are set');
 
         ConnectorFactory::build(['password' => 'secret'])->create('Nope', 'Webservices');
     }
