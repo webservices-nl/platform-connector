@@ -2,7 +2,7 @@
 
 use WebservicesNl\Protocol\Soap\Client\SoapSettings;
 
-League\FactoryMuffin\Facade::define('WebservicesNl\Protocol\Soap\Client\SoapSettings', [
+League\FactoryMuffin\Facade::define(SoapSettings::class, [
     'authentication'    => function () {
         $values = [SOAP_AUTHENTICATION_BASIC, SOAP_AUTHENTICATION_DIGEST];
 
