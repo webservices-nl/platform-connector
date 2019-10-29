@@ -32,12 +32,13 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\ServerException
-     * @expectedExceptionMessage Could not convert errorCode: 'FakeClass'
      * @throws \WebservicesNl\Common\Exception\ServerException
      */
     public function testConverterBad()
     {
+        $this->expectException(\WebservicesNl\Common\Exception\ServerException\ServerException::class);
+        $this->expectExceptionMessage('Could not convert errorCode: \'FakeClass\'');
+
         $converter = Converter::build();
         $detail = new \stdClass();
         $detail->errorcode = 'FakeClass';
@@ -45,19 +46,17 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $converter->convertToException($soapFault);
     }
 
-    /**
-     * @expectedException \DomainException
-     * @expectedExceptionMessage Not yet implemented
-     * @throws \DomainException
-     */
     public function testConvertFromException()
     {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Not yet implemented');
+
         $converter = Converter::build();
         $converter->convertFromException(new Exception());
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getFaults()
     {
