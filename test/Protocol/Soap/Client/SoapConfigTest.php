@@ -34,17 +34,13 @@ class SoapConfigTest extends \PHPUnit_Framework_TestCase
     public function testEmptyInstance()
     {
         /** @var PlatformConfig $platFormConfig */
-        $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
+        $platFormConfig = FactoryMuffin::create(PlatformConfig::class);
         $soapConfig = new SoapConfig($platFormConfig);
 
         static::assertFalse($soapConfig->hasConverter());
         static::assertEmpty($soapConfig->getSoapHeaders());
         static::assertEquals($platFormConfig, $soapConfig->getPlatformConfig());
-        static::assertAttributeInstanceOf(
-            'WebservicesNl\Platform\Webservices\PlatformConfig',
-            'platformConfig',
-            $soapConfig
-        );
+        static::assertAttributeInstanceOf(PlatformConfig::class, 'platformConfig', $soapConfig);
         static::assertEquals($soapConfig::getEndPoints(), SoapConfig::getEndPoints());
         static::assertCount(5, $soapConfig->toArray());
 

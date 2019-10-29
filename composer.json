@@ -23,20 +23,23 @@
     }
   ],
   "require": {
-    "php": "^7.1",
+    "php": "^5.6 || ^7",
     "ext-xml": "*",
     "guzzlehttp/guzzle": "^6",
     "psr/log": "^1.0",
-    "webservices-nl/common": "^1.0",
-    "webservices-nl/utils": "^1.0"
+    "webservices-nl/common": "^0",
+    "webservices-nl/utils": "1.0.4"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2",
+    "sensiolabs/security-checker": "^5.0",
+    "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^5",
     "mockery/mockery": "^0.9",
     "monolog/monolog": "^1.18",
     "league/factory-muffin": "^2",
-    "friendsofphp/php-cs-fixer": "^2",
-    "sensiolabs/security-checker": "^4"
+    "squizlabs/php_codesniffer": "^2",
+    "ext-soap": "*"
   },
   "autoload": {
     "psr-4": {
@@ -47,12 +50,5 @@
     "psr-4": {
       "WebservicesNl\\Test\\": "test/"
     }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packages.sup.ws.fdmg.org/"
-    }
-  ]
-
+  }
 }

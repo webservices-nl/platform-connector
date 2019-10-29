@@ -6,7 +6,9 @@ use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Connector\ConnectorFactory;
+use WebservicesNl\Connector\ProtocolAdapter\SoapAdapter;
 use WebservicesNl\Platform\Webservices\Connector;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ConnectorFactoryTest
@@ -16,37 +18,37 @@ use WebservicesNl\Platform\Webservices\Connector;
 class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a platformConfig for Fake
      * @throws InputException
      */
     public function testInstanceWithBadPlatform()
     {
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Could not find a platformConfig for Fake');
         ConnectorFactory::build(['username' => 'bla', 'password' => 'secret'])->create(null, 'Fake');
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a factory for Nope
      * @throws InputException
      */
     public function testInstanceWithBadProtocol()
     {
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Could not find a factory for Nope');
         ConnectorFactory::build(['username' => 'bla', 'password' => 'secret'])->create('Nope', 'Webservices');
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Not all mandatory config credentials are set
-     * @throws InputException
+     * @expectedExceptionMessage
      */
     public function testInstanceWithMissingArguments()
     {
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Not all mandatory config credentials are set');
+
         ConnectorFactory::build(['password' => 'secret'])->create('Nope', 'Webservices');
     }
 
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws InputException
      */
     public function testInstance()
@@ -56,14 +58,13 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $connector = ConnectorFactory::build(['username' => 'lala', 'password' => 'hoho'])
             ->create($protocol, $platform);
 
-        static::assertInstanceOf('WebservicesNl\Platform\Webservices\Connector', $connector);
-        static::assertInstanceOf('WebservicesNl\Connector\ProtocolAdapter\SoapAdapter', $connector->getAdapter());
+        static::assertInstanceOf(Connector::class, $connector);
+        static::assertInstanceOf(SoapAdapter::class, $connector->getAdapter());
         static::assertEquals($protocol, $connector->getAdapter()->getProtocol());
         static::assertEquals(Connector::PLATFORM_NAME, $connector->getPlatform());
     }
 
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws InputException
      */
     public function testConnectorFactoryInstanceBySettingLogger()
@@ -76,11 +77,11 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->setLogger($logger);
         $factory->create('soap', 'webservices');
 
-        static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
+        static::assertInstanceOf(LoggerInterface::class, $factory->getLogger());
     }
 
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws InputException
      */
     public function testConnectorFactoryInstanceByConstruct()
@@ -92,6 +93,6 @@ class ConnectorFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = ConnectorFactory::build(['username' => 'something', 'password' => 'secret'], $logger);
         $factory->create('soap', 'webservices');
 
-        static::assertInstanceOf('Psr\Log\LoggerInterface', $factory->getLogger());
+        static::assertInstanceOf(LoggerInterface::class, $factory->getLogger());
     }
 }
