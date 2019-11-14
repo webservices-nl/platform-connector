@@ -714,9 +714,9 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken)
      * @param string $code         code (meldcode), 4 digits
      *
-     * @returns \stdClass <CarCheckCode>.
-     *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarCheckCode
+     *
+     * @return \stdClass <CarCheckCode>.
      */
     public function carRDWCarCheckCode($licensePlate, $code)
     {

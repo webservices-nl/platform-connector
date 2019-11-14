@@ -67,7 +67,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $this->logger->setHandlers([$streamHandler, $this->testHandler]);
 
         $this->manager = new Manager();
-        $this->manager->createEndpoint('https://ws1.webservices.nl/soap_doclit');
+        $this->manager->createEndpoint('https://ws1.webservices.nl/soap');
     }
 
     /**
@@ -133,8 +133,8 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     public function testSoapClientInstanceBadCallWithMultipleEndpoints()
     {
         $manager = new Manager();
-        $manager->createEndpoint('https://ws1.webservices.nl/soap_doclit');
-        $manager->createEndpoint('https://ws2.webservices.nl/soap_doclit');
+        $manager->createEndpoint('https://ws1.webservices.nl/soap');
+        $manager->createEndpoint('https://ws2.webservices.nl/soap');
 
         // Create a mock and queue a bad and successful response.
         $mock = new MockHandler(
@@ -253,5 +253,93 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
         $instance->setLogger($this->logger);
         $instance->__soapCall('/login');
+    }
+
+    /**
+     * @throws \SoapFault
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     */
+    public function testSoapClientGetSignatures()
+    {
+        $mock = new MockHandler();
+        $handler = HandlerStack::create($mock);
+        $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
+
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
+        $signatures = $instance->getSignatures();
+
+        static::assertArrayHasKey('login', $signatures);
+        static::assertSame(['username', 'password'], $signatures['login']);
+    }
+
+    /**
+     *
+     * @throws \Exception
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \SoapFault
+     */
+    public function testSoapClientCallWithWrongOrderArguments()
+    {
+        $expectedRequestBody = <<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.webservices.nl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <SOAP-ENV:Header/>
+  <SOAP-ENV:Body>
+    <ns1:login>
+      <username xsi:type="xsd:string">a</username>
+      <password xsi:type="xsd:string">b</password>
+    </ns1:login>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+EOT;
+
+        $mock = new MockHandler(
+            [
+                function(Request $request) use ($expectedRequestBody) {
+                    $dom = new \DOMDocument();
+                    $dom->preserveWhiteSpace = false;
+                    $dom->formatOutput = true;
+                    $dom->loadXML($request->getBody()->getContents());
+
+                    static::assertSame($expectedRequestBody, $dom->saveXML());
+                    return new Response(202, ['Content-Length' => 0]);
+                },
+            ]
+        );
+
+        $handler = HandlerStack::create($mock);
+        $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
+
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
+        $instance->setLogger($this->logger);
+        $instance->__soapCall('login', ['password' => 'b', 'username' => 'a']);
+    }
+
+    /**
+     *
+     * @throws \Exception
+     * @throws \InvalidArgumentException
+     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws \SoapFault
+     */
+    public function testSoapClientCallUnknownArguments()
+    {
+        $mock = new MockHandler(
+            [
+                new Response(202, ['Content-Length' => 0]),
+            ]
+        );
+
+        $handler = HandlerStack::create($mock);
+        $curlClient = new Client(['handler' => $handler, 'exceptions' => false]);
+
+        $instance = new SoapClient(new SoapSettings(), $this->manager, $curlClient);
+        $instance->setLogger($this->logger);
+        $instance->__soapCall('login', ['unknown' => 'argument', 'username' => 'a', 'password' => 'b']);
+        $this->testHandler->hasWarningThatMatches('~Invalid argument [unknown]~');
     }
 }
