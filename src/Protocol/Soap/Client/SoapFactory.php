@@ -42,6 +42,7 @@ class SoapFactory extends AbstractClientFactory
      * @param PlatformConfigInterface $platformConfig
      *
      * @throws InputException
+     *
      * @return static
      */
     public static function build(PlatformConfigInterface $platformConfig)
@@ -54,10 +55,11 @@ class SoapFactory extends AbstractClientFactory
      *
      * @param array $settings additional settings go here
      *
-     * @return SoapClient
      * @throws InputException
      * @throws NoServerAvailableException
      * @throws \InvalidArgumentException
+     *
+     * @return SoapClient
      */
     public function create(array $settings = [])
     {
@@ -98,8 +100,9 @@ class SoapFactory extends AbstractClientFactory
      * @param array   $settings settings with extra guzzle settings
      * @param Manager $manager  endpoint Manager
      *
-     * @return Client
      * @throws NoServerAvailableException
+     *
+     * @return Client
      */
     private function createCurlClient(array $settings, Manager $manager)
     {
@@ -120,10 +123,10 @@ class SoapFactory extends AbstractClientFactory
      *
      * @param array $settings optional settings
      *
-     * @return Manager Endpoint manager
-     *
      * @throws \InvalidArgumentException
      * @throws InputException
+     *
+     * @return Manager Endpoint manager
      */
     private function createEndpointManager(array $settings = [])
     {

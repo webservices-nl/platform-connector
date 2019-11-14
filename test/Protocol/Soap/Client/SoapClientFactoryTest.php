@@ -4,8 +4,13 @@ namespace WebservicesNl\Test\Protocol\Soap\Client;
 
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
 use WebservicesNl\Platform\Webservices\PlatformConfig;
+use WebservicesNl\Protocol\Soap\Client\SoapClient;
 use WebservicesNl\Protocol\Soap\Client\SoapFactory;
+use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
 
 /**
  * Class SoapClientFactoryTest.
@@ -13,24 +18,23 @@ use WebservicesNl\Protocol\Soap\Client\SoapFactory;
 class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws NoServerAvailableException
      */
     public function testInstanceWithoutMandatoryValues()
     {
         $config = new PlatformConfig();
         $client = SoapFactory::build($config)->create();
 
-        static::assertInstanceOf('WebservicesNl\Protocol\Soap\Client\SoapClient', $client);
+        static::assertInstanceOf(SoapClient::class, $client);
     }
 
     /**
      * Test instance with Monolog passed.
      *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceWithoutLogger()
     {
@@ -43,9 +47,9 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Test instance with Monolog passed.
      *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws NoServerAvailableException
      */
     public function testInstanceWithLogger()
     {
@@ -63,23 +67,20 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $factory);
+        static::assertAttributeInstanceOf(LoggerInterface::class, 'logger', $factory);
         static::assertTrue($factory->hasLogger());
-        static::assertAttributeInstanceOf('\Psr\Log\LoggerInterface', 'logger', $soapClient);
+        static::assertAttributeInstanceOf(LoggerInterface::class, 'logger', $soapClient);
         static::assertTrue($handler->hasInfoThatContains('Created SoapClient for Webservices'));
         static::assertTrue($handler->hasDebugThatContains('Created SoapClient'));
-        static::assertInstanceOf(
-            'WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter',
-            $soapClient->getConverter()
-        );
+        static::assertInstanceOf(Converter::class, $soapClient->getConverter());
     }
 
     /**
      * Rest instance with custom SoapHeader.
      *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws NoServerAvailableException
      */
     public function testInstanceWithCustomSoapHeader()
     {
@@ -101,13 +102,13 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Rest instance with custom endpoint.
      *
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws NoServerAvailableException
      */
     public function testInstanceWithCustomEndpoint()
     {
-        $customUrl = 'http://www.dneonline.com/calculator.asmx?wsdl';
+        $customUrl = 'https://api.webservices.nl/dutchbusiness/soap?wsdl';
 
         $config = new PlatformConfig();
         $factory = SoapFactory::build($config);

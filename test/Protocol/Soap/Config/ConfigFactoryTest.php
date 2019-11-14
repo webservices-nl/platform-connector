@@ -2,6 +2,8 @@
 
 namespace WebservicesNl\Test\Protocol\Soap\Client\Config;
 
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Platform\PlatformConfigInterface;
 use WebservicesNl\Protocol\Soap\Config\ConfigFactory;
 
 /**
@@ -10,16 +12,16 @@ use WebservicesNl\Protocol\Soap\Config\ConfigFactory;
 class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Could not find a platform config for 'Fake'
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      */
     public function testInstanceWithBadPlatform()
     {
-        $config = \Mockery::mock('WebservicesNl\Platform\PlatformConfigInterface');
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Could not find a platform config for \'Fake\'');
+        $config = \Mockery::mock(PlatformConfigInterface::class);
         $config->shouldReceive('getPlatformName')->andReturn('Fake');
 
-        /** @var \WebservicesNl\Platform\PlatformConfigInterface $config */
+        /* @var PlatformConfigInterface $config */
         ConfigFactory::config($config);
     }
 }

@@ -161,7 +161,6 @@ class SoapSettings
      * SOAP_SSL_METHOD_SSLv23.
      *
      * (Only PHP 5.5+)
-     *
      */
     private $sslMethod = SOAP_SSL_METHOD_TLS;
 
@@ -324,9 +323,9 @@ class SoapSettings
     /**
      * @param int $connectionTimeout
      *
-     * @return SoapSettings
-     *
      * @throws InputException
+     *
+     * @return SoapSettings
      */
     public function setConnectionTimeout($connectionTimeout)
     {

@@ -147,11 +147,13 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param int         $version
      * @param string|null $one_way
      *
-     * @return string The XML SOAP response.
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws WsClientException
      * @throws NoServerAvailableException
      * @throws \InvalidArgumentException
      * @throws \SoapFault
+     *
+     * @return string the XML SOAP response
      */
     public function __doRequest($request, $location, $action, $version, $one_way = null)
     {
@@ -175,9 +177,10 @@ class SoapClient extends \SoapClient implements ClientInterface
      *
      * @param array $args
      *
-     * @return mixed
      * @throws \Exception
      * @throws \SoapFault
+     *
+     * @return mixed
      */
     public function call(array $args = [])
     {
@@ -226,10 +229,13 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param string $location
      * @param string $action
      *
-     * @return string
      * @throws WsClientException
      * @throws \SoapFault
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return string
+     *
      * @todo move exception handler to middleware, find solution error suppressing
      */
     private function doHttpRequest($requestBody, $location, $action)
@@ -312,8 +318,9 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param array      $input_headers
      * @param array|null $output_headers
      *
-     * @return mixed
      * @throws \Exception|\SoapFault
+     *
+     * @return mixed
      */
     public function __soapCall(
         $function_name,

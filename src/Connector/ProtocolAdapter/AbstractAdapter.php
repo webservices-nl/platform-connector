@@ -8,7 +8,6 @@ use WebservicesNl\Connector\Client\ClientInterface;
  * AbstractAdapter.
  *
  * AbstractAdapter, base class for extending all Connector interface Adapters (adapter pattern).
- *
  */
 abstract class AbstractAdapter implements AdapterInterface
 {

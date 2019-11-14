@@ -2,16 +2,15 @@
 
 namespace WebservicesNl\Test;
 
+use InvalidArgumentException;
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Platform\Webservices\PlatformConfig;
 
 /**
  * Class AbstractConfigTest
  */
 class AbstractConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -27,19 +26,16 @@ class AbstractConfigTest extends \PHPUnit_Framework_TestCase
         FactoryMuffin::loadFactories(dirname(__DIR__) . '/Factories');
     }
 
-
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
-     * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
+     * @throws InvalidArgumentException
      */
     public function testInstance()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
-        $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
+        /** @var PlatformConfig $platFormConfig */
+        $platFormConfig = FactoryMuffin::create(PlatformConfig::class);
 
         static::assertTrue(class_exists($platFormConfig->getClassName(true)));
         static::assertEquals($platFormConfig->getPlatformName(), $platFormConfig::PLATFORM_NAME);
-        static::assertTrue(is_array($platFormConfig->toArray()));
+        static::assertInternalType('array', $platFormConfig->toArray());
     }
 }

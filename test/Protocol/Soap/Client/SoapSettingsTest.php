@@ -8,13 +8,9 @@ use WebservicesNl\Protocol\Soap\Client\SoapSettings;
 
 /**
  * Class SoapSettingsTest.
- *
  */
 class SoapSettingsTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setFakerLocale('nl_NL');
@@ -32,13 +28,13 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Not a valid timeout
-     *
      * @throws InputException
      */
     public function testSettingsConnectionTimeout()
     {
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Not a valid timeout');
+
         $settings = new SoapSettings();
         $settings->setConnectionTimeout('bla');
     }
@@ -48,12 +44,12 @@ class SoapSettingsTest extends \PHPUnit_Framework_TestCase
      */
     public function testMappingToArray()
     {
-        /** @var \WebservicesNl\Protocol\Soap\Client\SoapSettings $settings */
-        $settings = FactoryMuffin::create('WebservicesNl\Protocol\Soap\Client\SoapSettings');
+        /** @var SoapSettings $settings */
+        $settings = FactoryMuffin::create(SoapSettings::class);
         $array = $settings->toArray();
 
         // accessing private properties ...
-        array_walk($array, function ($value, $key) use ($settings, $array) {
+        array_walk($array, function ($value, $key) use ($settings) {
             $name = 'get' . ucfirst($key);
             if (!method_exists($settings, $name)) {
                 $name = 'has' . ucfirst($key);

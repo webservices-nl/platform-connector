@@ -3,13 +3,12 @@
 namespace WebservicesNl\Test\Platform\Webservices;
 
 use League\FactoryMuffin\Facade as FactoryMuffin;
+use WebservicesNl\Common\Exception\Client\InputException;
+use WebservicesNl\Platform\Webservices\Connector;
 use WebservicesNl\Platform\Webservices\PlatformConfig;
 
 class PlatformConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {
@@ -26,31 +25,28 @@ class PlatformConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstance()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
-        $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
+        /** @var PlatformConfig $platFormConfig */
+        $platFormConfig = FactoryMuffin::create(PlatformConfig::class);
 
         static::assertTrue(class_exists($platFormConfig->getClassName(true)));
         static::assertEquals($platFormConfig->getPlatformName(), PlatformConfig::PLATFORM_NAME);
-        static::assertTrue(is_array($platFormConfig->toArray()));
+        static::assertInternalType('array', $platFormConfig->toArray());
 
-        static::assertEquals($platFormConfig->getConnectorName(), 'WebservicesNl\Platform\Webservices\Connector');
+        static::assertEquals($platFormConfig->getConnectorName(), Connector::class);
     }
 
     /**
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      * @throws \InvalidArgumentException
-     * @throws \WebservicesNl\Common\Exception\Server\NoServerAvailableException
      */
     public function testInstanceLoadFromArray()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
-        $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
+        /** @var PlatformConfig $platFormConfig */
+        $platFormConfig = FactoryMuffin::create(PlatformConfig::class);
         $platFormConfig->loadFromArray(['password' => 'secret', 'username' => 'johndoe']);
 
         static::assertEquals($platFormConfig->getUserName(), 'johndoe');
@@ -58,14 +54,15 @@ class PlatformConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \WebservicesNl\Common\Exception\Client\InputException
-     * @expectedExceptionMessage Not all mandatory config credentials are set
-     * @throws \WebservicesNl\Common\Exception\Client\InputException
+     * @throws InputException
      */
     public function testInstanceLoadFromArrayWithMissingValues()
     {
-        /** @var \WebservicesNl\Platform\Webservices\PlatformConfig $platFormConfig */
-        $platFormConfig = FactoryMuffin::create('WebservicesNl\Platform\Webservices\PlatformConfig');
+        $this->expectException(InputException::class);
+        $this->expectExceptionMessage('Not all mandatory config credentials are set');
+
+        /** @var PlatformConfig $platFormConfig */
+        $platFormConfig = FactoryMuffin::create(PlatformConfig::class);
         $platFormConfig->loadFromArray(['username' => 'johndoe', 'password' => null]);
     }
 }
