@@ -1531,6 +1531,90 @@ class Connector extends AbstractConnector
     }
 
     /**
+     *  Starts a UBO investigation.
+     *
+     * @param string      $dossierNumber   chamber of Commerce number
+     * @param string|null $oldestExtractDate Period start date, in Y-m-d format [optional]
+     * @param bool        $useUpdates   Use a real-time extract [optional]
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationToken>
+     */
+    public function dutchBusinessUBOStartInvestigation($dossierNumber, $oldestExtractDate = null, $useUpdates = true)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOStartInvestigation', [
+            'dossier_number' => $dossierNumber,
+            'oldest_extract_date' => $oldestExtractDate,
+            'use_updates' => $useUpdates,
+        ]);
+    }
+
+    /**
+     *  Checks the status of an (ongoing) UBO investigation.
+     *
+     * @param string      $token   An investigation token.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationStatus>
+     */
+    public function dutchBusinessUBOCheckInvestigation($token)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOCheckInvestigation', [
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     *  Pick up the results of the UBO investigation.
+     *
+     * @param string      $token    An investigation token.
+     * @param bool        $includeSource    When set the original source is added to the extracts.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationResult>
+     */
+    public function dutchBusinessUBOPickupInvestigation($token, $includeSource = false)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOPickupInvestigation', [
+            'token' => $token,
+            'include_source' => $includeSource,
+        ]);
+    }
+
+    /**
+     *  Retrieve a list of person entities based on search criteria.
+     *
+     * @param string      $first_name   First name [optional]
+     * @param string      $last_name    Last name (required)
+     * @param string      $date_of_birth    Date of birth (optional, format: Y-m-d)
+     * @param int         $page    Pagination starts at 1 (optional, defaults to first page)
+     *
+     * @return \stdClass <CompliancePersonSearchReference>
+     */
+    public function complianceSearchPersons($first_name, $last_name, $date_of_birth, $page = 1)
+    {
+        return $this->getAdapter()->call('complianceSearchPersons', [
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            '$date_of_birth' => $date_of_birth,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     * @todo
+     */
+    public function dutchBusinessGetConcernRelationsOverview($dossierNumber)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsOverview', ['dossier_number' => $dossierNumber]);
+    }
+
+    /**
+     * @todo
+     */
+    public function dutchBusinessGetConcernRelationsDetails($dossierNumber, $includeSource)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsDetails', ['dossier_number' => $dossierNumber, 'include_source' => $includeSource]);
+    }
+
+    /**
      * Get an extract document in PDF, containing the available Chamber of Commerce data for a business.
      * The document is generated using the business' `Online inzage uittreksel`.
      *
