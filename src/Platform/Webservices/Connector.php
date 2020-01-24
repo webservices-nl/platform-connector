@@ -1581,25 +1581,30 @@ class Connector extends AbstractConnector
     /**
      *  Retrieve a list of person entities based on search criteria.
      *
-     * @param string      $first_name   First name [optional]
-     * @param string      $last_name    Last name (required)
-     * @param string      $date_of_birth    Date of birth (optional, format: Y-m-d)
+     * @param string      $firstName   First name [optional]
+     * @param string      $lastName    Last name (required)
+     * @param string      $dateOfBirth    Date of birth (optional, format: Y-m-d)
      * @param int         $page    Pagination starts at 1 (optional, defaults to first page)
      *
      * @return \stdClass <CompliancePersonSearchReference>
      */
-    public function complianceSearchPersons($first_name, $last_name, $date_of_birth, $page = 1)
+    public function complianceSearchPersons($firstName, $lastName, $dateOfBirth, $page = 1)
     {
         return $this->getAdapter()->call('complianceSearchPersons', [
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            '$date_of_birth' => $date_of_birth,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'date_of_birth' => $dateOfBirth,
             'page' => $page,
         ]);
     }
 
     /**
-     * @todo
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsOverviewResult>
      */
     public function dutchBusinessGetConcernRelationsOverview($dossierNumber)
     {
@@ -1607,7 +1612,13 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @todo
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param bool   $includeSource  When set the original source is added to the response
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsDetailsResult>
      */
     public function dutchBusinessGetConcernRelationsDetails($dossierNumber, $includeSource)
     {
@@ -3004,6 +3015,32 @@ class Connector extends AbstractConnector
     {
         return $this->getAdapter()->call('graydonCreditVatNumber', ['graydon_company_id' => $graydonCompanyId]);
     }
+
+    /**
+     * Search for publications for a person.
+     *
+     * @param $lastName     Persons surname
+     * @param $prefix       Surname prefix (eg. de, van, van der ..)
+     * @param $birthDate    Date of birth (format: yyyy-mm-dd)
+     * @param $postcode     Postcode
+     * @param $houseNumber  House number
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByPerson
+     *
+     */
+    public function insolvencySearchPublicationsByPerson($lastName, $prefix, $birthDate, $postcode, $houseNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByPerson', [
+            'last_name' => $lastName,
+            'prefix' => $prefix,
+            'birth_date' => $birthDate,
+            'postcode' => $postcode,
+            'house_number' => $houseNumber,
+        ]);
+    }
+
 
     /**
      * This method expects an address that is already more or less complete.
