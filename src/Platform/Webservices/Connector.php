@@ -3019,11 +3019,11 @@ class Connector extends AbstractConnector
     /**
      * Search for publications for a person.
      *
-     * @param $lastName     Persons surname
-     * @param $prefix       Surname prefix (eg. de, van, van der ..)
-     * @param $birthDate    Date of birth (format: yyyy-mm-dd)
-     * @param $postcode     Postcode
-     * @param $houseNumber  House number
+     * @param string $lastName     Persons surname
+     * @param string $prefix       Surname prefix (eg. de, van, van der ..)
+     * @param string $birthDate    Date of birth (format: yyyy-mm-dd)
+     * @param string $postcode     Postcode
+     * @param string $houseNumber  House number
      *
      * @return \stdClass <InsolvencyPublicationList>
      *
@@ -3041,6 +3041,22 @@ class Connector extends AbstractConnector
         ]);
     }
 
+    /**
+     * Search for publications for a dutch company.
+     *
+     * @param string $cocNumber  A registration number from the dutch chamber of commerce (dutch: kvk-nummer)
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByCoCNumber
+     *
+     */
+    public function insolvencySearchPublicationsByCoCNumber($cocNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByCoCNumber', [
+            'coc_number' => $cocNumber,
+        ]);
+    }
 
     /**
      * This method expects an address that is already more or less complete.
