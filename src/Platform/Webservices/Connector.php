@@ -3059,6 +3059,24 @@ class Connector extends AbstractConnector
     }
 
     /**
+     * Fetch a insolvency case from a given publication.
+     *
+     * @param string $publicationId  The id of a insolvency publication, pattern: “([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}”.
+     *
+     * @return \stdClass <InsolvencyCase>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencyGetCaseByPublication
+     *
+     */
+    public function insolvencyGetCaseByPublication($publicationId)
+    {
+        return $this->getAdapter()->call('insolvencyGetCaseByPublication', [
+            'publication_id' => $publicationId,
+        ]);
+    }
+
+
+    /**
      * This method expects an address that is already more or less complete.
      * Checks for the correctness of the specified address, completing it if possible. If suggestions can be generated
      * they will be returned as well. Returns address suggestions related to the address information given. Suggestions
