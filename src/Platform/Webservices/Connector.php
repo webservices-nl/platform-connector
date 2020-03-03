@@ -1591,7 +1591,7 @@ class Connector extends AbstractConnector
     public function dutchBusinessGetAnnualFinancialStatement($dossierNumber, $year, $type)
     {
         return $this->getAdapter()->call(
-            'dutchBusinessGetDossierHistory',
+            'dutchBusinessGetAnnualFinancialStatement',
             [
                 'dossier_number' => $dossierNumber,
                 'year' => $year,
