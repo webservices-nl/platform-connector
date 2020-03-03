@@ -1526,7 +1526,8 @@ class Connector extends AbstractConnector
             [
                 'dossier_number' => $dossierNumber,
                 'period_start_date' => $periodStartDate,
-                'period_end_date' => $periodEndDate, ]
+                'period_end_date' => $periodEndDate,
+            ]
         );
     }
 
@@ -1576,6 +1577,27 @@ class Connector extends AbstractConnector
             'token' => $token,
             'include_source' => $includeSource,
         ]);
+    }
+
+    /**
+     *  Request an annual financial statement document for a dutch-business.
+     *
+     * @param string      $dossierNumber    Chamber of Commerce number
+     * @param integer     $year     The year of the financial statement
+     * @param string      $type     The type of the financial statement
+     *
+     * @return \stdClass <DutchBusinessAnnualFinancialStatement>
+     */
+    public function dutchBusinessGetAnnualFinancialStatement($dossierNumber, $year, $type)
+    {
+        return $this->getAdapter()->call(
+            'dutchBusinessGetDossierHistory',
+            [
+                'dossier_number' => $dossierNumber,
+                'year' => $year,
+                'type' => $type,
+            ]
+        );
     }
 
     /**
