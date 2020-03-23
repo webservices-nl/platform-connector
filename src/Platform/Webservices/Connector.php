@@ -1526,8 +1526,125 @@ class Connector extends AbstractConnector
             [
                 'dossier_number' => $dossierNumber,
                 'period_start_date' => $periodStartDate,
-                'period_end_date' => $periodEndDate, ]
+                'period_end_date' => $periodEndDate,
+            ]
         );
+    }
+
+    /**
+     *  Starts a UBO investigation.
+     *
+     * @param string      $dossierNumber   chamber of Commerce number
+     * @param string|null $oldestExtractDate Period start date, in Y-m-d format [optional]
+     * @param bool        $useUpdates   Use a real-time extract [optional]
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationToken>
+     */
+    public function dutchBusinessUBOStartInvestigation($dossierNumber, $oldestExtractDate = null, $useUpdates = true)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOStartInvestigation', [
+            'dossier_number' => $dossierNumber,
+            'oldest_extract_date' => $oldestExtractDate,
+            'use_updates' => $useUpdates,
+        ]);
+    }
+
+    /**
+     *  Checks the status of an (ongoing) UBO investigation.
+     *
+     * @param string      $token   An investigation token.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationStatus>
+     */
+    public function dutchBusinessUBOCheckInvestigation($token)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOCheckInvestigation', [
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     *  Pick up the results of the UBO investigation.
+     *
+     * @param string      $token    An investigation token.
+     * @param bool        $includeSource    When set the original source is added to the extracts.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationResult>
+     */
+    public function dutchBusinessUBOPickupInvestigation($token, $includeSource = false)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOPickupInvestigation', [
+            'token' => $token,
+            'include_source' => $includeSource,
+        ]);
+    }
+
+    /**
+     *  Request an annual financial statement document for a dutch-business.
+     *
+     * @param string      $dossierNumber    Chamber of Commerce number
+     * @param integer     $year     The year of the financial statement
+     * @param string      $type     The type of the financial statement
+     *
+     * @return \stdClass <DutchBusinessAnnualFinancialStatement>
+     */
+    public function dutchBusinessGetAnnualFinancialStatement($dossierNumber, $year, $type)
+    {
+        return $this->getAdapter()->call(
+            'dutchBusinessGetAnnualFinancialStatement',
+            [
+                'dossier_number' => $dossierNumber,
+                'year' => $year,
+                'type' => $type,
+            ]
+        );
+    }
+
+    /**
+     *  Retrieve a list of person entities based on search criteria.
+     *
+     * @param string      $firstName   First name [optional]
+     * @param string      $lastName    Last name (required)
+     * @param string      $dateOfBirth    Date of birth (optional, format: Y-m-d)
+     * @param int         $page    Pagination starts at 1 (optional, defaults to first page)
+     *
+     * @return \stdClass <CompliancePersonSearchReference>
+     */
+    public function complianceSearchPersons($firstName, $lastName, $dateOfBirth, $page = 1)
+    {
+        return $this->getAdapter()->call('complianceSearchPersons', [
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'date_of_birth' => $dateOfBirth,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsOverviewResult>
+     */
+    public function dutchBusinessGetConcernRelationsOverview($dossierNumber)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsOverview', ['dossier_number' => $dossierNumber]);
+    }
+
+    /**
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param bool   $includeSource  When set the original source is added to the response
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsDetailsResult>
+     */
+    public function dutchBusinessGetConcernRelationsDetails($dossierNumber, $includeSource)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsDetails', ['dossier_number' => $dossierNumber, 'include_source' => $includeSource]);
     }
 
     /**
@@ -2920,6 +3037,66 @@ class Connector extends AbstractConnector
     {
         return $this->getAdapter()->call('graydonCreditVatNumber', ['graydon_company_id' => $graydonCompanyId]);
     }
+
+    /**
+     * Search for publications for a person.
+     *
+     * @param string $lastName     Persons surname
+     * @param string $prefix       Surname prefix (eg. de, van, van der ..)
+     * @param string $birthDate    Date of birth (format: yyyy-mm-dd)
+     * @param string $postcode     Postcode
+     * @param string $houseNumber  House number
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByPerson
+     *
+     */
+    public function insolvencySearchPublicationsByPerson($lastName, $prefix, $birthDate, $postcode, $houseNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByPerson', [
+            'last_name' => $lastName,
+            'prefix' => $prefix,
+            'birth_date' => $birthDate,
+            'postcode' => $postcode,
+            'house_number' => $houseNumber,
+        ]);
+    }
+
+    /**
+     * Search for publications for a dutch company.
+     *
+     * @param string $cocNumber  A registration number from the dutch chamber of commerce (dutch: kvk-nummer)
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByCoCNumber
+     *
+     */
+    public function insolvencySearchPublicationsByCoCNumber($cocNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByCoCNumber', [
+            'coc_number' => $cocNumber,
+        ]);
+    }
+
+    /**
+     * Fetch a insolvency case from a given publication.
+     *
+     * @param string $publicationId  The id of a insolvency publication, pattern: “([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}”.
+     *
+     * @return \stdClass <InsolvencyCase>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencyGetCaseByPublication
+     *
+     */
+    public function insolvencyGetCaseByPublication($publicationId)
+    {
+        return $this->getAdapter()->call('insolvencyGetCaseByPublication', [
+            'publication_id' => $publicationId,
+        ]);
+    }
+
 
     /**
      * This method expects an address that is already more or less complete.
