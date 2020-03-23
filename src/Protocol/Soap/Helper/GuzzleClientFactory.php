@@ -65,14 +65,14 @@ class GuzzleClientFactory
 
         return new Client(
             [
-                'base_url'           => (string)$settings['url'],
-                'handler'            => $stack,
-                'exceptions'         => false,
-                'timeout'            => (float)$settings['responseTimeout'],
-                'connection_timeout' => (float)$settings['connectionTimeout'],
+                'base_url' => (string) $settings['url'],
+                'handler' => $stack,
+                'exceptions' => false,
+                'timeout' => (float) $settings['responseTimeout'],
+                'connection_timeout' => (float) $settings['connectionTimeout'],
                 'headers' => [
-                    'User-Agent' => $settings['userAgent']
-                ]
+                    'User-Agent' => $settings['userAgent'],
+                ],
             ]
         );
     }

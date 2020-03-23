@@ -2,16 +2,15 @@
 
 namespace WebservicesNl\Test\Protocol\Soap\Client;
 
-use InvalidArgumentException;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use WebservicesNl\Common\Exception\Client\InputException;
 use WebservicesNl\Common\Exception\Server\NoServerAvailableException;
 use WebservicesNl\Platform\Webservices\PlatformConfig;
+use WebservicesNl\Protocol\Soap\Client\SoapClient;
 use WebservicesNl\Protocol\Soap\Client\SoapFactory;
 use WebservicesNl\Protocol\Soap\Config\Platform\Webservices\Converter;
-use Psr\Log\LoggerInterface;
-use WebservicesNl\Protocol\Soap\Client\SoapClient;
 
 /**
  * Class SoapClientFactoryTest.
@@ -20,7 +19,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws NoServerAvailableException
      */
     public function testInstanceWithoutMandatoryValues()
@@ -35,7 +34,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      * Test instance with Monolog passed.
      *
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function testInstanceWithoutLogger()
     {
@@ -49,7 +48,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      * Test instance with Monolog passed.
      *
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws NoServerAvailableException
      */
     public function testInstanceWithLogger()
@@ -80,7 +79,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      * Rest instance with custom SoapHeader.
      *
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws NoServerAvailableException
      */
     public function testInstanceWithCustomSoapHeader()
@@ -104,7 +103,7 @@ class SoapClientFactoryTest extends \PHPUnit_Framework_TestCase
      * Rest instance with custom endpoint.
      *
      * @throws InputException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws NoServerAvailableException
      */
     public function testInstanceWithCustomEndpoint()

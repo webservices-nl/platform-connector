@@ -12,9 +12,6 @@ use WebservicesNl\Connector\ProtocolAdapter\SoapAdapter;
  */
 class SoapAdapterTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public function testInstance()
     {
         $protocolName = 'lalala';

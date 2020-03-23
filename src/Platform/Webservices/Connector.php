@@ -25,7 +25,7 @@ class Connector extends AbstractConnector
      * @param int    $accountId    ID of the account, use 0 for the current user's account
      * @param string $restrictions A string with host restrictions separated by semi colons (;)
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function accountEditHostRestrictions($accountId, $restrictions)
     {
@@ -40,15 +40,15 @@ class Connector extends AbstractConnector
      * This method allows <Group::Account admins> to edit their account profile.
      *
      * @param int    $accountId        Account ID of the account to edit, use 0 for the current user's account
-     * @param string $address          Address of the company using this account.
-     * @param string $contactName      Name of the contact person responsible for this account.
-     * @param string $contactEmail     Email address of the contact person responsible for this account.
-     * @param string $telephone        Telephone number of the contact person responsible for this account.
-     * @param string $fax              Fax number of the contact person responsible for this account.
-     * @param string $description      Description of the account to its users.
-     * @param float  $balanceThreshold Balance threshold to alert account, use 0 to disable.
+     * @param string $address          address of the company using this account
+     * @param string $contactName      name of the contact person responsible for this account
+     * @param string $contactEmail     email address of the contact person responsible for this account
+     * @param string $telephone        telephone number of the contact person responsible for this account
+     * @param string $fax              fax number of the contact person responsible for this account
+     * @param string $description      description of the account to its users
+     * @param float  $balanceThreshold balance threshold to alert account, use 0 to disable
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function accountEditV2(
         $accountId,
@@ -63,14 +63,14 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'accountEditV2',
             [
-                'accountid'        => $accountId,
-                'address'          => $address,
-                'contactname'      => $contactName,
-                'contactemail'     => $contactEmail,
-                'telephone'        => $telephone,
-                'fax'              => $fax,
-                'description'      => $description,
-                'balancethreshold' => (float)$balanceThreshold,
+                'accountid' => $accountId,
+                'address' => $address,
+                'contactname' => $contactName,
+                'contactemail' => $contactEmail,
+                'telephone' => $telephone,
+                'fax' => $fax,
+                'description' => $description,
+                'balancethreshold' => (float) $balanceThreshold,
             ]
         );
     }
@@ -90,9 +90,10 @@ class Connector extends AbstractConnector
      *                            See <Error Handling::Error codes>. You may start the registration process over by
      *                            calling <accountGetCreationToken>.
      *
-     * @param string $token A token retrieved using <accountGetCreationToken>.
+     * @param string $token a token retrieved using <accountGetCreationToken>
      *
      * @throws NotFoundException
+     *
      * @return int accountId The account id, which is 0 when the account registration has not finished yet
      */
     public function accountGetCreationStatus($token)
@@ -137,11 +138,11 @@ class Connector extends AbstractConnector
      * @param int $accountId ID of the account to list, use 0 for the current user's account
      * @param int $page      Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <UserV2> entries.
+     * @return \stdClass <Patterns::{Type}PagedResult> of <UserV2> entries
      */
     public function accountUserListV2($accountId, $page)
     {
-        return $this->getAdapter()->call('accountUserListV2', ['accountid' => (int)$accountId, 'page' => $page]);
+        return $this->getAdapter()->call('accountUserListV2', ['accountid' => (int) $accountId, 'page' => $page]);
     }
 
     /**
@@ -152,7 +153,7 @@ class Connector extends AbstractConnector
      * @param string $phrase    Phrase to search for in user profiles
      * @param int    $page      Page to retrieve, pages start counting at 1
      *
-     * @return \stdClass UserV2 entries.
+     * @return \stdClass userV2 entries
      */
     public function accountUserSearchV2($accountId, $phrase, $page)
     {
@@ -168,6 +169,7 @@ class Connector extends AbstractConnector
      * @param int $accountId ID of the account to view the balance of, use 0 for the current account
      *
      * @link https://webview.webservices.nl/documentation/files/service_accounting-php.html#Accounting.accountViewBalance
+     *
      * @return int
      */
     public function accountViewBalance($accountId = 0)
@@ -181,6 +183,7 @@ class Connector extends AbstractConnector
      * @param int $accountId ID of the account, use 0 for the current user's account
      *
      * @link https://webview.webservices.nl/documentation/files/service_accounting-php.html#Accounting.accountViewHostRestrictions
+     *
      * @return string containing all restrictions, separated by semicolons
      */
     public function accountViewHostRestrictions($accountId)
@@ -194,11 +197,12 @@ class Connector extends AbstractConnector
      * @param int $accountId Account ID of the account to move use 0 for the account
      *
      * @link https://webview.webservices.nl/documentation/files/service_accounting-php.html#Accounting.accountViewV2
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function accountViewV2($accountId)
     {
-        return $this->getAdapter()->call('accountViewV2', ['accountid' => (int)$accountId]);
+        return $this->getAdapter()->call('accountViewV2', ['accountid' => (int) $accountId]);
     }
 
     /**
@@ -209,13 +213,14 @@ class Connector extends AbstractConnector
      * @param int    $page    Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_address-php.html#Address.addressCityListNeighborhoods
-     * @return \StdClass <Patterns::{Type}PagedResult>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult>
      */
     public function addressCityListNeighborhoods($name, $postbus, $page)
     {
         return $this->getAdapter()->call(
             'addressCityListNeighborhoods',
-            ['name' => $name, 'postbus' => (bool)$postbus, 'page' => $page]
+            ['name' => $name, 'postbus' => (bool) $postbus, 'page' => $page]
         );
     }
 
@@ -226,11 +231,12 @@ class Connector extends AbstractConnector
      * addressCitySearch by returning <CityV2> entries instead of <City> entries, thus giving more information about a
      * city.
      *
-     * @param string $name Phrase to search cities for, or the numeric identifier for the city.
+     * @param string $name phrase to search cities for, or the numeric identifier for the city
      * @param int    $page Page to retrieve, pages start counting at 1
      *
      * @link http://webview.webservices.nl/documentation/files/service_address-php.html#Address.addressCitySearchV2
-     * @return \StdClass <Patterns::{Type}PagedResult> of <CityV2> entries.
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <CityV2> entries
      */
     public function addressCitySearchV2($name, $page)
     {
@@ -244,7 +250,8 @@ class Connector extends AbstractConnector
      * @param int    $page Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_address-php.html#Address.addressDistrictListCities
-     * @return \StdClass <Patterns::{Type}PagedResult>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult>
      */
     public function addressDistrictListCities($name, $page)
     {
@@ -254,11 +261,12 @@ class Connector extends AbstractConnector
     /**
      * Search for all municipalities that match a phrase.
      *
-     * @param string $name Phrase to search municipalities for, or the numeric identifier for the municipality.
+     * @param string $name phrase to search municipalities for, or the numeric identifier for the municipality
      * @param string $page Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_address-php.html#Address.addressDistrictSearch
-     * @return \StdClass <Patterns::{Type}PagedResult> of <District> entries.
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <District> entries
      */
     public function addressDistrictSearch($name, $page)
     {
@@ -276,8 +284,8 @@ class Connector extends AbstractConnector
      * @param string $street            Phrase used to select the street of the address
      * @param int    $houseNo           Number used to select the house number of the address
      * @param string $houseNoAddition   Phrase used to select the house number addition of the address
-     * @param string $nbCode            Number used to select the neighborhoodcode of the address, the first four
-     *                                  numbers of the postcode.
+     * @param string $nbCode            number used to select the neighborhoodcode of the address, the first four
+     *                                  numbers of the postcode
      * @param string $letterCombination Phrase used to select the lettercombination of the address, the last two
      *                                  letters of the postcode. See <Perceel>.lettercombinatie
      * @param string $addressType       Phrase used to select the addresstype of the address
@@ -285,7 +293,8 @@ class Connector extends AbstractConnector
      *
      * @deprecated please use addressPerceelFullParameterSearchV2
      * @link       https://webview.webservices.nl/documentation/files/service_address-php.html#Address.addressPerceelFullParameterSearch
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function addressPerceelFullParameterSearch(
         $province,
@@ -302,16 +311,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'addressPerceelFullParameterSearch',
             [
-                'province'          => $province,
-                'district'          => $district,
-                'city'              => $city,
-                'street'            => $street,
-                'houseNo'           => $houseNo,
-                'houseNoAddition'   => $houseNoAddition,
-                'nbcode'            => $nbCode,
+                'province' => $province,
+                'district' => $district,
+                'city' => $city,
+                'street' => $street,
+                'houseNo' => $houseNo,
+                'houseNoAddition' => $houseNoAddition,
+                'nbcode' => $nbCode,
                 'lettercombination' => $letterCombination,
-                'addresstype'       => $addressType,
-                'page'              => $page,
+                'addresstype' => $addressType,
+                'page' => $page,
             ]
         );
     }
@@ -327,14 +336,14 @@ class Connector extends AbstractConnector
      * @param string $street            Phrase used to select the street of the address
      * @param int    $houseNo           Number used to select the house number of the address
      * @param string $houseNoAddition   Phrase used to select the house number addition of the address
-     * @param string $nbCode            Number used to select the neighborhoodcode of the address, the first four
-     *                                  numbers of the postcode.
+     * @param string $nbCode            number used to select the neighborhoodcode of the address, the first four
+     *                                  numbers of the postcode
      * @param string $letterCombination Phrase used to select the lettercombination of the address, the last two
      *                                  letters of the postcode. See <Perceel>.lettercombinatie
      * @param string $addresstype       Phrase used to select the addresstype of the address
      * @param int    $page              Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <PerceelSearchPartsPagedResult>.
+     * @return \stdClass <PerceelSearchPartsPagedResult>
      */
     public function addressPerceelFullParameterSearchV2(
         $province,
@@ -351,16 +360,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'addressPerceelFullParameterSearchV2',
             [
-                'province'          => $province,
-                'district'          => $district,
-                'city'              => $city,
-                'street'            => $street,
-                'houseNo'           => $houseNo,
-                'houseNoAddition'   => $houseNoAddition,
-                'nbcode'            => $nbCode,
+                'province' => $province,
+                'district' => $district,
+                'city' => $city,
+                'street' => $street,
+                'houseNo' => $houseNo,
+                'houseNoAddition' => $houseNoAddition,
+                'nbcode' => $nbCode,
                 'lettercombination' => $letterCombination,
-                'addresstype'       => $addresstype,
-                'page'              => $page,
+                'addresstype' => $addresstype,
+                'page' => $page,
             ]
         );
     }
@@ -377,7 +386,8 @@ class Connector extends AbstractConnector
      * @param int    $page
      *
      * @deprecated please use addressPerceelFullParameterSearchV2
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function addressPerceelParameterSearch(
         $province,
@@ -391,13 +401,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'addressPerceelParameterSearch',
             [
-                'province'        => $province,
-                'district'        => $district,
-                'city'            => $city,
-                'street'          => $street,
-                'houseNo'         => $houseNo,
+                'province' => $province,
+                'district' => $district,
+                'city' => $city,
+                'street' => $street,
+                'houseNo' => $houseNo,
                 'houseNoAddition' => $houseNoAddition,
-                'page'            => $page,
+                'page' => $page,
             ]
         );
     }
@@ -417,7 +427,7 @@ class Connector extends AbstractConnector
      * @param string $address Address phrase to search for in addresses
      * @param int    $page    Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <PerceelSearchPartsPagedResult>
+     * @return \stdClass <PerceelSearchPartsPagedResult>
      */
     public function addressPerceelPhraseSearch($address, $page)
     {
@@ -429,7 +439,7 @@ class Connector extends AbstractConnector
      *
      * @param int $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function addressProvinceList($page)
     {
@@ -442,7 +452,7 @@ class Connector extends AbstractConnector
      * @param string $name Name or code of the province to list the municipalities from
      * @param int    $page Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass of <District> entries.
+     * @return \stdClass of <District> entries
      */
     public function addressProvinceListDistricts($name, $page)
     {
@@ -456,7 +466,7 @@ class Connector extends AbstractConnector
      * @param bool   $postbus Boolean indicating whether Postbus neighborhood codes should be included in the result
      * @param int    $page    Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <Neighborhood> entries.
+     * @return \stdClass <Patterns::{Type}PagedResult> of <Neighborhood> entries
      */
     public function addressProvinceListNeighborhoods($name, $postbus, $page)
     {
@@ -469,10 +479,10 @@ class Connector extends AbstractConnector
     /**
      * Search for all provinces that match a phrase.
      *
-     * @param string $name Phrase to search for in the province names, or the province code.
+     * @param string $name phrase to search for in the province names, or the province code
      * @param int    $page Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <Province> entries.
+     * @return \stdClass <Patterns::{Type}PagedResult> of <Province> entries
      */
     public function addressProvinceSearch($name, $page)
     {
@@ -497,7 +507,7 @@ class Connector extends AbstractConnector
      * @param string $city     Phrase used to select the city of the address, see <PCReeks>.plaatsnaam. Optional.
      * @param int    $page     Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass PagedResult of <RangeAddress> entries.
+     * @return \stdClass pagedResult of <RangeAddress> entries
      */
     public function addressReeksAddressSearch($address, $postcode, $city, $page)
     {
@@ -526,7 +536,7 @@ class Connector extends AbstractConnector
      *                                  <PCReeks>.reeksindicatie
      * @param int    $page              Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass PCReeksSearchPartsPagedResult
+     * @return \stdClass PCReeksSearchPartsPagedResult
      */
     public function addressReeksFullParameterSearch(
         $province,
@@ -543,16 +553,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'addressReeksFullParameterSearch',
             [
-                'province'          => $province,
-                'district'          => $district,
-                'city'              => $city,
-                'street'            => $street,
-                'houseNo'           => $houseNo,
-                'houseNoAddition'   => $houseNoAddition,
-                'nbcode'            => $nbCode,
+                'province' => $province,
+                'district' => $district,
+                'city' => $city,
+                'street' => $street,
+                'houseNo' => $houseNo,
+                'houseNoAddition' => $houseNoAddition,
+                'nbcode' => $nbCode,
                 'lettercombination' => $letterCombination,
-                'addresstype'       => $addressType,
-                'page'              => $page,
+                'addresstype' => $addressType,
+                'page' => $page,
             ]
         );
     }
@@ -570,20 +580,20 @@ class Connector extends AbstractConnector
      * @param string $houseNoAddition Phrase used to select the house number addition of the address
      * @param int    $page            Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass PCReeksSearchPartsPagedResult
+     * @return \stdClass PCReeksSearchPartsPagedResult
      */
     public function addressReeksParameterSearch($province, $district, $city, $street, $houseNo, $houseNoAddition, $page)
     {
         return $this->getAdapter()->call(
             'addressReeksParameterSearch',
             [
-                'province'        => $province,
-                'district'        => $district,
-                'city'            => $city,
-                'street'          => $street,
-                'houseNo'         => $houseNo,
+                'province' => $province,
+                'district' => $district,
+                'city' => $city,
+                'street' => $street,
+                'houseNo' => $houseNo,
                 'houseNoAddition' => $houseNoAddition,
-                'page'            => $page,
+                'page' => $page,
             ]
         );
     }
@@ -594,10 +604,11 @@ class Connector extends AbstractConnector
      * validate an address not using this unique identifier,
      * use <addressReeksAddressSearch> or <addressReeksFullParameterSearch>.
      *
-     * @param string $address - Address to validate using the unique '1234AA12' postcode + house number format.
+     * @param string $address - Address to validate using the unique '1234AA12' postcode + house number format
      *
      * @throws NotFoundException
-     * @return \StdClass <PCReeks>
+     *
+     * @return \stdClass <PCReeks>
      */
     public function addressReeksPostcodeSearch($address)
     {
@@ -611,7 +622,8 @@ class Connector extends AbstractConnector
      * @param int    $page             Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_areacode-php.html
-     * @return \StdClass <Patterns::{Type}PagedResult> of <AreaCode>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <AreaCode>
      */
     public function areaCodeLookup($neighborhoodCode, $page)
     {
@@ -624,7 +636,8 @@ class Connector extends AbstractConnector
      * @param string $postcode postcode to lookup
      *
      * @link https://webview.webservices.nl/documentation/files/service_areacode-php.html#Areacode.areaCodePostcodeLookup
-     * @return \StdClass <Patterns::{Type}Array> of <AreaCode>
+     *
+     * @return \stdClass <Patterns::{Type}Array> of <AreaCode>
      */
     public function areaCodePostcodeLookup($postcode)
     {
@@ -638,7 +651,8 @@ class Connector extends AbstractConnector
      * @param int    $page     Page to retrieve
      *
      * @link https://webview.webservices.nl/documentation/files/service_areacode-php.html#Areacode.areaCodeToNeighborhoodcode
-     * @return \StdClass A <Patterns::{Type}PagedResult> of <Neighborhood> entries
+     *
+     * @return \stdClass A <Patterns::{Type}PagedResult> of <Neighborhood> entries
      */
     public function areaCodeToNeighborhoodcode($areaCode, $page)
     {
@@ -651,7 +665,8 @@ class Connector extends AbstractConnector
      * @param string $bovagId The identifier used by Bovag to identify a member
      *
      * @link https://webview.webservices.nl/documentation/files/service_bovag-php.html#Bovag.bovagGetMemberByBovagId
-     * @return \StdClass <BovagMember>
+     *
+     * @return \stdClass <BovagMember>
      */
     public function bovagGetMemberByBovagId($bovagId)
     {
@@ -665,7 +680,8 @@ class Connector extends AbstractConnector
      * @param string $establishmentNumber Establishment number
      *
      * @link https://webview.webservices.nl/documentation/files/service_bovag-php.html#Bovag.bovagGetMemberByDutchBusiness
-     * @return \StdClass <BovagMember>
+     *
+     * @return \stdClass <BovagMember>
      */
     public function bovagGetMemberByDutchBusiness($dossierNumber, $establishmentNumber)
     {
@@ -683,7 +699,8 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken)
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carATDPrice
-     * @return \StdClass A <CarATDPrices>
+     *
+     * @return \stdClass A <CarATDPrices>
      */
     public function carATDPrice($licensePlate)
     {
@@ -697,14 +714,15 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken)
      * @param string $code         code (meldcode), 4 digits
      *
-     * @returns \StdClass <CarCheckCode>.
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarCheckCode
+     *
+     * @return \stdClass <CarCheckCode>.
      */
     public function carRDWCarCheckCode($licensePlate, $code)
     {
         return $this->getAdapter()->call(
             'carRDWCarCheckCode',
-            ['license_plate' => (string)$licensePlate, 'code' => (string)$code]
+            ['license_plate' => (string) $licensePlate, 'code' => (string) $code]
         );
     }
 
@@ -715,11 +733,12 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken) of the car to retrieve
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataV3
-     * @return \StdClass <Car>
+     *
+     * @return \stdClass <Car>
      */
     public function carRDWCarData($licensePlate)
     {
-        return $this->getAdapter()->call('carRDWCarData', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carRDWCarData', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -730,11 +749,12 @@ class Connector extends AbstractConnector
      *
      * @link       https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataBP
      * @deprecated please use carRDWCarDataBPV2
-     * @return \StdClass <Car>
+     *
+     * @return \stdClass <Car>
      */
     public function carRDWCarDataBP($licensePlate)
     {
-        return $this->getAdapter()->call('carRDWCarDataBP', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carRDWCarDataBP', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -744,11 +764,12 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken) of the car to retreive
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataBPV2
-     * @return \StdClass <CarBPV2>
+     *
+     * @return \stdClass <CarBPV2>
      */
     public function carRDWCarDataBPV2($licensePlate)
     {
-        return $this->getAdapter()->call('carRDWCarDataBPV2', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carRDWCarDataBPV2', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -760,13 +781,14 @@ class Connector extends AbstractConnector
      * @param string $code
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataExtended
-     * @return \StdClass <CarExtended>
+     *
+     * @return \stdClass <CarExtended>
      */
     public function carRDWCarDataExtended($licensePlate, $code)
     {
         return $this->getAdapter()->call(
             'carRDWCarDataExtended',
-            ['license_plate' => (string)$licensePlate, 'code' => (string)$code]
+            ['license_plate' => (string) $licensePlate, 'code' => (string) $code]
         );
     }
 
@@ -776,11 +798,12 @@ class Connector extends AbstractConnector
      * @param string $carId
      *
      * @see Use <carRDWCarDataV3> to find a car_id
-     * @return \StdClass <CarOptions>
+     *
+     * @return \stdClass <CarOptions>
      */
     public function carRDWCarDataOptions($carId)
     {
-        return $this->getAdapter()->call('carRDWCarDataOptions', ['car_id' => (string)$carId]);
+        return $this->getAdapter()->call('carRDWCarDataOptions', ['car_id' => (string) $carId]);
     }
 
     /**
@@ -792,11 +815,12 @@ class Connector extends AbstractConnector
      * @param string $licensePlate
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataPrice
-     * @return \StdClass <CarRDWCarDataPrice>
+     *
+     * @return \stdClass <CarRDWCarDataPrice>
      */
     public function carRDWCarDataPrice($licensePlate)
     {
-        return $this->getAdapter()->call('carRDWCarDataPrice', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carRDWCarDataPrice', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -806,11 +830,12 @@ class Connector extends AbstractConnector
      * @param string $licensePlate - Dutch license plate (kenteken) of the car to retrieve
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarDataV3
-     * @return \StdClass <CarDataV3Result>.
+     *
+     * @return \stdClass <CarDataV3Result>
      */
     public function carRDWCarDataV3($licensePlate)
     {
-        return $this->getAdapter()->call('carRDWCarDataV3', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carRDWCarDataV3', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -821,11 +846,12 @@ class Connector extends AbstractConnector
      * @param string $licensePlate Dutch license plate (kenteken)
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEBasicTypeData
-     * @return \StdClass <CarVWEBasicTypeData>
+     *
+     * @return \stdClass <CarVWEBasicTypeData>
      */
     public function carVWEBasicTypeData($licensePlate)
     {
-        return $this->getAdapter()->call('carVWEBasicTypeData', ['license_plate' => (string)$licensePlate]);
+        return $this->getAdapter()->call('carVWEBasicTypeData', ['license_plate' => (string) $licensePlate]);
     }
 
     /**
@@ -842,16 +868,16 @@ class Connector extends AbstractConnector
      *
      * @param int $productionYear Search for brands which produced cars in this year, or one year before or after. If
      *                            0, brands of all years are returned.
-     * @param int $kindId         Identifier of the kind of car to retrieve the brands for.
+     * @param int $kindId         identifier of the kind of car to retrieve the brands for
      * @param int $page           Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <CarVWEBrand> entries
+     * @return \stdClass <Patterns::{Type}PagedResult> of <CarVWEBrand> entries
      */
     public function carVWEListBrands($productionYear, $kindId, $page)
     {
         return $this->getAdapter()->call(
             'carVWEListBrands',
-            ['production_year' => (int)$productionYear, 'kind_id' => (int)$kindId, 'page' => (int)$page]
+            ['production_year' => (int) $productionYear, 'kind_id' => (int) $kindId, 'page' => (int) $page]
         );
     }
 
@@ -861,21 +887,22 @@ class Connector extends AbstractConnector
      * @param int $productionYear Search for models which were produced in this year, or one year before or after. If
      *                            0, models of all years are returned.
      * @param int $kindId         Identifier of the kind of car to retrieve the models for
-     * @param int $brandId        Brand identifier, as returned by <carVWEListBrands>.
+     * @param int $brandId        brand identifier, as returned by <carVWEListBrands>
      * @param int $page           Page to retrieve, pages start counting at 1
      *
      * @see carVWEList for kindId Options
-     * @return \StdClass <Patterns::{Type}PagedResult> of <CarVWEModel> entries
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <CarVWEModel> entries
      */
     public function carVWEListModels($productionYear, $kindId, $brandId, $page)
     {
         return $this->getAdapter()->call(
             'carVWEListModels',
             [
-                'production_year' => (int)$productionYear,
-                'kind_id'         => (int)$kindId,
-                'brand_id'        => (int)$brandId,
-                'page'            => (int)$page,
+                'production_year' => (int) $productionYear,
+                'kind_id' => (int) $kindId,
+                'brand_id' => (int) $brandId,
+                'page' => (int) $page,
             ]
         );
     }
@@ -895,7 +922,7 @@ class Connector extends AbstractConnector
      *                            6 - moped
      *                            8 - bus
      * @param int $brandId        Body style identifier. Optional.
-     * @param int $modelId        Model identifier, as returned by <carVWEListModels>.
+     * @param int $modelId        model identifier, as returned by <carVWEListModels>
      * @param int $fuelTypeId     Fuel type identifier. Optional
      * @param int $bodyStyleId    Body style identifier. Optional.
      *                            02 - 2/4-drs sedan (2/4 deurs sedan)
@@ -928,7 +955,8 @@ class Connector extends AbstractConnector
      * @param int $page           Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEListVersions
-     * @return \StdClass <Patterns::{Type}PagedResult> of <CarVWEVersion> entries
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <CarVWEVersion> entries
      */
     public function carVWEListVersions(
         $productionYear,
@@ -944,15 +972,15 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'carVWEListVersions',
             [
-                'production_year' => (int)$productionYear,
-                'kind_id'         => (int)$kindId,
-                'brand_id'        => (int)$brandId,
-                'model_id'        => (int)$modelId,
-                'fuel_type_id'    => (int)$fuelTypeId,
-                'body_style_id'   => (int)$bodyStyleId,
-                'doors'           => (int)$doors,
-                'gear_id'         => (int)$gearId,
-                'page'            => (int)$page,
+                'production_year' => (int) $productionYear,
+                'kind_id' => (int) $kindId,
+                'brand_id' => (int) $brandId,
+                'model_id' => (int) $modelId,
+                'fuel_type_id' => (int) $fuelTypeId,
+                'body_style_id' => (int) $bodyStyleId,
+                'doors' => (int) $doors,
+                'gear_id' => (int) $gearId,
+                'page' => (int) $page,
             ]
         );
     }
@@ -965,13 +993,14 @@ class Connector extends AbstractConnector
      * @param int    $code         code (meldcode), 4 digits
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarCheckCode
-     * @return \StdClass <CarCheckCode>
+     *
+     * @return \stdClass <CarCheckCode>
      */
     public function carVWEMeldcodeCheck($licensePlate, $code)
     {
         return $this->getAdapter()->call(
             'carVWEMeldcodeCheck',
-            ['license_plate' => (string)$licensePlate, 'code' => (string)$code]
+            ['license_plate' => (string) $licensePlate, 'code' => (string) $code]
         );
     }
 
@@ -985,13 +1014,14 @@ class Connector extends AbstractConnector
      *
      * @see  carVWEBasicTypeData
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEOptions
-     * @return \StdClass <CarVWEOptions>
+     *
+     * @return \stdClass <CarVWEOptions>
      */
     public function carVWEOptions($licensePlate, $atlCode)
     {
         return $this->getAdapter()->call(
             'carVWEOptions',
-            ['license_plate' => (string)$licensePlate, 'atl_code' => (int)$atlCode]
+            ['license_plate' => (string) $licensePlate, 'atl_code' => (int) $atlCode]
         );
     }
 
@@ -1001,11 +1031,12 @@ class Connector extends AbstractConnector
      * @param int $atlCode Code identifying the version of the car. atlCode can be obtained using <carVWEBasicTypeData>,
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEPhotos
-     * @return \StdClass <CarVWEPhoto>
+     *
+     * @return \stdClass <CarVWEPhoto>
      */
     public function carVWEPhotos($atlCode)
     {
-        return $this->getAdapter()->call('carVWEPhotos', ['atl_code' => (int)$atlCode]);
+        return $this->getAdapter()->call('carVWEPhotos', ['atl_code' => (int) $atlCode]);
     }
 
     /**
@@ -1017,13 +1048,14 @@ class Connector extends AbstractConnector
      *                             <carVWEBasicTypeData>.
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEVersionPrice
-     * @return \StdClass <CarVWEVersionPrice>
+     *
+     * @return \stdClass <CarVWEVersionPrice>
      */
     public function carVWEVersionPrice($licensePlate, $atlCode)
     {
         return $this->getAdapter()->call(
             'carVWEVersionPrice',
-            ['license_plate' => (string)$licensePlate, 'atl_code' => (int)$atlCode]
+            ['license_plate' => (string) $licensePlate, 'atl_code' => (int) $atlCode]
         );
     }
 
@@ -1035,7 +1067,8 @@ class Connector extends AbstractConnector
      * @param int $atlCode        Code identifying the version of the car
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carVWEVersionYearData
-     * @return \StdClass <CarVWEVersionYearData>
+     *
+     * @return \stdClass <CarVWEVersionYearData>
      */
     public function carVWEVersionYearData($productionYear, $atlCode)
     {
@@ -1054,7 +1087,7 @@ class Connector extends AbstractConnector
      * @param string $contactName
      * @param string $telephone
      *
-     * @return \StdClass <User>
+     * @return \stdClass <User>
      */
     public function createTestUser($application, $email, $companyName, $contactName, $telephone)
     {
@@ -1062,10 +1095,10 @@ class Connector extends AbstractConnector
             'createTestUser',
             [
                 'application' => $application,
-                'email'       => $email,
+                'email' => $email,
                 'companyname' => $companyName,
                 'contactname' => $contactName,
-                'telephone'   => $telephone,
+                'telephone' => $telephone,
             ]
         );
     }
@@ -1083,17 +1116,17 @@ class Connector extends AbstractConnector
      *                          '|4' -- Claim
      *                          '|5' -- Contract
      *                          '|6' -- Commercial Credit Insurance
-     * @param string $language  ISO 639-1 notation language that the report should be returned in, for example: "EN".
+     * @param string $language  ISO 639-1 notation language that the report should be returned in, for example: "EN"
      * @param string $document  Specify to retrieve an extra document with an excerpt of the data. Currently unused.
      *                          Possible values: [empty string] -- Return no extra document.
      *
-     * @return \StdClass <CreditsafeCompanyReportFull>
+     * @return \stdClass <CreditsafeCompanyReportFull>
      */
     public function creditsafeGetReportFull($companyId, $language, $document)
     {
         return $this->getAdapter()->call(
             'creditsafeGetReportFull',
-            ['company_id' => (int)$companyId, 'language' => (string)$language, 'document' => (string)$document]
+            ['company_id' => (int) $companyId, 'language' => (string) $language, 'document' => (string) $document]
         );
     }
 
@@ -1123,7 +1156,7 @@ class Connector extends AbstractConnector
      * @param string $phoneNumber        Company's phone number, optional
      * @param int    $page               Page of search results to retrieve
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <CreditsafeCompany> entries.
+     * @return \stdClass <Patterns::{Type}PagedResult> of <CreditsafeCompany> entries
      */
     public function creditsafeSearch(
         $country,
@@ -1146,22 +1179,22 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'creditsafeSearch',
             [
-                'country'             => $country,
-                'id'                  => $id,
+                'country' => $country,
+                'id' => $id,
                 'registration_number' => $registrationNumber,
-                'status'              => $status,
-                'office_type'         => $officeType,
-                'name'                => $name,
-                'name_match_type'     => $nameMatchType,
-                'address'             => $address,
-                'address_match_type'  => $addressMatchType,
-                'street'              => $street,
-                'house_number'        => $houseNumber,
-                'city'                => $city,
-                'postal_code'         => $postalCode,
-                'province'            => $province,
-                'phone_number'        => $phoneNumber,
-                'page'                => $page,
+                'status' => $status,
+                'office_type' => $officeType,
+                'name' => $name,
+                'name_match_type' => $nameMatchType,
+                'address' => $address,
+                'address_match_type' => $addressMatchType,
+                'street' => $street,
+                'house_number' => $houseNumber,
+                'city' => $city,
+                'postal_code' => $postalCode,
+                'province' => $province,
+                'phone_number' => $phoneNumber,
+                'page' => $page,
             ]
         );
     }
@@ -1174,11 +1207,12 @@ class Connector extends AbstractConnector
      * of identifiers: DUNS number, D&B key, and regional business number. All company references returned by search
      * methods are identified using D&B keys.
      *
-     * @param string $companyId     Identifier for the business.
+     * @param string $companyId     identifier for the business
      * @param string $companyIdType Type of company identifier
      *
      * @link   https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbBusinessVerification
-     * @return \StdClass <DNBBusinessVerification>
+     *
+     * @return \stdClass <DNBBusinessVerification>
      */
     public function dnbBusinessVerification($companyId, $companyIdType)
     {
@@ -1192,11 +1226,12 @@ class Connector extends AbstractConnector
      * Retrieve extensive management Dun & Bradstreet Business information
      * See <Dun & Bradstreet::Company identifiers>.
      *
-     * @param string $companyId     Identifier for the business.
+     * @param string $companyId     identifier for the business
      * @param string $companyIdType Type of company identifier
      *
      * @link   https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbEnterpriseManagement
-     * @return \StdClass <DNBBusinessVerification>
+     *
+     * @return \stdClass <DNBBusinessVerification>
      */
     public function dnbEnterpriseManagement($companyId, $companyIdType)
     {
@@ -1214,7 +1249,8 @@ class Connector extends AbstractConnector
      * @param string $companyIdType Type of company identifier
      *
      * @link https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbGetReference
-     * @return \StdClass <DNBBusinessVerification>
+     *
+     * @return \stdClass <DNBBusinessVerification>
      */
     public function dnbGetReference($companyId, $companyIdType)
     {
@@ -1239,7 +1275,8 @@ class Connector extends AbstractConnector
      *                              (Vestigingsnummer), or a 9-digit RSIN Number
      *
      * @link https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbQuickCheck
-     * @return \StdClass <DNBQuickCheck>
+     *
+     * @return \stdClass <DNBQuickCheck>
      */
     public function dnbQuickCheck($companyId, $companyIdType)
     {
@@ -1256,18 +1293,19 @@ class Connector extends AbstractConnector
      * one other address field.
      * See <Dun & Bradstreet::Company identifiers>.
      *
-     * @param string $name            Trade name of the business, required.
-     * @param string $streetName      Street the business is located at, optional.
-     * @param string $houseNo         House number of the business, optional.
-     * @param string $houseNoAddition House number addition, optional.
-     * @param string $postcode        Postcode of the business, optional.
-     * @param string $cityName        City where the business is located, optional.
+     * @param string $name            trade name of the business, required
+     * @param string $streetName      street the business is located at, optional
+     * @param string $houseNo         house number of the business, optional
+     * @param string $houseNoAddition house number addition, optional
+     * @param string $postcode        postcode of the business, optional
+     * @param string $cityName        city where the business is located, optional
      * @param string $country         The 2 character ISO 3166-1 code for the country where the business is located.
      *                                Required
-     * @param int    $page            Page to retrieve, pages start counting at 1.
+     * @param int    $page            page to retrieve, pages start counting at 1
      *
      * @deprecated use <dnbSearchReferenceV2> instead
-     * @return \StdClass <DNBBusinessVerification>
+     *
+     * @return \stdClass <DNBBusinessVerification>
      */
     public function dnbSearchReference(
         $name,
@@ -1282,14 +1320,14 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dnbSearchReference',
             [
-                'name'            => $name,
-                'streetname'      => $streetName,
-                'houseno'         => $houseNo,
+                'name' => $name,
+                'streetname' => $streetName,
+                'houseno' => $houseNo,
                 'housenoaddition' => $houseNoAddition,
-                'postcode'        => $postcode,
-                'cityname'        => $cityName,
-                'country'         => $country,
-                'page'            => $page,
+                'postcode' => $postcode,
+                'cityname' => $cityName,
+                'country' => $country,
+                'page' => $page,
             ]
         );
     }
@@ -1300,21 +1338,22 @@ class Connector extends AbstractConnector
      * with optional address parameters. Searching on address can be done using the postcode, or the city and at least
      * one other address field.
      *
-     * @param string $name            Trade name of the business, required.
+     * @param string $name            trade name of the business, required
      * @param string $streetName      Street the business is located at, optional
      * @param string $houseNo         House number of the business, optional
      * @param string $houseNoAddition House number addition, optional
      * @param string $postcode        Postcode of the business, optional
      * @param string $cityName        City where the business is located, optional
-     * @param string $region          Depending on the country, this may be a state, province, or other large
-     *                                geographical area.
+     * @param string $region          depending on the country, this may be a state, province, or other large
+     *                                geographical area
      * @param string $country         For searches in the United States (US) and Canada (CA) this parameter is required.
      *                                State abbreviations, such as NY for New York, must be used
      *                                for the US.
      * @param int    $page
      *
      * @link https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbSearchReferenceV2
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DNBBusinessReferenceV2> entries
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DNBBusinessReferenceV2> entries
      */
     public function dnbSearchReferenceV2(
         $name,
@@ -1330,15 +1369,15 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dnbSearchReferenceV2',
             [
-                'name'            => $name,
-                'streetname'      => $streetName,
-                'houseno'         => $houseNo,
+                'name' => $name,
+                'streetname' => $streetName,
+                'houseno' => $houseNo,
                 'housenoaddition' => $houseNoAddition,
-                'postcode'        => $postcode,
-                'cityname'        => $cityName,
-                'region'          => $region,
-                'country'         => $country,
-                'page'            => $page,
+                'postcode' => $postcode,
+                'cityname' => $cityName,
+                'region' => $region,
+                'country' => $country,
+                'page' => $page,
             ]
         );
     }
@@ -1347,11 +1386,12 @@ class Connector extends AbstractConnector
      * Retrieve basic WorldBase business information.
      * See <Dun & Bradstreet::Company identifiers>.
      *
-     * @param string $companyId     Identifier for the business.
+     * @param string $companyId     identifier for the business
      * @param string $companyIdType Type of company identifier. see <Dun & Bradstreet::Company identifiers>
      *
      * @link https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbWorldbaseMarketing
-     * @return \StdClass <DNBMarketing>
+     *
+     * @return \stdClass <DNBMarketing>
      */
     public function dnbWorldbaseMarketing($companyId, $companyIdType)
     {
@@ -1364,11 +1404,12 @@ class Connector extends AbstractConnector
     /**
      * Retrieve detailed WorldBase business information.
      *
-     * @param string $companyId     Identifier for the business.
+     * @param string $companyId     identifier for the business
      * @param string $companyIdType Type of company identifier. see <Dun & Bradstreet::Company identifiers>
      *
      * @link https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbWorldbaseMarketingPlus
-     * @return \StdClass <DNBMarketingPlusResult>
+     *
+     * @return \stdClass <DNBMarketingPlusResult>
      */
     public function dnbWorldbaseMarketingPlus($companyId, $companyIdType)
     {
@@ -1381,11 +1422,12 @@ class Connector extends AbstractConnector
     /**
      * Detailed WorldBase information, including information on a business' family tree.
      *
-     * @param string $companyId     Identifier for the business.
+     * @param string $companyId     identifier for the business
      * @param string $companyIdType Type of company identifier. see <Dun & Bradstreet::Company identifiers>
      *
      * @link  https://webview.webservices.nl/documentation/files/service_dnb-php.html#DunBradstreet.dnbWorldbaseMarketingPlusLinkage
-     * @return \StdClass <DNBMarketingPlusLinkageResult>
+     *
+     * @return \stdClass <DNBMarketingPlusLinkageResult>
      */
     public function dnbWorldbaseMarketingPlusLinkage($companyId, $companyIdType)
     {
@@ -1402,7 +1444,8 @@ class Connector extends AbstractConnector
      * @param string $nbCodeto   destination neighborhoodcode
      *
      * @link https://webview.webservices.nl/documentation/files/service_driveinfo-php.html#Driveinfo.driveInfoDistanceLookup
-     * @return \StdClass <DriveInfo>
+     *
+     * @return \stdClass <DriveInfo>
      */
     public function driveInfoDistanceLookup($nbCodefrom, $nbCodeto)
     {
@@ -1419,7 +1462,8 @@ class Connector extends AbstractConnector
      * @param string $nbCodeto   destination neighborhoodcode
      *
      * @link https://webview.webservices.nl/documentation/files/service_driveinfo-php.html#Driveinfo.driveInfoTimeLookup
-     * @return \StdClass <DriveInfo>
+     *
+     * @return \stdClass <DriveInfo>
      */
     public function driveInfoTimeLookup($nbCodefrom, $nbCodeto)
     {
@@ -1434,9 +1478,9 @@ class Connector extends AbstractConnector
      * postcode + house number format. If returns either the full address in <DutchAddressPostcodeRange> format,
      * or an error if no matching address exists.
      *
-     * @param string $address Address to validate, in the unique '1234AA12' postcode house number format.
+     * @param string $address address to validate, in the unique '1234AA12' postcode house number format
      *
-     * @return \StdClass <DutchAddressPostcodeRange>
+     * @return \stdClass <DutchAddressPostcodeRange>
      */
     public function dutchAddressRangePostcodeSearch($address)
     {
@@ -1455,6 +1499,7 @@ class Connector extends AbstractConnector
      * @param int|null $establishmentNumber The Establishment number
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchaddress-php.html#Dutch_Address.dutchAddressRangePostcodeSearch
+     *
      * @return \stdClass <DutchBusinessDossier>
      */
     public function dutchBusinessGetDossier($dossierNumber, $establishmentNumber = null)
@@ -1468,21 +1513,138 @@ class Connector extends AbstractConnector
     /**
      *  Get a list of logged updates for a specific business dossier.
      *
-     * @param string      $dossierNumber   Chamber of Commerce number.
+     * @param string      $dossierNumber   chamber of Commerce number
      * @param string      $periodStartDate Period start date, in Y-m-d format
      * @param string|null $periodEndDate   Period end date, in Y-m-d format. The max period is one year. [optional]
      *
-     * @return \StdClass <DutchBusinessDossierHistory>
+     * @return \stdClass <DutchBusinessDossierHistory>
      */
     public function dutchBusinessGetDossierHistory($dossierNumber, $periodStartDate, $periodEndDate = null)
     {
         return $this->getAdapter()->call(
             'dutchBusinessGetDossierHistory',
             [
-                'dossier_number'    => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'period_start_date' => $periodStartDate,
-                'period_end_date'   => $periodEndDate]
+                'period_end_date' => $periodEndDate,
+            ]
         );
+    }
+
+    /**
+     *  Starts a UBO investigation.
+     *
+     * @param string      $dossierNumber   chamber of Commerce number
+     * @param string|null $oldestExtractDate Period start date, in Y-m-d format [optional]
+     * @param bool        $useUpdates   Use a real-time extract [optional]
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationToken>
+     */
+    public function dutchBusinessUBOStartInvestigation($dossierNumber, $oldestExtractDate = null, $useUpdates = true)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOStartInvestigation', [
+            'dossier_number' => $dossierNumber,
+            'oldest_extract_date' => $oldestExtractDate,
+            'use_updates' => $useUpdates,
+        ]);
+    }
+
+    /**
+     *  Checks the status of an (ongoing) UBO investigation.
+     *
+     * @param string      $token   An investigation token.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationStatus>
+     */
+    public function dutchBusinessUBOCheckInvestigation($token)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOCheckInvestigation', [
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     *  Pick up the results of the UBO investigation.
+     *
+     * @param string      $token    An investigation token.
+     * @param bool        $includeSource    When set the original source is added to the extracts.
+     *
+     * @return \stdClass <DutchBusinessUBOInvestigationResult>
+     */
+    public function dutchBusinessUBOPickupInvestigation($token, $includeSource = false)
+    {
+        return $this->getAdapter()->call('dutchBusinessUBOPickupInvestigation', [
+            'token' => $token,
+            'include_source' => $includeSource,
+        ]);
+    }
+
+    /**
+     *  Request an annual financial statement document for a dutch-business.
+     *
+     * @param string      $dossierNumber    Chamber of Commerce number
+     * @param integer     $year     The year of the financial statement
+     * @param string      $type     The type of the financial statement
+     *
+     * @return \stdClass <DutchBusinessAnnualFinancialStatement>
+     */
+    public function dutchBusinessGetAnnualFinancialStatement($dossierNumber, $year, $type)
+    {
+        return $this->getAdapter()->call(
+            'dutchBusinessGetAnnualFinancialStatement',
+            [
+                'dossier_number' => $dossierNumber,
+                'year' => $year,
+                'type' => $type,
+            ]
+        );
+    }
+
+    /**
+     *  Retrieve a list of person entities based on search criteria.
+     *
+     * @param string      $firstName   First name [optional]
+     * @param string      $lastName    Last name (required)
+     * @param string      $dateOfBirth    Date of birth (optional, format: Y-m-d)
+     * @param int         $page    Pagination starts at 1 (optional, defaults to first page)
+     *
+     * @return \stdClass <CompliancePersonSearchReference>
+     */
+    public function complianceSearchPersons($firstName, $lastName, $dateOfBirth, $page = 1)
+    {
+        return $this->getAdapter()->call('complianceSearchPersons', [
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'date_of_birth' => $dateOfBirth,
+            'page' => $page,
+        ]);
+    }
+
+    /**
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsOverviewResult>
+     */
+    public function dutchBusinessGetConcernRelationsOverview($dossierNumber)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsOverview', ['dossier_number' => $dossierNumber]);
+    }
+
+    /**
+     *  Search for an overview of Corporate Group Relationships aka ‘concern relaties’ for specified dossier number.
+     *  The overview gives a summary of the concern-relations size and depth.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param bool   $includeSource  When set the original source is added to the response
+     *
+     * @return \stdClass <DutchBusinessGetConcernRelationsDetailsResult>
+     */
+    public function dutchBusinessGetConcernRelationsDetails($dossierNumber, $includeSource)
+    {
+        return $this->getAdapter()->call('dutchBusinessGetConcernRelationsDetails', ['dossier_number' => $dossierNumber, 'include_source' => $includeSource]);
     }
 
     /**
@@ -1490,16 +1652,17 @@ class Connector extends AbstractConnector
      * The document is generated using the business' `Online inzage uittreksel`.
      *
      * @param string $dossierNumber Chamber of Commerce number
-     * @param bool   $allowCaching  determines whether a cached document may be returned.
+     * @param bool   $allowCaching  determines whether a cached document may be returned
      *
      * @see <DutchBusinessExtractDocumentData>
-     * @return \StdClass <DutchBusinessExtractDocument>
+     *
+     * @return \stdClass <DutchBusinessExtractDocument>
      */
     public function dutchBusinessGetExtractDocument($dossierNumber, $allowCaching)
     {
         return $this->getAdapter()->call(
             'dutchBusinessGetExtractDocument',
-            ['dossier_number' => (string)$dossierNumber, 'allow_caching' => (bool)$allowCaching]
+            ['dossier_number' => (string) $dossierNumber, 'allow_caching' => (bool) $allowCaching]
         );
     }
 
@@ -1512,7 +1675,8 @@ class Connector extends AbstractConnector
      *
      * @link       https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractDocumentData
      * @deprecated please use <DutchBusinessExtractDocumentV2>
-     * @return \StdClass <DutchBusinessExtractDocument>
+     *
+     * @return \stdClass <DutchBusinessExtractDocument>
      */
     public function dutchBusinessGetExtractDocumentData($dossierNumber, $allowCaching)
     {
@@ -1528,11 +1692,30 @@ class Connector extends AbstractConnector
      * @param string $dossierNumber Chamber of Commerce number
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractDocumentDataV2
-     * @return \StdClass <DutchBusinessExtractDocumentV2>
+     *
+     * @return \stdClass <DutchBusinessExtractDocumentV2>
      */
     public function dutchBusinessGetExtractDocumentDataV2($dossierNumber)
     {
         return $this->getAdapter()->call('dutchBusinessGetExtractDocumentDataV2', ['dossier_number' => $dossierNumber]);
+    }
+
+    /**
+     * Get the extract data and document for a business dossier.
+     *
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param bool   $includeSource When set the original source is added to the response
+     *
+     * @return \stdClass <DutchBusinessExtractDocumentV3>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractDocumentDataV3
+     */
+    public function dutchBusinessGetExtractDocumentDataV3($dossierNumber, $includeSource = false)
+    {
+        return $this->getAdapter()->call(
+            'dutchBusinessGetExtractDocumentDataV3',
+            ['dossier_number' => $dossierNumber, 'include_source' => $includeSource]
+        );
     }
 
     /**
@@ -1545,21 +1728,22 @@ class Connector extends AbstractConnector
      * <dutchBusinessGetExtractDocumentData> or <dutchBusinessGetExtractDocument>.
      *
      * @param string $dossierNumber   Chamber of Commerce number
-     * @param string $periodStartDate The start date of the period of historic documents.
+     * @param string $periodStartDate the start date of the period of historic documents
      * @param string $periodEndDate   The end date of the set period, can differ max one year from start date.
      *                                [optional][default:today]
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractHistory
-     * @return \StdClass <DutchBusinessExtractHistory>
+     *
+     * @return \stdClass <DutchBusinessExtractHistory>
      */
     public function dutchBusinessGetExtractHistory($dossierNumber, $periodStartDate, $periodEndDate)
     {
         return $this->getAdapter()->call(
             'dutchBusinessGetExtractHistory',
             [
-                'dossier_number'    => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'period_start_date' => $periodStartDate,
-                'period_end_date'   => $periodEndDate,
+                'period_end_date' => $periodEndDate,
             ]
         );
     }
@@ -1568,20 +1752,20 @@ class Connector extends AbstractConnector
      * Get a list of historical business-extract references for the given company or organisation.
      * Collected by Webservices.nl that contain changes compared to their previous retrieved extract.
      *
-     * @param string $dossierNumber   Chamber of Commerce number.
-     * @param string $periodStartDate The start date of the period of historic documents.
+     * @param string $dossierNumber   chamber of Commerce number
+     * @param string $periodStartDate the start date of the period of historic documents
      * @param string $periodEndDate   The end date of the set period. [optional][default:today]
      *
-     * @return \StdClass <DutchBusinessExtractHistory>
+     * @return \stdClass <DutchBusinessExtractHistory>
      */
     public function dutchBusinessGetExtractHistoryChanged($dossierNumber, $periodStartDate, $periodEndDate)
     {
         return $this->getAdapter()->call(
             'dutchBusinessGetExtractHistoryChanged',
             [
-                'dossier_number'    => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'period_start_date' => $periodStartDate,
-                'period_end_date'   => $periodEndDate,
+                'period_end_date' => $periodEndDate,
             ]
         );
     }
@@ -1593,7 +1777,8 @@ class Connector extends AbstractConnector
      * @param string $extractId Business-extract identifier
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractHistoryChanged
-     * @return \StdClass <DutchBusinessExtractDocumentData>.
+     *
+     * @return \stdClass <DutchBusinessExtractDocumentData>
      */
     public function dutchBusinessGetExtractHistoryDocumentData($extractId)
     {
@@ -1607,7 +1792,8 @@ class Connector extends AbstractConnector
      * @param string $extractId Business-extract identifier
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractHistoryDocumentDataV2
-     * @return \StdClass <DutchBusinessExtractDocumentDataV2>
+     *
+     * @return \stdClass <DutchBusinessExtractDocumentDataV2>
      */
     public function dutchBusinessGetExtractHistoryDocumentDataV2($extractId)
     {
@@ -1620,7 +1806,8 @@ class Connector extends AbstractConnector
      * @param string $dossierNumber Chamber of Commerce number
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetLegalExtractDocumentDataV2
-     * @return \StdClass <DutchBusinessExtractDocumentDataV2>
+     *
+     * @return \stdClass <DutchBusinessExtractDocumentDataV2>
      */
     public function dutchBusinessGetLegalExtractDocumentDataV2($dossierNumber)
     {
@@ -1635,7 +1822,7 @@ class Connector extends AbstractConnector
      *
      * @param string $dossierNumber The Chamber of Commerce number
      *
-     * @return \StdClass <DutchBusinessPositions> entry
+     * @return \stdClass <DutchBusinessPositions> entry
      */
     public function dutchBusinessGetPositions($dossierNumber)
     {
@@ -1647,10 +1834,11 @@ class Connector extends AbstractConnector
      * Returns the section and its description and all levels of SBI codes and their description, according to the
      * 17-04-2014 version.
      *
-     * @param string $sbiCode  a number between 2 and 6 characters.
+     * @param string $sbiCode  a number between 2 and 6 characters
      * @param string $language the language of the resulted sbi code descriptions nl (default) || en (English)
      *
-     * @return \StdClass <DutchBusinessSBICodeInfo>
+     * @return \stdClass <DutchBusinessSBICodeInfo>
+     *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetSBIDescription
      */
     public function dutchBusinessGetSBIDescription($sbiCode, $language)
@@ -1664,7 +1852,7 @@ class Connector extends AbstractConnector
     /**
      * @param string $dossierNumber The Chamber of Commerce number
      *
-     * @return \StdClass <DutchBusinessVatNumber>
+     * @return \stdClass <DutchBusinessVatNumber>
      */
     public function dutchBusinessGetVatNumber($dossierNumber)
     {
@@ -1691,7 +1879,8 @@ class Connector extends AbstractConnector
      * @param int    $page
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessSearch
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessEstablishmentReference>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessEstablishmentReference>
      */
     public function dutchBusinessSearch(
         $dossierNumber,
@@ -1709,17 +1898,17 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dutchBusinessSearch',
             [
-                'dossier_number'        => $dossierNumber,
-                'trade_name'            => $tradeName,
-                'city'                  => $city,
-                'street'                => $street,
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'dossier_number' => $dossierNumber,
+                'trade_name' => $tradeName,
+                'city' => $city,
+                'street' => $street,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'telephone_number'      => $telephoneNumber,
-                'domain_name'           => $domainName,
-                'strict_search'         => $strictSearch,
-                'page'                  => $page,
+                'telephone_number' => $telephoneNumber,
+                'domain_name' => $domainName,
+                'strict_search' => $strictSearch,
+                'page' => $page,
             ]
         );
     }
@@ -1733,17 +1922,17 @@ class Connector extends AbstractConnector
      * @param string $rsinNumber          The RSIN (`Rechtspersonen Samenwerkingsverbanden Informatie Nummer`) number
      * @param int    $page                Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
      */
     public function dutchBusinessSearchDossierNumber($dossierNumber, $establishmentNumber, $rsinNumber, $page)
     {
         return $this->getAdapter()->call(
             'dutchBusinessSearchDossierNumber',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
-                'rsin_number'          => $rsinNumber,
-                'page'                 => $page,
+                'rsin_number' => $rsinNumber,
+                'page' => $page,
             ]
         );
     }
@@ -1758,17 +1947,18 @@ class Connector extends AbstractConnector
      * @param int    $page                Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessSearchEstablishments
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessEstablishmentReference>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessEstablishmentReference>
      */
     public function dutchBusinessSearchEstablishments($dossierNumber, $establishmentNumber, $rsinNumber, $page)
     {
         return $this->getAdapter()->call(
             'dutchBusinessSearchEstablishments',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
-                'rsin_number'          => $rsinNumber,
-                'page'                 => $page,
+                'rsin_number' => $rsinNumber,
+                'page' => $page,
             ]
         );
     }
@@ -1787,7 +1977,8 @@ class Connector extends AbstractConnector
      * @param int    $page                Page to retrieve, pages start counting at 1
      *
      * @deprecated see dutchBusinessSearchParametersV2 this version working
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function dutchBusinessSearchParameters(
         $tradeName,
@@ -1804,16 +1995,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dutchBusinessSearchParameters',
             [
-                'trade_name'            => $tradeName,
-                'city'                  => $city,
-                'street'                => $street,
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'trade_name' => $tradeName,
+                'city' => $city,
+                'street' => $street,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'telephone_number'      => $telephoneNumber,
-                'domain_name'           => $domainName,
-                'strict_search'         => $strictSearch,
-                'page'                  => $page,
+                'telephone_number' => $telephoneNumber,
+                'domain_name' => $domainName,
+                'strict_search' => $strictSearch,
+                'page' => $page,
             ]
         );
     }
@@ -1842,7 +2033,7 @@ class Connector extends AbstractConnector
      * @param bool   $strictSearch
      * @param int    $page
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessReferenceV2>
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessReferenceV2>
      */
     public function dutchBusinessSearchParametersV2(
         $tradeName,
@@ -1859,16 +2050,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dutchBusinessSearchParametersV2',
             [
-                'trade_name'            => $tradeName,
-                'city'                  => $city,
-                'street'                => $street,
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'trade_name' => $tradeName,
+                'city' => $city,
+                'street' => $street,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'telephone_number'      => $telephoneNumber,
-                'domain_name'           => $domainName,
-                'strict_search'         => $strictSearch,
-                'page'                  => $page,
+                'telephone_number' => $telephoneNumber,
+                'domain_name' => $domainName,
+                'strict_search' => $strictSearch,
+                'page' => $page,
             ]
         );
     }
@@ -1882,17 +2073,17 @@ class Connector extends AbstractConnector
      * @param string $houseNumberAddition House number addition
      * @param int    $page                Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
      */
     public function dutchBusinessSearchPostcode($postcode, $houseNumber, $houseNumberAddition, $page)
     {
         return $this->getAdapter()->call(
             'dutchBusinessSearchPostcode',
             [
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'page'                  => $page,
+                'page' => $page,
             ]
         );
     }
@@ -1922,7 +2113,7 @@ class Connector extends AbstractConnector
      * @param int    $employeesMin       Minimum number of employees working at the business
      * @param int    $employeesMax       Maximum number of employees working at the business
      * @param string $economicallyActive Indicates whether the businesses should be economically active
-     * @param string $financialStatus    Indicates the financial status of the businesses.
+     * @param string $financialStatus    indicates the financial status of the businesses
      * @param string $changedSince       Date in yyyy-mm-dd format. Businesses match if the information about them
      *                                   changed on or after this date.
      * @param string $newSince           Date in yyyy-mm-dd format. Only businesses which were added on or after this
@@ -1932,7 +2123,8 @@ class Connector extends AbstractConnector
      * @param int    $page               Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessSearchSelection
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessReference>
      */
     public function dutchBusinessSearchSelection(
         $city,
@@ -1951,18 +2143,18 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'dutchBusinessSearchSelection',
             [
-                'city'                => $city,
-                'postcode'            => $postcode,
-                'sbi'                 => $sbi,
-                'primary_sbi_only'    => $primarySbiOnly,
-                'legal_form'          => $legalForm,
-                'employees_min'       => $employeesMin,
-                'employees_max'       => $employeesMax,
+                'city' => $city,
+                'postcode' => $postcode,
+                'sbi' => $sbi,
+                'primary_sbi_only' => $primarySbiOnly,
+                'legal_form' => $legalForm,
+                'employees_min' => $employeesMin,
+                'employees_max' => $employeesMax,
                 'economically_active' => $economicallyActive,
-                'financial_status'    => $financialStatus,
-                'changed_since'       => $changedSince,
-                'new_since'           => $newSince,
-                'page'                => $page,
+                'financial_status' => $financialStatus,
+                'changed_since' => $changedSince,
+                'new_since' => $newSince,
+                'page' => $page,
             ]
         );
     }
@@ -1980,7 +2172,8 @@ class Connector extends AbstractConnector
      * @param string $establishmentNumber Establishment number
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUpdateAddDossier
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function dutchBusinessUpdateAddDossier($dossierNumber, $establishmentNumber)
     {
@@ -2006,16 +2199,17 @@ class Connector extends AbstractConnector
      *                                    specified in the request.
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUpdateCheckDossier
-     * @return \StdClass <DutchBusinessUpdateReference>
+     *
+     * @return \stdClass <DutchBusinessUpdateReference>
      */
     public function dutchBusinessUpdateCheckDossier($dossierNumber, $establishmentNumber, $updateTypes)
     {
         return $this->getAdapter()->call(
             'dutchBusinessUpdateCheckDossier',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
-                'update_types'         => $updateTypes,
+                'update_types' => $updateTypes,
             ]
         );
     }
@@ -2037,7 +2231,8 @@ class Connector extends AbstractConnector
      * @param int    $page         Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUpdateGetChangedDossiers
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessUpdateReference>
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessUpdateReference>
      */
     public function dutchBusinessUpdateGetChangedDossiers($changedSince, $updateTypes, $page)
     {
@@ -2063,7 +2258,8 @@ class Connector extends AbstractConnector
      * @param int   $page        The page of results
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUpdateGetDossiers
-     * @return \StdClass <Patterns::{Type}PagedResult> of <DutchBusinessUpdateReference> entries.
+     *
+     * @return \stdClass <Patterns::{Type}PagedResult> of <DutchBusinessUpdateReference> entries
      */
     public function dutchBusinessUpdateGetDossiers($updateTypes, $page)
     {
@@ -2080,7 +2276,7 @@ class Connector extends AbstractConnector
      * @param string $dossierNumber       Chamber of Commerce number
      * @param string $establishmentNumber Establishment number
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function dutchBusinessUpdateRemoveDossier($dossierNumber, $establishmentNumber)
     {
@@ -2096,7 +2292,8 @@ class Connector extends AbstractConnector
      * @param string $licensePlate The dutch license plate
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchvehicle-php.html#Dutch_Vehicle.dutchVehicleGetMarketValue
-     * @return \StdClass <DutchVehicleMarketValue>
+     *
+     * @return \stdClass <DutchVehicleMarketValue>
      */
     public function dutchVehicleGetMarketValue($licensePlate)
     {
@@ -2109,7 +2306,8 @@ class Connector extends AbstractConnector
      * @param string $licensePlate The dutch license plate
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchvehicle-php.html#Dutch_Vehicle.dutchVehicleGetOwnerHistory
-     * @return \StdClass <DutchVehicleOwnerHistory>
+     *
+     * @return \stdClass <DutchVehicleOwnerHistory>
      */
     public function dutchVehicleGetOwnerHistory($licensePlate)
     {
@@ -2124,7 +2322,8 @@ class Connector extends AbstractConnector
      * @param string $licensePlate The dutch license plate
      *
      * @link https://webview.webservices.nl/documentation/files/service_dutchvehicle-php.html#Dutch_Vehicle.dutchVehicleGetPurchaseReference
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function dutchVehicleGetPurchaseReference($licensePlate)
     {
@@ -2134,7 +2333,7 @@ class Connector extends AbstractConnector
     /**
      * @param string $licensePlate The dutch license plate
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function dutchVehicleGetVehicle($licensePlate)
     {
@@ -2155,7 +2354,8 @@ class Connector extends AbstractConnector
      * @param string $phoneNumber   Home phone number, only numeric characters (e.g. 0201234567), may be empty.
      *
      * @link https://webview.webservices.nl/documentation/files/service_edr-php.html#EDR.edrGetScore
-     * @return \StdClass <EDRScore>
+     *
+     * @return \stdClass <EDRScore>
      */
     public function edrGetScore(
         $lastName,
@@ -2171,15 +2371,15 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'edrGetScore',
             [
-                'last_name'      => $lastName,
-                'initials'       => $initials,
+                'last_name' => $lastName,
+                'initials' => $initials,
                 'surname_prefix' => $surnamePrefix,
-                'gender'         => $gender,
-                'birth_date'     => $birthDate,
-                'street'         => $street,
-                'house_number'   => $houseNumber,
-                'postcode'       => $postcode,
-                'phone_number'   => $phoneNumber,
+                'gender' => $gender,
+                'birth_date' => $birthDate,
+                'street' => $street,
+                'house_number' => $houseNumber,
+                'postcode' => $postcode,
+                'phone_number' => $phoneNumber,
             ]
         );
     }
@@ -2199,7 +2399,8 @@ class Connector extends AbstractConnector
      * @param int    $houseNo  Address house number
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationAddressCoordinatesLatLon
-     * @return \StdClass <LatLonCoordinatesMatch>
+     *
+     * @return \stdClass <LatLonCoordinatesMatch>
      */
     public function geoLocationAddressCoordinatesLatLon($postcode, $city, $street, $houseNo)
     {
@@ -2207,9 +2408,9 @@ class Connector extends AbstractConnector
             'geoLocationAddressCoordinatesLatLon',
             [
                 'postcode' => $postcode,
-                'city'     => $city,
-                'street'   => $street,
-                'houseno'  => $houseNo,
+                'city' => $city,
+                'street' => $street,
+                'houseno' => $houseNo,
             ]
         );
     }
@@ -2229,7 +2430,8 @@ class Connector extends AbstractConnector
      * @param int    $houseNo  Address house number
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationAddressCoordinatesRD
-     * @return \StdClass <RDCoordinatesMatch>
+     *
+     * @return \stdClass <RDCoordinatesMatch>
      */
     public function geoLocationAddressCoordinatesRD($postcode, $city, $street, $houseNo)
     {
@@ -2246,6 +2448,7 @@ class Connector extends AbstractConnector
      * @param array  $nbCodes    Array of neighborhood codes to sort using increasing distance to nbcodefrom
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationDistanceSortedNeighborhoodCodes
+     *
      * @return \stdClass <Patterns::{Type}Array> of <SortedPostcode>
      */
     public function geoLocationDistanceSortedNeighborhoodCodes($nbCodefrom, $nbCodes)
@@ -2266,7 +2469,7 @@ class Connector extends AbstractConnector
      * @param int    $radius     Radius from nbcodefrom to search in, in meters
      * @param int    $page       Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <SortedPostcode>
+     * @return \stdClass <Patterns::{Type}PagedResult> of <SortedPostcode>
      */
     public function geoLocationDistanceSortedNeighborhoodCodesRadius($nbCodefrom, $radius, $page)
     {
@@ -2285,6 +2488,7 @@ class Connector extends AbstractConnector
      * @param int    $page         Page to retrieve, pages start counting at 1
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationDistanceSortedPostcodesRadius
+     *
      * @return \StdCLass <Patterns::{Type}PagedResult> of <SortedPostcode>
      */
     public function geoLocationDistanceSortedPostcodesRadius($postcodeFrom, $radius, $page)
@@ -2307,6 +2511,7 @@ class Connector extends AbstractConnector
      * @param bool  $inRadians       Indicate if input is in radians (otherwise they are interpreted as degrees)
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationHaversineDistance
+     *
      * @return int
      */
     public function geoLocationHaversineDistance(
@@ -2319,11 +2524,11 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'geoLocationHaversineDistance',
             [
-                'latitude_coord_1'  => $latitudeCoord1,
+                'latitude_coord_1' => $latitudeCoord1,
                 'longitude_coord_1' => $longitudeCoord1,
-                'latitude_coord_2'  => $latitudeCoord2,
+                'latitude_coord_2' => $latitudeCoord2,
                 'longitude_coord_2' => $longitudeCoord2,
-                'in_radians'        => $inRadians]
+                'in_radians' => $inRadians, ]
         );
     }
 
@@ -2342,10 +2547,11 @@ class Connector extends AbstractConnector
      *                         exactly matched.
      * @param string $country  Country of the address. Country can be specified by using ISO3 country codes
      *                         (recommended). Complete country names may not always work
-     * @param string $language Language used for input and preferred language for the output.
+     * @param string $language language used for input and preferred language for the output
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationInternationalAddressCoordinatesLatLon
-     * @return \StdClass <LatLonCoordinatesInternationalAddress>
+     *
+     * @return \stdClass <LatLonCoordinatesInternationalAddress>
      */
     public function geoLocationInternationalAddressCoordinatesLatLon(
         $street,
@@ -2358,11 +2564,11 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'geoLocationInternationalAddressCoordinatesLatLon',
             [
-                'street'   => $street,
-                'houseno'  => $houseNo,
-                'city'     => $city,
+                'street' => $street,
+                'houseno' => $houseNo,
+                'city' => $city,
                 'province' => $province,
-                'country'  => $country,
+                'country' => $country,
                 'language' => $language,
             ]
         );
@@ -2386,7 +2592,8 @@ class Connector extends AbstractConnector
      *                           language requested.
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationInternationalAddressCoordinatesLatLonV2
-     * @return \StdClass <LatLonCoordinatesInternationalAddress>
+     *
+     * @return \stdClass <LatLonCoordinatesInternationalAddress>
      */
     public function geoLocationInternationalAddressCoordinatesLatLonV2(
         $country,
@@ -2401,14 +2608,14 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'geoLocationInternationalAddressCoordinatesLatLonV2',
             [
-                'country'    => $country,
+                'country' => $country,
                 'postalcode' => $postalCode,
-                'houseno'    => $houseNo,
-                'street'     => $street,
-                'city'       => $city,
-                'province'   => $province,
-                'matchrate'  => $matchRate,
-                'language'   => $language,
+                'houseno' => $houseNo,
+                'street' => $street,
+                'city' => $city,
+                'province' => $province,
+                'matchrate' => $matchRate,
+                'language' => $language,
             ]
         );
     }
@@ -2420,7 +2627,8 @@ class Connector extends AbstractConnector
      * @param float $longitude Longitude of the location
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationInternationalLatLonToAddress
-     * @return \StdClass <GeoLocationInternationalAddress>
+     *
+     * @return \stdClass <GeoLocationInternationalAddress>
      */
     public function geoLocationInternationalLatLonToAddress($latitude, $longitude)
     {
@@ -2440,7 +2648,8 @@ class Connector extends AbstractConnector
      *                         (recommended). Complete country names may not always work.
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationInternationalPostcodeCoordinatesLatLon
-     * @return \StdClass LatLonCoordinates>
+     *
+     * @return \stdClass LatLonCoordinates>
      */
     public function geoLocationInternationalPostcodeCoordinatesLatLon($postcode, $country)
     {
@@ -2461,7 +2670,8 @@ class Connector extends AbstractConnector
      * @param float $longitude Longitude of the location
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationLatLonToAddressV2
-     * @return \StdClass <GeoLocationAddressV2>
+     *
+     * @return \stdClass <GeoLocationAddressV2>
      */
     public function geoLocationLatLonToAddressV2($latitude, $longitude)
     {
@@ -2478,7 +2688,8 @@ class Connector extends AbstractConnector
      * @param string $longitude Longitude of the postcode
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationLatLonToPostcode
-     * @return \StdClass <GeoLocationAddress>
+     *
+     * @return \stdClass <GeoLocationAddress>
      */
     public function geoLocationLatLonToPostcode($latitude, $longitude)
     {
@@ -2495,7 +2706,8 @@ class Connector extends AbstractConnector
      * @param string $longitude Longitude of the postcode
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationLatLonToRD
-     * @return \StdClass <RDCoordinates>
+     *
+     * @return \stdClass <RDCoordinates>
      */
     public function geoLocationLatLonToRD($latitude, $longitude)
     {
@@ -2511,11 +2723,12 @@ class Connector extends AbstractConnector
      * @param string $nbCode Neighborhoodcode to find the location of
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationNeighborhoodCoordinatesLatLon
-     * @return \StdClass <LatLonCoordinates>
+     *
+     * @return \stdClass <LatLonCoordinates>
      */
     public function geoLocationNeighborhoodCoordinatesLatLon($nbCode)
     {
-        return $this->getAdapter()->call('geoLocationNeighborhoodCoordinatesLatLon', ['nbcode' => (string)$nbCode]);
+        return $this->getAdapter()->call('geoLocationNeighborhoodCoordinatesLatLon', ['nbcode' => (string) $nbCode]);
     }
 
     /**
@@ -2524,11 +2737,12 @@ class Connector extends AbstractConnector
      * @param string $nbCode Neighborhoodcode to find the location of
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationNeighborhoodCoordinatesRD
-     * @return \StdClass <RDCoordinates>
+     *
+     * @return \stdClass <RDCoordinates>
      */
     public function geoLocationNeighborhoodCoordinatesRD($nbCode)
     {
-        return $this->getAdapter()->call('geoLocationNeighborhoodCoordinatesRD', ['nbcode' => (string)$nbCode]);
+        return $this->getAdapter()->call('geoLocationNeighborhoodCoordinatesRD', ['nbcode' => (string) $nbCode]);
     }
 
     /**
@@ -2538,6 +2752,7 @@ class Connector extends AbstractConnector
      * @param string $nbCodeto   Neighborhood code of the second neighborhood
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationNeighborhoodDistance
+     *
      * @return int distance in meters
      */
     public function geoLocationNeighborhoodDistance($nbCodefrom, $nbCodeto)
@@ -2554,7 +2769,8 @@ class Connector extends AbstractConnector
      * @param string $postcode Postcode to find the location of
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationPostcodeCoordinatesLatLon
-     * @return \StdClass <LatLonCoordinates>
+     *
+     * @return \stdClass <LatLonCoordinates>
      */
     public function geoLocationPostcodeCoordinatesLatLon($postcode)
     {
@@ -2567,7 +2783,8 @@ class Connector extends AbstractConnector
      * @param string $postcode Postcode to find the location of
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationPostcodeCoordinatesRD
-     * @return \StdClass <RDCoordinates>
+     *
+     * @return \stdClass <RDCoordinates>
      */
     public function geoLocationPostcodeCoordinatesRD($postcode)
     {
@@ -2581,6 +2798,7 @@ class Connector extends AbstractConnector
      * @param string $postcodeTo   Second postcode
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationPostcodeDistance
+     *
      * @return int distance in meters
      */
     public function geoLocationPostcodeDistance($postcodeFrom, $postcodeTo)
@@ -2603,7 +2821,8 @@ class Connector extends AbstractConnector
      * @param int $posY rd Y of the location
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationRDToAddressV2
-     * @return \StdClass <GeoLocationAddressV2>
+     *
+     * @return \stdClass <GeoLocationAddressV2>
      */
     public function geoLocationRDToAddressV2($posX, $posY)
     {
@@ -2617,7 +2836,8 @@ class Connector extends AbstractConnector
      * @param int $posY part of the RD coordinate
      *
      * @link  https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationLatLonToRD
-     * @return \StdClass <RDCoordinates>
+     *
+     * @return \stdClass <RDCoordinates>
      */
     public function geoLocationRDToLatLon($posX, $posY)
     {
@@ -2631,7 +2851,8 @@ class Connector extends AbstractConnector
      * @param int $posY part of the RD coordinate
      *
      * @link https://webview.webservices.nl/documentation/files/service_geolocation-php.html#Geolocation.geoLocationRDToPostcode
-     * @return \StdClass postcode
+     *
+     * @return \stdClass postcode
      */
     public function geoLocationRDToPostcode($posX, $posY)
     {
@@ -2646,26 +2867,28 @@ class Connector extends AbstractConnector
      * @param int $graydonCompanyId 9 Digit Graydon company identification number
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditCompanyLiaisons
-     * @return \StdClass <GraydonCreditReportCompanyLiaisons>.
+     *
+     * @return \stdClass <GraydonCreditReportCompanyLiaisons>
      */
     public function graydonCreditCompanyLiaisons($graydonCompanyId)
     {
         return $this->getAdapter()->call(
             'graydonCreditCompanyLiaisons',
-            ['graydon_company_id' => (int)$graydonCompanyId]
+            ['graydon_company_id' => (int) $graydonCompanyId]
         );
     }
 
     /**
      * Retrieve a Graydon credit report of a company registered in the Netherlands.
      *
-     * @param int    $graydonCompanyId 9 Digit Graydon company identification number.
+     * @param int    $graydonCompanyId 9 Digit Graydon company identification number
      * @param string $document         Specify to retrieve an extra document with an excerpt of the data. Currently
      *                                 unused. Possible values:
      *                                 [empty string] -- Return no extra document.
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditGetReport
-     * @return \StdClass <GraydonCreditReport>
+     *
+     * @return \stdClass <GraydonCreditReport>
      */
     public function graydonCreditGetReport($graydonCompanyId, $document)
     {
@@ -2684,7 +2907,8 @@ class Connector extends AbstractConnector
      *                              list of free test reports.
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditManagement
-     * @return \StdClass <GraydonCreditReportManagement>
+     *
+     * @return \stdClass <GraydonCreditReportManagement>
      */
     public function graydonCreditManagement($graydonCompanyId)
     {
@@ -2696,10 +2920,11 @@ class Connector extends AbstractConnector
      * If an alarm code is set, no values are returned. Use <graydonCreditGetReport> to retrieve more information about
      * the alarm/calamity.
      *
-     * @param int $graydonCompanyId 9 Digit Graydon company identification number.
+     * @param int $graydonCompanyId 9 Digit Graydon company identification number
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditQuickscan
-     * @return \StdClass <GraydonCreditReportQuickscan>
+     *
+     * @return \stdClass <GraydonCreditReportQuickscan>
      */
     public function graydonCreditQuickscan($graydonCompanyId)
     {
@@ -2715,7 +2940,8 @@ class Connector extends AbstractConnector
      *                              list of free test reports
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditRatings
-     * @return \StdClass <GraydonCreditReportRatings>
+     *
+     * @return \stdClass <GraydonCreditReportRatings>
      */
     public function graydonCreditRatings($graydonCompanyId)
     {
@@ -2734,16 +2960,17 @@ class Connector extends AbstractConnector
      *                              Supported countries:  nl -- The Netherlands
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditSearchIdentification
-     * @return \StdClass <Patterns::{Type}Array> of <GraydonReference>
+     *
+     * @return \stdClass <Patterns::{Type}Array> of <GraydonReference>
      */
     public function graydonCreditSearchIdentification($companyId, $companyIdType, $countryIso2)
     {
         return $this->getAdapter()->call(
             'graydonCreditSearchIdentification',
             [
-                'company_id'      => $companyId,
+                'company_id' => $companyId,
                 'company_id_type' => $companyIdType,
-                'country_iso2'    => $countryIso2,
+                'country_iso2' => $countryIso2,
             ]
         );
     }
@@ -2757,7 +2984,8 @@ class Connector extends AbstractConnector
      *                            Supported countries: nl -- The Netherlands
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditSearchName
-     * @return \StdClass <Patterns::{Type}Array> of <GraydonReference>
+     *
+     * @return \stdClass <Patterns::{Type}Array> of <GraydonReference>
      */
     public function graydonCreditSearchName($companyName, $residence, $countryIso2)
     {
@@ -2777,15 +3005,16 @@ class Connector extends AbstractConnector
      *                            Supported countries: nl -- The Netherlands
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditSearchPostcode
-     * @return \StdClass <Patterns::{Type}Array> of <GraydonReference>
+     *
+     * @return \stdClass <Patterns::{Type}Array> of <GraydonReference>
      */
     public function graydonCreditSearchPostcode($postcode, $houseNo, $telephoneNo, $countryIso2)
     {
         return $this->getAdapter()->call(
             'graydonCreditSearchPostcode',
             [
-                'postcode'     => $postcode,
-                'house_no'     => $houseNo,
+                'postcode' => $postcode,
+                'house_no' => $houseNo,
                 'telephone_no' => $telephoneNo,
                 'country_iso2' => $countryIso2,
             ]
@@ -2801,12 +3030,73 @@ class Connector extends AbstractConnector
      *                              See <Company Test Identifiers> for a list of free test reports
      *
      * @link https://webview.webservices.nl/documentation/files/service_graydoncredit-php.html#Graydon_Credit.graydonCreditVatNumber
-     * @return \StdClass <GraydonCreditReportVatNumber>
+     *
+     * @return \stdClass <GraydonCreditReportVatNumber>
      */
     public function graydonCreditVatNumber($graydonCompanyId)
     {
         return $this->getAdapter()->call('graydonCreditVatNumber', ['graydon_company_id' => $graydonCompanyId]);
     }
+
+    /**
+     * Search for publications for a person.
+     *
+     * @param string $lastName     Persons surname
+     * @param string $prefix       Surname prefix (eg. de, van, van der ..)
+     * @param string $birthDate    Date of birth (format: yyyy-mm-dd)
+     * @param string $postcode     Postcode
+     * @param string $houseNumber  House number
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByPerson
+     *
+     */
+    public function insolvencySearchPublicationsByPerson($lastName, $prefix, $birthDate, $postcode, $houseNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByPerson', [
+            'last_name' => $lastName,
+            'prefix' => $prefix,
+            'birth_date' => $birthDate,
+            'postcode' => $postcode,
+            'house_number' => $houseNumber,
+        ]);
+    }
+
+    /**
+     * Search for publications for a dutch company.
+     *
+     * @param string $cocNumber  A registration number from the dutch chamber of commerce (dutch: kvk-nummer)
+     *
+     * @return \stdClass <InsolvencyPublicationList>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByCoCNumber
+     *
+     */
+    public function insolvencySearchPublicationsByCoCNumber($cocNumber)
+    {
+        return $this->getAdapter()->call('insolvencySearchPublicationsByCoCNumber', [
+            'coc_number' => $cocNumber,
+        ]);
+    }
+
+    /**
+     * Fetch a insolvency case from a given publication.
+     *
+     * @param string $publicationId  The id of a insolvency publication, pattern: “([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}”.
+     *
+     * @return \stdClass <InsolvencyCase>
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencyGetCaseByPublication
+     *
+     */
+    public function insolvencyGetCaseByPublication($publicationId)
+    {
+        return $this->getAdapter()->call('insolvencyGetCaseByPublication', [
+            'publication_id' => $publicationId,
+        ]);
+    }
+
 
     /**
      * This method expects an address that is already more or less complete.
@@ -2824,11 +3114,12 @@ class Connector extends AbstractConnector
      * @param string $postcode      Postalcode search phrase
      * @param string $province      Province search phrase
      * @param string $country       Country of the address, required. Accepts ISO3 country codes.
-     * @param string $language      Language in which the results are returned, see <Preferred Language>.
-     * @param string $countryFormat The format in which the country is returned, see <Country Format>.
+     * @param string $language      language in which the results are returned, see <Preferred Language>
+     * @param string $countryFormat the format in which the country is returned, see <Country Format>
      *
      * @link https://webview.webservices.nl/documentation/files/service_internationaladdress-php.html#International_Address.internationalAddressSearchInteractive
-     * @return \StdClass <InternationalAddressSearchV2Result>
+     *
+     * @return \stdClass <InternationalAddressSearchV2Result>
      */
     public function internationalAddressSearchInteractive(
         $organization,
@@ -2846,16 +3137,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'internationalAddressSearchInteractive',
             [
-                'organization'   => $organization,
-                'building'       => $building,
-                'street'         => $street,
-                'housenr'        => $houseNr,
-                'pobox'          => $poBox,
-                'locality'       => $locality,
-                'postcode'       => $postcode,
-                'province'       => $province,
-                'country'        => $country,
-                'language'       => $language,
+                'organization' => $organization,
+                'building' => $building,
+                'street' => $street,
+                'housenr' => $houseNr,
+                'pobox' => $poBox,
+                'locality' => $locality,
+                'postcode' => $postcode,
+                'province' => $province,
+                'country' => $country,
+                'language' => $language,
                 'country_format' => $countryFormat,
             ]
         );
@@ -2877,11 +3168,12 @@ class Connector extends AbstractConnector
      * @param string $postcode      Postalcode search phrase
      * @param string $province      Province search phrase
      * @param string $country       Country of the address, required. Accepts ISO3 country codes.
-     * @param string $language      Language in which the results are returned, see <Preferred Language>.
-     * @param string $countryFormat The format in which the country is returned, see <Country Format>.
+     * @param string $language      language in which the results are returned, see <Preferred Language>
+     * @param string $countryFormat the format in which the country is returned, see <Country Format>
      *
      * @link https://webview.webservices.nl/documentation/files/service_internationaladdress-php.html#International_Address.internationalAddressSearchV2
-     * @return \StdClass <InternationalAddressSearchV2Result>
+     *
+     * @return \stdClass <InternationalAddressSearchV2Result>
      */
     public function internationalAddressSearchV2(
         $organization,
@@ -2899,16 +3191,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'internationalAddressSearchV2',
             [
-                'organization'   => $organization,
-                'building'       => $building,
-                'street'         => $street,
-                'housenr'        => $houseNr,
-                'pobox'          => $poBox,
-                'locality'       => $locality,
-                'postcode'       => $postcode,
-                'province'       => $province,
-                'country'        => $country,
-                'language'       => $language,
+                'organization' => $organization,
+                'building' => $building,
+                'street' => $street,
+                'housenr' => $houseNr,
+                'pobox' => $poBox,
+                'locality' => $locality,
+                'postcode' => $postcode,
+                'province' => $province,
+                'country' => $country,
+                'language' => $language,
                 'country_format' => $countryFormat,
             ]
         );
@@ -2927,22 +3219,22 @@ class Connector extends AbstractConnector
      * @param string $houseNoAddition Address house number addition
      *
      * @link https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterAddressCoordinates
-     * @return \StdClass <KadasterCoordinates>
+     *
+     * @return \stdClass <KadasterCoordinates>
      */
     public function kadasterAddressCoordinates($postcode, $city, $street, $houseNo, $houseNoAddition)
     {
         return $this->getAdapter()->call(
             'kadasterAddressCoordinates',
             [
-                'postcode'        => $postcode,
-                'city'            => $city,
-                'street'          => $street,
-                'houseno'         => $houseNo,
+                'postcode' => $postcode,
+                'city' => $city,
+                'street' => $street,
+                'houseno' => $houseNo,
                 'housenoaddition' => $houseNoAddition,
             ]
         );
     }
-
 
     /**
      * Find a 'bron document', a document which is the basis for an ascription.
@@ -2952,7 +3244,7 @@ class Connector extends AbstractConnector
      *                                        Supported values:
      *                                        3 -- Register of mortgage documents (dutch: hypotheekakte)
      *                                        4 -- Register of transport documents (dutch: transportakte)
-     * @param string $deel                    Identifier for a group of documents within a register of a Kadaster.
+     * @param string $deel                    identifier for a group of documents within a register of a Kadaster
      * @param string $nummer                  Alphanumeric number used to identify a document. Note that a number does
      *                                        not relate to a single revision of the document, numbers may be reused if
      *                                        a change is issued on time.
@@ -2974,7 +3266,7 @@ class Connector extends AbstractConnector
      *                                        gif_144 -- A PDF file, and one GIF image for every page will be returned.
      *                                        Each image is approximately 1190 by 1684 pixels.
      *
-     * @return \StdClass <KadasterBronDocument>
+     * @return \stdClass <KadasterBronDocument>
      */
     public function kadasterBronDocument($aanduidingSoortRegister, $deel, $nummer, $reeks, $format)
     {
@@ -2982,10 +3274,10 @@ class Connector extends AbstractConnector
             'kadasterBronDocument',
             [
                 'aanduiding_soort_register' => $aanduidingSoortRegister,
-                'deel'                      => $deel,
-                'nummer'                    => $nummer,
-                'reeks'                     => $reeks,
-                'format'                    => $format,
+                'deel' => $deel,
+                'nummer' => $nummer,
+                'reeks' => $reeks,
+                'format' => $format,
             ]
         );
     }
@@ -3014,7 +3306,8 @@ class Connector extends AbstractConnector
      *                              Each image is approximately 1190 by 1684 pixels.
      *
      * @link https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtDocumentPerceel
-     * @return \StdClass <BerichtObjectDocumentResultaat>
+     *
+     * @return \stdClass <BerichtObjectDocumentResultaat>
      */
     public function kadasterEigendomsBerichtDocumentPerceel(
         $gemeenteCode,
@@ -3028,13 +3321,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtDocumentPerceel',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3059,21 +3352,21 @@ class Connector extends AbstractConnector
      *                                     Each image is approximately 1190 by 1684 pixels.
      *
      * @link https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtDocumentPostcode
-     * @return \StdClass <BerichtObjectDocumentResultaat>
+     *
+     * @return \stdClass <BerichtObjectDocumentResultaat>
      */
     public function kadasterEigendomsBerichtDocumentPostcode($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtDocumentPostcode',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
-
 
     /**
      * Find a 'Eigendomsbericht' by parcel details.
@@ -3092,7 +3385,8 @@ class Connector extends AbstractConnector
      *
      * @link       https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtPerceel
      * @deprecated please use <kadasterEigendomsBerichtPerceelV2> instead
-     * @return \StdClass <BerichtObjectResultaat>
+     *
+     * @return \stdClass <BerichtObjectResultaat>
      */
     public function kadasterEigendomsBerichtPerceel(
         $gemeenteCode,
@@ -3105,12 +3399,12 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtPerceel',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
             ]
         );
     }
@@ -3131,7 +3425,8 @@ class Connector extends AbstractConnector
      * @param string $volgnummer    Object index number, set if object is part of another parcel
      *
      * @link  https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtPerceelV2
-     * @return \StdClass <BerichtObjectResultaatV2>
+     *
+     * @return \stdClass <BerichtObjectResultaatV2>
      */
     public function kadasterEigendomsBerichtPerceelV2(
         $gemeenteCode,
@@ -3144,12 +3439,12 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtPerceelV2',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
             ]
         );
     }
@@ -3165,15 +3460,16 @@ class Connector extends AbstractConnector
      *
      * @link       https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtPostcode
      * @deprecated please use kadasterEigendomsBerichtPostcodeV2
-     * @return \StdClass <BerichtObjectResultaat>
+     *
+     * @return \stdClass <BerichtObjectResultaat>
      */
     public function kadasterEigendomsBerichtPostcode($postcode, $huisNummer, $huisNummerToevoeging)
     {
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtPostcode',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
             ]
         );
@@ -3189,15 +3485,16 @@ class Connector extends AbstractConnector
      * @param string $huisNummerToevoeging Address house number addition
      *
      * @link  https://webview.webservices.nl/documentation/files/service_kadaster-php.html#Kadaster.kadasterEigendomsBerichtPostcodeV2
-     * @return \StdClass <BerichtObjectResultaatV2>
+     *
+     * @return \stdClass <BerichtObjectResultaatV2>
      */
     public function kadasterEigendomsBerichtPostcodeV2($postcode, $huisNummer, $huisNummerToevoeging)
     {
         return $this->getAdapter()->call(
             'kadasterEigendomsBerichtPostcodeV2',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
             ]
         );
@@ -3230,7 +3527,8 @@ class Connector extends AbstractConnector
      *                              Each image is approximately 1190 by 1684 pixels.
      *
      * @deprecated please use <kadasterHypothecairBerichtPerceelV3>
-     * @return \StdClass <kadasterHypothecairBerichtResultaat>
+     *
+     * @return \stdClass <kadasterHypothecairBerichtResultaat>
      */
     public function kadasterHypothecairBerichtPerceel(
         $gemeenteCode,
@@ -3244,13 +3542,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPerceel',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3264,7 +3562,7 @@ class Connector extends AbstractConnector
      * @param $volgnummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterHypothecairBerichtPerceelV2(
         $gemeenteCode,
@@ -3278,13 +3576,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPerceelV2',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3298,7 +3596,7 @@ class Connector extends AbstractConnector
      * @param $volgnummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterHypothecairBerichtPerceelV3(
         $gemeenteCode,
@@ -3312,13 +3610,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPerceelV3',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3329,17 +3627,17 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterHypothecairBerichtPostcode($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPostcode',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3350,17 +3648,17 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterHypothecairBerichtPostcodeV2($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPostcodeV2',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3371,17 +3669,17 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterHypothecairBerichtPostcodeV3($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterHypothecairBerichtPostcodeV3',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3396,7 +3694,7 @@ class Connector extends AbstractConnector
      * @param $format
      * @param $schaal
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKadastraleKaartPerceel(
         $gemeenteCode,
@@ -3411,14 +3709,14 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterKadastraleKaartPerceel',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
-                'schaal'        => $schaal,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
+                'schaal' => $schaal,
             ]
         );
     }
@@ -3433,7 +3731,7 @@ class Connector extends AbstractConnector
      * @param $format
      * @param $schaal
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKadastraleKaartPerceelV2(
         $gemeenteCode,
@@ -3448,14 +3746,14 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterKadastraleKaartPerceelV2',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
-                'schaal'        => $schaal,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
+                'schaal' => $schaal,
             ]
         );
     }
@@ -3467,18 +3765,18 @@ class Connector extends AbstractConnector
      * @param $format
      * @param $schaal
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKadastraleKaartPostcode($postcode, $huisNummer, $huisNummerToevoeging, $format, $schaal)
     {
         return $this->getAdapter()->call(
             'kadasterKadastraleKaartPostcode',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
-                'schaal'                => $schaal,
+                'format' => $format,
+                'schaal' => $schaal,
             ]
         );
     }
@@ -3490,18 +3788,18 @@ class Connector extends AbstractConnector
      * @param $format
      * @param $schaal
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKadastraleKaartPostcodeV2($postcode, $huisNummer, $huisNummerToevoeging, $format, $schaal)
     {
         return $this->getAdapter()->call(
             'kadasterKadastraleKaartPostcodeV2',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
-                'schaal'                => $schaal,
+                'format' => $format,
+                'schaal' => $schaal,
             ]
         );
     }
@@ -3510,14 +3808,14 @@ class Connector extends AbstractConnector
      * @param $postcode
      * @param $huisNummer
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKoopsommenOverzicht($postcode, $huisNummer)
     {
         return $this->getAdapter()->call(
             'kadasterKoopsommenOverzicht',
             [
-                'postcode'   => $postcode,
+                'postcode' => $postcode,
                 'huisnummer' => $huisNummer,
             ]
         );
@@ -3528,16 +3826,16 @@ class Connector extends AbstractConnector
      * @param $huisNummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterKoopsommenOverzichtV2($postcode, $huisNummer, $format)
     {
         return $this->getAdapter()->call(
             'kadasterKoopsommenOverzichtV2',
             [
-                'postcode'   => $postcode,
+                'postcode' => $postcode,
                 'huisnummer' => $huisNummer,
-                'format'     => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3551,7 +3849,7 @@ class Connector extends AbstractConnector
      * @param $volgnummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPerceel(
         $gemeenteCode,
@@ -3565,13 +3863,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPerceel',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3585,7 +3883,7 @@ class Connector extends AbstractConnector
      * @param $volgnummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPerceelV2(
         $gemeenteCode,
@@ -3599,13 +3897,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPerceelV2',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3619,7 +3917,7 @@ class Connector extends AbstractConnector
      * @param $volgnummer
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPerceelV3(
         $gemeenteCode,
@@ -3633,13 +3931,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPerceelV3',
             [
-                'gemeentecode'  => $gemeenteCode,
-                'gemeentenaam'  => $gemeenteNaam,
-                'sectie'        => $sectie,
+                'gemeentecode' => $gemeenteCode,
+                'gemeentenaam' => $gemeenteNaam,
+                'sectie' => $sectie,
                 'perceelnummer' => $perceelnummer,
-                'relatiecode'   => $relatieCode,
-                'volgnummer'    => $volgnummer,
-                'format'        => $format,
+                'relatiecode' => $relatieCode,
+                'volgnummer' => $volgnummer,
+                'format' => $format,
             ]
         );
     }
@@ -3650,17 +3948,17 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPostcode($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPostcode',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3671,17 +3969,17 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPostcodeV2($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPostcodeV2',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
@@ -3692,23 +3990,23 @@ class Connector extends AbstractConnector
      * @param $huisNummerToevoeging
      * @param $format
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterUittrekselKadastraleKaartPostcodeV3($postcode, $huisNummer, $huisNummerToevoeging, $format)
     {
         return $this->getAdapter()->call(
             'kadasterUittrekselKadastraleKaartPostcodeV3',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'format'                => $format,
+                'format' => $format,
             ]
         );
     }
 
     /**
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterValueListGetMunicipalities()
     {
@@ -3716,7 +4014,7 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kadasterValueListGetRanges()
     {
@@ -3727,14 +4025,14 @@ class Connector extends AbstractConnector
      * @param $dossierNumber
      * @param $establishmentNumber
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkGetDossier($dossierNumber, $establishmentNumber)
     {
         return $this->getAdapter()->call(
             'kvkGetDossier',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
             ]
         );
@@ -3744,7 +4042,7 @@ class Connector extends AbstractConnector
      * @param $dossierNumber
      * @param $allowCaching
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkGetExtractDocument($dossierNumber, $allowCaching)
     {
@@ -3760,17 +4058,17 @@ class Connector extends AbstractConnector
      * @param $rsinNumber
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkSearchDossierNumber($dossierNumber, $establishmentNumber, $rsinNumber, $page)
     {
         return $this->getAdapter()->call(
             'kvkSearchDossierNumber',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
-                'rsin_number'          => $rsinNumber,
-                'page'                 => $page,
+                'rsin_number' => $rsinNumber,
+                'page' => $page,
             ]
         );
     }
@@ -3787,7 +4085,7 @@ class Connector extends AbstractConnector
      * @param $strictSearch
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkSearchParameters(
         $tradeName,
@@ -3804,16 +4102,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kvkSearchParameters',
             [
-                'trade_name'            => $tradeName,
-                'city'                  => $city,
-                'street'                => $street,
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'trade_name' => $tradeName,
+                'city' => $city,
+                'street' => $street,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'telephone_number'      => $telephoneNumber,
-                'domain_name'           => $domainName,
-                'strict_search'         => $strictSearch,
-                'page'                  => $page,
+                'telephone_number' => $telephoneNumber,
+                'domain_name' => $domainName,
+                'strict_search' => $strictSearch,
+                'page' => $page,
             ]
         );
     }
@@ -3824,17 +4122,17 @@ class Connector extends AbstractConnector
      * @param $houseNumberAddition
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkSearchPostcode($postcode, $houseNumber, $houseNumberAddition, $page)
     {
         return $this->getAdapter()->call(
             'kvkSearchPostcode',
             [
-                'postcode'              => $postcode,
-                'house_number'          => $houseNumber,
+                'postcode' => $postcode,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'page'                  => $page,
+                'page' => $page,
             ]
         );
     }
@@ -3853,7 +4151,7 @@ class Connector extends AbstractConnector
      * @param $newSince
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkSearchSelection(
         $city,
@@ -3872,18 +4170,18 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'kvkSearchSelection',
             [
-                'city'                => $city,
-                'postcode'            => $postcode,
-                'sbi'                 => $sbi,
-                'primary_sbi_only'    => $primarySbiOnly,
-                'legal_form'          => $legalForm,
-                'employees_min'       => $employeesMin,
-                'employees_max'       => $employeesMax,
+                'city' => $city,
+                'postcode' => $postcode,
+                'sbi' => $sbi,
+                'primary_sbi_only' => $primarySbiOnly,
+                'legal_form' => $legalForm,
+                'employees_min' => $employeesMin,
+                'employees_max' => $employeesMax,
                 'economically_active' => $economicallyActive,
-                'financial_status'    => $financialStatus,
-                'changed_since'       => $changedSince,
-                'new_since'           => $newSince,
-                'page'                => $page,
+                'financial_status' => $financialStatus,
+                'changed_since' => $changedSince,
+                'new_since' => $newSince,
+                'page' => $page,
             ]
         );
     }
@@ -3892,7 +4190,7 @@ class Connector extends AbstractConnector
      * @param $dossierNumber
      * @param $establishmentNumber
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkUpdateAddDossier($dossierNumber, $establishmentNumber)
     {
@@ -3907,16 +4205,16 @@ class Connector extends AbstractConnector
      * @param $establishmentNumber
      * @param $updateTypes
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkUpdateCheckDossier($dossierNumber, $establishmentNumber, $updateTypes)
     {
         return $this->getAdapter()->call(
             'kvkUpdateCheckDossier',
             [
-                'dossier_number'       => $dossierNumber,
+                'dossier_number' => $dossierNumber,
                 'establishment_number' => $establishmentNumber,
-                'update_types'         => $updateTypes,
+                'update_types' => $updateTypes,
             ]
         );
     }
@@ -3926,7 +4224,7 @@ class Connector extends AbstractConnector
      * @param $updateTypes
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkUpdateGetChangedDossiers($changedSince, $updateTypes, $page)
     {
@@ -3940,7 +4238,7 @@ class Connector extends AbstractConnector
      * @param $updateTypes
      * @param $page
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkUpdateGetDossiers($updateTypes, $page)
     {
@@ -3951,7 +4249,7 @@ class Connector extends AbstractConnector
      * @param $dossierNumber
      * @param $establishmentNumber
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function kvkUpdateRemoveDossier($dossierNumber, $establishmentNumber)
     {
@@ -3967,7 +4265,7 @@ class Connector extends AbstractConnector
      * @param string $username
      * @param string $password
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function login($username, $password)
     {
@@ -3990,19 +4288,19 @@ class Connector extends AbstractConnector
      * @param $height
      * @param $zoom
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function mapViewInternationalLatLon($latitude, $longitude, $format, $width, $height, $zoom)
     {
         return $this->getAdapter()->call(
             'mapViewInternationalLatLon',
             [
-                'latitude'  => $latitude,
+                'latitude' => $latitude,
                 'longitude' => $longitude,
-                'format'    => $format,
-                'width'     => $width,
-                'height'    => $height,
-                'zoom'      => $zoom,
+                'format' => $format,
+                'width' => $width,
+                'height' => $height,
+                'zoom' => $zoom,
             ]
         );
     }
@@ -4016,20 +4314,20 @@ class Connector extends AbstractConnector
      * @param $height
      * @param $zoom
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function mapViewLatLon($centerLat, $centerLon, $extraLatLon, $format, $width, $height, $zoom)
     {
         return $this->getAdapter()->call(
             'mapViewLatLon',
             [
-                'center_lat'   => $centerLat,
-                'center_lon'   => $centerLon,
+                'center_lat' => $centerLat,
+                'center_lon' => $centerLon,
                 'extra_latlon' => $extraLatLon,
-                'format'       => $format,
-                'width'        => $width,
-                'height'       => $height,
-                'zoom'         => $zoom,
+                'format' => $format,
+                'width' => $width,
+                'height' => $height,
+                'zoom' => $zoom,
             ]
         );
     }
@@ -4041,7 +4339,7 @@ class Connector extends AbstractConnector
      * @param $height
      * @param $zoom
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function mapViewPostcodeV2($postcode, $format, $width, $height, $zoom)
     {
@@ -4049,10 +4347,10 @@ class Connector extends AbstractConnector
             'mapViewPostcodeV2',
             [
                 'postcode' => $postcode,
-                'format'   => $format,
-                'width'    => $width,
-                'height'   => $height,
-                'zoom'     => $zoom,
+                'format' => $format,
+                'width' => $width,
+                'height' => $height,
+                'zoom' => $zoom,
             ]
         );
     }
@@ -4070,7 +4368,7 @@ class Connector extends AbstractConnector
      * @param int    $height  Height in pixels, domain [1 - 2048]
      * @param float  $zoom    Scale in meters per pixel. See: <Zoom>
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function mapViewRD($centerX, $centerY, $extraXY, $format, $width, $height, $zoom)
     {
@@ -4080,10 +4378,10 @@ class Connector extends AbstractConnector
                 'center_x' => $centerX,
                 'center_y' => $centerY,
                 'extra_xy' => $extraXY,
-                'format'   => $format,
-                'width'    => $width,
-                'height'   => $height,
-                'zoom'     => $zoom,
+                'format' => $format,
+                'width' => $width,
+                'height' => $height,
+                'zoom' => $zoom,
             ]
         );
     }
@@ -4111,7 +4409,7 @@ class Connector extends AbstractConnector
      * @param int    $inhoud               Volume in cubic meters, may be empty (0)
      * @param int    $grootte              Surface area of the parcel in square meters, may be empty (0)
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function nbwoEstimateValue(
         $postcode,
@@ -4125,13 +4423,13 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'nbwoEstimateValue',
             [
-                'postcode'              => $postcode,
-                'huisnummer'            => $huisNummer,
+                'postcode' => $postcode,
+                'huisnummer' => $huisNummer,
                 'huisnummer_toevoeging' => $huisNummerToevoeging,
-                'prijspeil_datum'       => $prijspeilDatum,
-                'woningtype'            => $woningtype,
-                'inhoud'                => $inhoud,
-                'grootte'               => $grootte,
+                'prijspeil_datum' => $prijspeilDatum,
+                'woningtype' => $woningtype,
+                'inhoud' => $inhoud,
+                'grootte' => $grootte,
             ]
         );
     }
@@ -4148,7 +4446,7 @@ class Connector extends AbstractConnector
      * @param $postcode
      * @param $city
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function riskCheckGetRiskPersonCompanyReport(
         $gender,
@@ -4165,16 +4463,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'riskCheckGetRiskPersonCompanyReport',
             [
-                'gender'                => $gender,
-                'initials'              => $initials,
-                'prefix'                => $prefix,
-                'last_name'             => $lastName,
-                'birth_date'            => $birthDate,
-                'street'                => $street,
-                'house_number'          => $houseNumber,
+                'gender' => $gender,
+                'initials' => $initials,
+                'prefix' => $prefix,
+                'last_name' => $lastName,
+                'birth_date' => $birthDate,
+                'street' => $street,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'postcode'              => $postcode,
-                'city'                  => $city,
+                'postcode' => $postcode,
+                'city' => $city,
             ]
         );
     }
@@ -4197,22 +4495,22 @@ class Connector extends AbstractConnector
      * character without diacritical mark (e.g. an accented e is mapped to an 'e').
      *
      * @param string $gender              Gender of the person. M or F, may be empty.
-     * @param string $initials            The initials, mandatory.
-     * @param string $prefix              The surname prefix, like "van" or "de", may be empty.
-     * @param string $lastName            The last name of the person, mandatory.
-     * @param string $birthDate           Birth date in the format yyyy-mm-dd, may be empty.
-     * @param string $street              Street part of the address, may be empty.
-     * @param int    $houseNumber         House number, mandatory.
-     * @param string $houseNumberAddition Extension part of the house number, may be empty.
-     * @param string $postcode            Dutch postcode in the format 1234AB, mandatory.
-     * @param string $city                City, may be empty.
-     * @param string $accountNumber       Bank account number, only numeric characters, may be empty.
+     * @param string $initials            the initials, mandatory
+     * @param string $prefix              the surname prefix, like "van" or "de", may be empty
+     * @param string $lastName            the last name of the person, mandatory
+     * @param string $birthDate           birth date in the format yyyy-mm-dd, may be empty
+     * @param string $street              street part of the address, may be empty
+     * @param int    $houseNumber         house number, mandatory
+     * @param string $houseNumberAddition extension part of the house number, may be empty
+     * @param string $postcode            dutch postcode in the format 1234AB, mandatory
+     * @param string $city                city, may be empty
+     * @param string $accountNumber       bank account number, only numeric characters, may be empty
      * @param string $phoneNumber         Home phone number, only numeric characters (e.g. 0201234567), may be empty
      * @param string $mobileNumber        Mobile phone number, only numeric characters (e.g. 0612345678), may be empty
-     * @param string $email               Email address, may be empty.
-     * @param string $testingDate         Date for which the credit score should be determined, format Y-m-d, mandatory.
+     * @param string $email               email address, may be empty
+     * @param string $testingDate         date for which the credit score should be determined, format Y-m-d, mandatory
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function riskCheckPerson(
         $gender,
@@ -4234,21 +4532,21 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'riskCheckPerson',
             [
-                'gender'                => $gender,
-                'initials'              => $initials,
-                'prefix'                => $prefix,
-                'last_name'             => $lastName,
-                'birth_date'            => $birthDate,
-                'street'                => $street,
-                'house_number'          => $houseNumber,
+                'gender' => $gender,
+                'initials' => $initials,
+                'prefix' => $prefix,
+                'last_name' => $lastName,
+                'birth_date' => $birthDate,
+                'street' => $street,
+                'house_number' => $houseNumber,
                 'house_number_addition' => $houseNumberAddition,
-                'postcode'              => $postcode,
-                'city'                  => $city,
-                'account_number'        => $accountNumber,
-                'phone_number'          => $phoneNumber,
-                'mobile_number'         => $mobileNumber,
-                'email'                 => $email,
-                'testing_date'          => $testingDate,
+                'postcode' => $postcode,
+                'city' => $city,
+                'account_number' => $accountNumber,
+                'phone_number' => $phoneNumber,
+                'mobile_number' => $mobileNumber,
+                'email' => $email,
+                'testing_date' => $testingDate,
             ]
         );
     }
@@ -4262,7 +4560,7 @@ class Connector extends AbstractConnector
      * @param string $postcodeTo   Postcode at the end of the route
      * @param bool   $english      Whether to returns the description in english (true) or Dutch (false)
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerDescription($postcodeFrom, $postcodeTo, $english)
     {
@@ -4270,8 +4568,8 @@ class Connector extends AbstractConnector
             'routePlannerDescription',
             [
                 'postcodefrom' => $postcodeFrom,
-                'postcodeto'   => $postcodeTo,
-                'english'      => $english,
+                'postcodeto' => $postcodeTo,
+                'english' => $english,
             ]
         );
     }
@@ -4294,7 +4592,7 @@ class Connector extends AbstractConnector
      * @param string $toCountry    Destination country (ISO3, ISO2 or Full-Text)
      * @param string $language     'danish', 'dutch', 'english', 'french', 'german' or 'italian'
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerDescriptionAddress(
         $routeType,
@@ -4313,18 +4611,18 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerDescriptionAddress',
             [
-                'routetype'       => $routeType,
+                'routetype' => $routeType,
                 'from_postalcode' => $toPostalCode,
-                'from_houseno'    => $fromHouseNo,
-                'from_street'     => $fromStreet,
-                'from_city'       => $fromCity,
-                'from_country'    => $fromCountry,
-                'to_postalcode'   => $toPostalcode,
-                'to_houseno'      => $toHouseNo,
-                'to_street'       => $toStreet,
-                'to_city'         => $toCity,
-                'to_country'      => $toCountry,
-                'language'        => $language,
+                'from_houseno' => $fromHouseNo,
+                'from_street' => $fromStreet,
+                'from_city' => $fromCity,
+                'from_country' => $fromCountry,
+                'to_postalcode' => $toPostalcode,
+                'to_houseno' => $toHouseNo,
+                'to_street' => $toStreet,
+                'to_city' => $toCity,
+                'to_country' => $toCountry,
+                'language' => $language,
             ]
         );
     }
@@ -4340,7 +4638,7 @@ class Connector extends AbstractConnector
      * @param string $routeType    Type of route to calculate: 'fastest', 'shortest' or 'economic'
      * @param bool   $english      Whether to returns the description in english (true) or dutch (false)
      *
-     * @return \StdClass <RouteDescriptionCoordinatesRD> entry.
+     * @return \stdClass <RouteDescriptionCoordinatesRD> entry
      */
     public function routePlannerDescriptionCoordinatesRD($postcodeFrom, $postcodeTo, $routeType, $english)
     {
@@ -4348,9 +4646,9 @@ class Connector extends AbstractConnector
             'routePlannerDescriptionCoordinatesRD',
             [
                 'postcodefrom' => $postcodeFrom,
-                'postcodeto'   => $postcodeTo,
-                'routetype'    => $routeType,
-                'english'      => $english,
+                'postcodeto' => $postcodeTo,
+                'routetype' => $routeType,
+                'english' => $english,
             ]
         );
     }
@@ -4372,7 +4670,7 @@ class Connector extends AbstractConnector
      * @param string $toCity         Destination address city
      * @param string $language       Language description: 'danish', 'dutch', 'english', 'french', 'german' or 'italian'
      *
-     * @return \StdClass <Patterns::{Type}Array> of <RoutePart> entries
+     * @return \stdClass <Patterns::{Type}Array> of <RoutePart> entries
      */
     public function routePlannerDescriptionDutchAddress(
         $routeType,
@@ -4389,16 +4687,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerDescriptionDutchAddress',
             [
-                'routetype'       => $routeType,
+                'routetype' => $routeType,
                 'from_postalcode' => $fromPostalCode,
-                'from_housno'     => $fromHousNo,
-                'from_street'     => $fromStreet,
-                'from_city'       => $fromCity,
-                'to_postalcode'   => $toPostalCode,
-                'to_housno'       => $toHousNo,
-                'to_street'       => $toStreet,
-                'to_city'         => $toCity,
-                'language'        => $language,
+                'from_housno' => $fromHousNo,
+                'from_street' => $fromStreet,
+                'from_city' => $fromCity,
+                'to_postalcode' => $toPostalCode,
+                'to_housno' => $toHousNo,
+                'to_street' => $toStreet,
+                'to_city' => $toCity,
+                'language' => $language,
             ]
         );
     }
@@ -4408,7 +4706,7 @@ class Connector extends AbstractConnector
      * @param $postcodeTo
      * @param $english
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerDescriptionShortest($postcodeFrom, $postcodeTo, $english)
     {
@@ -4430,7 +4728,7 @@ class Connector extends AbstractConnector
      * @param float  $routeType     Type of route to calculate: 'fastest', 'shortest' or 'economic'
      * @param string $language      'danish', 'dutch', 'english', 'french', 'german', 'italian' or 'swedish'
      *
-     * @return \StdClass <Patterns::{Type}Array> of <RoutePart> entries.
+     * @return \stdClass <Patterns::{Type}Array> of <RoutePart> entries
      */
     public function routePlannerEUDescription(
         $latitudeFrom,
@@ -4443,12 +4741,12 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerEUDescription',
             [
-                'latitudefrom'  => (float)$latitudeFrom,
-                'longitudefrom' => (float)$longitudeFrom,
-                'latitudeto'    => (float)$latitudeTo,
-                'longitudeto'   => (float)$longitudeTo,
-                'routetype'     => (float)$routeType,
-                'language'      => $language,
+                'latitudefrom' => (float) $latitudeFrom,
+                'longitudefrom' => (float) $longitudeFrom,
+                'latitudeto' => (float) $latitudeTo,
+                'longitudeto' => (float) $longitudeTo,
+                'routetype' => (float) $routeType,
+                'language' => $language,
             ]
         );
     }
@@ -4461,7 +4759,7 @@ class Connector extends AbstractConnector
      * @param $routeType
      * @param $language
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerEUDescriptionCoordinatesLatLon(
         $latitudeFrom,
@@ -4474,12 +4772,12 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerEUDescriptionCoordinatesLatLon',
             [
-                'latitudefrom'  => $latitudeFrom,
+                'latitudefrom' => $latitudeFrom,
                 'longitudefrom' => $longitudeFrom,
-                'latitudeto'    => $latitudeTo,
-                'longitudeto'   => $longitudeTo,
-                'routetype'     => $routeType,
-                'language'      => $language,
+                'latitudeto' => $latitudeTo,
+                'longitudeto' => $longitudeTo,
+                'routetype' => $routeType,
+                'language' => $language,
             ]
         );
     }
@@ -4491,7 +4789,7 @@ class Connector extends AbstractConnector
      * @param $longitudeTo
      * @param $routeType
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerEUInformation(
         $latitudeFrom,
@@ -4503,11 +4801,11 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerEUInformation',
             [
-                'latitudefrom'  => $latitudeFrom,
+                'latitudefrom' => $latitudeFrom,
                 'longitudefrom' => $longitudeFrom,
-                'latitudeto'    => $latitudeTo,
-                'longitudeto'   => $longitudeTo,
-                'routetype'     => $routeType,
+                'latitudeto' => $latitudeTo,
+                'longitudeto' => $longitudeTo,
+                'routetype' => $routeType,
             ]
         );
     }
@@ -4524,7 +4822,7 @@ class Connector extends AbstractConnector
      * @param $height
      * @param $view
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerEUMap(
         $latitudeFrom,
@@ -4541,16 +4839,16 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerEUMap',
             [
-                'latitudefrom'  => $latitudeFrom,
+                'latitudefrom' => $latitudeFrom,
                 'longitudefrom' => $longitudeFrom,
-                'latitudeto'    => $latitudeTo,
-                'longitudeto'   => $longitudeTo,
-                'routetype'     => $routeType,
-                'language'      => $language,
-                'format'        => $format,
-                'width'         => $width,
-                'height'        => $height,
-                'view'          => $view,
+                'latitudeto' => $latitudeTo,
+                'longitudeto' => $longitudeTo,
+                'routetype' => $routeType,
+                'language' => $language,
+                'format' => $format,
+                'width' => $width,
+                'height' => $height,
+                'view' => $view,
             ]
         );
     }
@@ -4571,7 +4869,7 @@ class Connector extends AbstractConnector
      * @param $routeType
      * @param $language
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerGetRoute(
         $startPostcode,
@@ -4592,20 +4890,20 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerGetRoute',
             [
-                'start_postcode'                    => $startPostcode,
-                'start_house_number'                => $startHouseNumber,
-                'start_house_number_addition'       => $startHouseNumberAddition,
-                'start_street'                      => $startStreet,
-                'start_city'                        => $startCity,
-                'start_country'                     => $startCountry,
-                'destination_postcode'              => $destinationPostcode,
-                'destination_house_number'          => $destinationHouseNumber,
+                'start_postcode' => $startPostcode,
+                'start_house_number' => $startHouseNumber,
+                'start_house_number_addition' => $startHouseNumberAddition,
+                'start_street' => $startStreet,
+                'start_city' => $startCity,
+                'start_country' => $startCountry,
+                'destination_postcode' => $destinationPostcode,
+                'destination_house_number' => $destinationHouseNumber,
                 'destination_house_number_addition' => $destinationHouseNumberAddition,
-                'destination_street'                => $destinationStreet,
-                'destination_city'                  => $destinationCity,
-                'destination_country'               => $destinationCountry,
-                'route_type'                        => $routeType,
-                'language'                          => $language,
+                'destination_street' => $destinationStreet,
+                'destination_city' => $destinationCity,
+                'destination_country' => $destinationCountry,
+                'route_type' => $routeType,
+                'language' => $language,
             ]
         );
     }
@@ -4615,7 +4913,7 @@ class Connector extends AbstractConnector
      * @param $postcodeTo
      * @param $routeType
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerInformation($postcodeFrom, $postcodeTo, $routeType)
     {
@@ -4623,8 +4921,8 @@ class Connector extends AbstractConnector
             'routePlannerInformation',
             [
                 'postcodefrom' => $postcodeFrom,
-                'postcodeto'   => $postcodeTo,
-                'routetype'    => $routeType,
+                'postcodeto' => $postcodeTo,
+                'routetype' => $routeType,
             ]
         );
     }
@@ -4642,7 +4940,7 @@ class Connector extends AbstractConnector
      * @param $toCity
      * @param $toCountry
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerInformationAddress(
         $routeType,
@@ -4660,17 +4958,17 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerInformationAddress',
             [
-                'routetype'       => $routeType,
+                'routetype' => $routeType,
                 'from_postalcode' => $fromPostalCode,
-                'from_houseno'    => $fromHouseNo,
-                'from_street'     => $fromStreet,
-                'from_city'       => $fromCity,
-                'from_country'    => $fromCountry,
-                'to_postalcode'   => $toPostalCode,
-                'to_houseno'      => $toHouseNo,
-                'to_street'       => $toStreet,
-                'to_city'         => $toCity,
-                'to_country'      => $toCountry,
+                'from_houseno' => $fromHouseNo,
+                'from_street' => $fromStreet,
+                'from_city' => $fromCity,
+                'from_country' => $fromCountry,
+                'to_postalcode' => $toPostalCode,
+                'to_houseno' => $toHouseNo,
+                'to_street' => $toStreet,
+                'to_city' => $toCity,
+                'to_country' => $toCountry,
             ]
         );
     }
@@ -4686,7 +4984,7 @@ class Connector extends AbstractConnector
      * @param $toStreet
      * @param $toCity
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerInformationDutchAddress(
         $routeType,
@@ -4702,15 +5000,15 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'routePlannerInformationDutchAddress',
             [
-                'routetype'       => $routeType,
+                'routetype' => $routeType,
                 'from_postalcode' => $toPostalCode,
-                'from_housno'     => $fromHousNo,
-                'from_street'     => $fromStreet,
-                'from_city'       => $fromCity,
-                'to_postalcode'   => $toPostalcode,
-                'to_housno'       => $toHousNo,
-                'to_street'       => $toStreet,
-                'to_city'         => $toCity,
+                'from_housno' => $fromHousNo,
+                'from_street' => $fromStreet,
+                'from_city' => $fromCity,
+                'to_postalcode' => $toPostalcode,
+                'to_housno' => $toHousNo,
+                'to_street' => $toStreet,
+                'to_city' => $toCity,
             ]
         );
     }
@@ -4723,19 +5021,19 @@ class Connector extends AbstractConnector
      * @param $routeType
      * @param $english
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerRDDescription($xFrom, $yFrom, $xTo, $yTo, $routeType, $english)
     {
         return $this->getAdapter()->call(
             'routePlannerRDDescription',
             [
-                'xfrom'     => $xFrom,
-                'yfrom'     => $yFrom,
-                'xto'       => $xTo,
-                'yto'       => $yTo,
+                'xfrom' => $xFrom,
+                'yfrom' => $yFrom,
+                'xto' => $xTo,
+                'yto' => $yTo,
                 'routetype' => $routeType,
-                'english'   => $english,
+                'english' => $english,
             ]
         );
     }
@@ -4748,19 +5046,19 @@ class Connector extends AbstractConnector
      * @param $routeType
      * @param $english
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerRDDescriptionCoordinatesRD($xFrom, $yFrom, $xTo, $yTo, $routeType, $english)
     {
         return $this->getAdapter()->call(
             'routePlannerRDDescriptionCoordinatesRD',
             [
-                'xfrom'     => $xFrom,
-                'yfrom'     => $yFrom,
-                'xto'       => $xTo,
-                'yto'       => $yTo,
+                'xfrom' => $xFrom,
+                'yfrom' => $yFrom,
+                'xto' => $xTo,
+                'yto' => $yTo,
                 'routetype' => $routeType,
-                'english'   => $english,
+                'english' => $english,
             ]
         );
     }
@@ -4772,17 +5070,17 @@ class Connector extends AbstractConnector
      * @param $yTo
      * @param $routeType
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function routePlannerRDInformation($xFrom, $yFrom, $xTo, $yTo, $routeType)
     {
         return $this->getAdapter()->call(
             'routePlannerRDInformation',
             [
-                'xfrom'     => $xFrom,
-                'yfrom'     => $yFrom,
-                'xto'       => $xTo,
-                'yto'       => $yTo,
+                'xfrom' => $xFrom,
+                'yfrom' => $yFrom,
+                'xto' => $xTo,
+                'yto' => $yTo,
                 'routetype' => $routeType,
             ]
         );
@@ -4792,7 +5090,7 @@ class Connector extends AbstractConnector
      * @param $bban
      * @param $countryIso
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function sepaConvertBasicBankAccountNumber($bban, $countryIso)
     {
@@ -4805,7 +5103,7 @@ class Connector extends AbstractConnector
     /**
      * @param $iban
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function sepaValidateInternationalBankAccountNumberFormat($iban)
     {
@@ -4818,7 +5116,7 @@ class Connector extends AbstractConnector
      * @param int $userId      User ID of the user to add to the group, use 0 for the current user
      * @param int $userGroupId User Group ID of the group to add the user to
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userAddGroup($userId, $userGroupId)
     {
@@ -4830,14 +5128,14 @@ class Connector extends AbstractConnector
      * @param string $oldPassword
      * @param string $newPassword
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userChangePassword($userId, $oldPassword, $newPassword)
     {
         return $this->getAdapter()->call(
             'userChangePassword',
             [
-                'userid'       => $userId,
+                'userid' => $userId,
                 'old_password' => $oldPassword,
                 'new_password' => $newPassword,
             ]
@@ -4851,21 +5149,22 @@ class Connector extends AbstractConnector
      * @param int    $accountId    Account ID to assign this user to
      * @param string $nickname     Nickname to use for this user, leave empty to to create a random nickname. All users
      *                             get a prefix set by <Account::Username prefix>
-     * @param string $password     Password to use for authentication, leave empty for a strong random password.
+     * @param string $password     password to use for authentication, leave empty for a strong random password
      * @param array  $userGroups   array of usergroup IDs to assign this user to. See <userListAssignableGroups> for
      *                             list
      * @param string $email        Registration email address, used for activation
      * @param string $companyName  Name of the company using this user, if any
      * @param string $address      Address of the company using this user, if any
      * @param string $contactName  Name of the contact person responsible for this user
-     * @param string $contactEmail This field is not used and is ignored by the method.
+     * @param string $contactEmail this field is not used and is ignored by the method
      * @param string $telephone    Telephone number of the contact person responsible for this user
-     * @param string $fax          Fax number of the contact person responsible for this user.
+     * @param string $fax          fax number of the contact person responsible for this user
      * @param string $clientCode   Deprecated, should contain an empty string
      * @param string $comments     Comments on the user, can only be seen and edited by <Group::Account admins>
      *
      * @link http://webview.webservices.nl/documentation/files/service_accounting-class-php.html#Accounting.userCreateV2
-     * @return \StdClass
+     *
+     * @return \stdClass
      */
     public function userCreateV2(
         $accountId,
@@ -4885,19 +5184,19 @@ class Connector extends AbstractConnector
         return $this->getAdapter()->call(
             'userCreateV2',
             [
-                'accountid'    => $accountId,
-                'nickname'     => $nickname,
-                'password'     => $password,
-                'usergroups'   => $userGroups,
-                'email'        => $email,
-                'companyname'  => $companyName,
-                'address'      => $address,
-                'contactname'  => $contactName,
+                'accountid' => $accountId,
+                'nickname' => $nickname,
+                'password' => $password,
+                'usergroups' => $userGroups,
+                'email' => $email,
+                'companyname' => $companyName,
+                'address' => $address,
+                'contactname' => $contactName,
                 'contactemail' => $contactEmail,
-                'telephone'    => $telephone,
-                'fax'          => $fax,
-                'clientcode'   => $clientCode,
-                'comments'     => $comments,
+                'telephone' => $telephone,
+                'fax' => $fax,
+                'clientcode' => $clientCode,
+                'comments' => $comments,
             ]
         );
     }
@@ -4908,7 +5207,7 @@ class Connector extends AbstractConnector
      * @param int $userId  ID of the user to edit the balance of, use 0 for the current user
      * @param int $balance Amount of balance to add to (or remove from, if negative) the user
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userEditBalance($userId, $balance)
     {
@@ -4925,24 +5224,24 @@ class Connector extends AbstractConnector
      *                                       <Account::Username prefix>.
      * @param string $password               new password for this user. To keep the current password pass the empty
      *                                       string.
-     * @param string $email                  Registration email address, used for activation.
-     * @param string $companyName            Name of the company using this user, if any.
+     * @param string $email                  registration email address, used for activation
+     * @param string $companyName            name of the company using this user, if any
      * @param string $address                Address of the company using this user, if any
      * @param string $contactName            Name of the contact person responsible for this user
      * @param string $contactEmail           Telephone number of the contact person responsible for this user
      * @param string $telephone              Telephone number of the contact person responsible for this user
-     * @param string $fax                    Fax number of the contact person responsible for this user.
+     * @param string $fax                    fax number of the contact person responsible for this user
      * @param string $clientCode             Deprecated, shoud contain an empty string
-     * @param string $comments               Comments on the user, can only be seen and edited by <Group::Account
-     *                                       admins>.
+     * @param string $comments               comments on the user, can only be seen and edited by <Group::Account
+     *                                       admins>
      * @param int    $accountId              accountID to assign user to, use 0 for current account. Only usable by
      *                                       <Group::Admins>
-     * @param int    $balanceThreshold       Balance threshold to alert user, 0 to disable.
+     * @param int    $balanceThreshold       balance threshold to alert user, 0 to disable
      * @param string $notificationRecipients Recipients of balance alert notification:
      *                                       'accountcontact' = contact account contact, 'user' = contact user,
      *                                       'accountcontact_and_user' = both
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userEditExtendedV2(
         $userId,
@@ -5003,7 +5302,7 @@ class Connector extends AbstractConnector
      * @param int $userId User ID of the user to target, use 0 for the current user
      * @param int $page   Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userListAssignableGroups($userId, $page)
     {
@@ -5014,9 +5313,9 @@ class Connector extends AbstractConnector
      * Send a notification email to a user with a new password. This method is part of the <User::Creation> process.
      *
      * @param int    $userId   User ID of the user to notify, use 0 for the current user
-     * @param string $password Password to use for authentication, leave empty for a strong random password.
+     * @param string $password password to use for authentication, leave empty for a strong random password
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userNotify($userId, $password)
     {
@@ -5026,7 +5325,7 @@ class Connector extends AbstractConnector
     /**
      * @param int $userId
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userRemove($userId)
     {
@@ -5039,7 +5338,7 @@ class Connector extends AbstractConnector
      * @param int $userId      - User ID of the user to remove from the group, use 0 for the current user
      * @param int $userGroupId - User Group ID of the group to remove the user from
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userRemoveGroup($userId, $userGroupId)
     {
@@ -5052,7 +5351,7 @@ class Connector extends AbstractConnector
      * @param int $userId User ID of the user to view, use 0 for the current user
      * @param int $page   Page to retrieve, pages start counting at 1
      *
-     * @return \StdClass <Patterns::{Type}PagedResult> of <Session> entries
+     * @return \stdClass <Patterns::{Type}PagedResult> of <Session> entries
      */
     public function userSessionList($userId, $page)
     {
@@ -5065,7 +5364,7 @@ class Connector extends AbstractConnector
      * @param int $userId  ID of the user to view, use 0 for the current user
      * @param int $reactId Session ID to remove, use 0 to remove all sessions
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function userSessionRemove($userId, $reactId)
     {
@@ -5114,7 +5413,7 @@ class Connector extends AbstractConnector
     /**
      * @param $vatNumber
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function vatValidate($vatNumber)
     {
@@ -5124,7 +5423,7 @@ class Connector extends AbstractConnector
     /**
      * @param $vatNumber
      *
-     * @return \StdClass
+     * @return \stdClass
      */
     public function vatViesProxyCheckVat($vatNumber)
     {

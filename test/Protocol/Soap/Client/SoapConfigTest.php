@@ -8,13 +8,9 @@ use WebservicesNl\Protocol\Soap\Client\SoapConfig;
 
 /**
  * Class SoapConfigTest.
- *
  */
 class SoapConfigTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(function () {

@@ -18,9 +18,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public static function setupBeforeClass()
     {
         FactoryMuffin::setCustomSaver(
-                /** @noinspection StaticClosureCanBeUsedInspection */ function () {
-            return true;
-        });
+/** @noinspection StaticClosureCanBeUsedInspection */ function () {
+    return true;
+});
 
         FactoryMuffin::setCustomSetter(function ($object, $name, $value) {
             $name = 'set' . ucfirst(strtolower($name));
@@ -31,9 +31,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         FactoryMuffin::loadFactories(dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/Factories');
     }
 
-    /**
-     *
-     */
     public function testConfigCreationWithWebservicesConfig()
     {
         /** @var PlatformConfig $platformConfig */
@@ -54,9 +51,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     *
-     */
     public function testConfigCreationIsConvertedToArray()
     {
         /** @var PlatformConfig $platformConfig */
@@ -70,9 +64,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         static::assertCount(8, $resultArray);
     }
 
-    /**
-     *
-     */
     public function testConfigArrayIsBorked()
     {
         /** @var PlatformConfig $platformConfig */
@@ -80,7 +71,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             PlatformConfig::class,
             ['userName' => function () {
                 return null;
-            },]
+            }, ]
         );
 
         /** @var WebservicesConfig $soapConfig */

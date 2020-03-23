@@ -1,5 +1,6 @@
 vendor/
 ansible/
 phpunit.xml
-report/
-.idea
+/report/
+/.idea
+/.php_cs.cache

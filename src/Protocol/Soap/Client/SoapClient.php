@@ -63,6 +63,13 @@ class SoapClient extends \SoapClient implements ClientInterface
     ];
 
     /**
+     * Parsed WSDL functions signatures 'functionA => [arg_a, arg_b]'
+     *
+     * @var array
+     */
+    private $signatures;
+
+    /**
      * SoapClient constructor.
      *
      * @param SoapSettings $settings
@@ -73,6 +80,7 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @throws \InvalidArgumentException
      * @throws \Ddeboer\Transcoder\Exception\ExtensionMissingException
      * @throws \Ddeboer\Transcoder\Exception\UnsupportedEncodingException
+     * @throws \SoapFault
      */
     public function __construct(SoapSettings $settings, Manager $manager, HttpClient $client)
     {
@@ -87,6 +95,46 @@ class SoapClient extends \SoapClient implements ClientInterface
         // initiate the native PHP SoapClient for fetching all the WSDL stuff
         $soapSettings = ArrayUtils::toUnderscore($this->settings->toArray());
         parent::__construct((string) $active->getUri()->withQuery('wsdl'), array_filter($soapSettings));
+        $this->signatures = $this->parseSignatures();
+    }
+
+    /**
+     * Parse the function signatures from the configured WSDL
+     *
+     * @return array
+     */
+    protected function parseSignatures()
+    {
+        $signatures = [];
+        foreach ($this->__getFunctions() as $functionSignature) {
+            $functionMatches = [];
+            if (!preg_match('~(?<function>[\w]+)\(.*\)$~', $functionSignature, $functionMatches)) {
+                $this->log(
+                    sprintf('Could not parse function signature \'%s\'', $functionSignature),
+                    LogLevel::WARNING
+                );
+                continue;
+            }
+
+            $paramMatches = [];
+            if (!preg_match_all('~(((?<type>[\w]+) )?\$(?<name>[\w]+),?)~', $functionSignature, $paramMatches)) {
+                //this can happen simply if there are no parameters in the function signature
+                continue;
+            }
+
+            //every function will be added with a list of ordered parameter names
+            $signatures[$functionMatches['function']] = $paramMatches['name'];
+        }
+
+        return $signatures;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSignatures()
+    {
+        return $this->signatures;
     }
 
     /**
@@ -99,11 +147,13 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param int         $version
      * @param string|null $one_way
      *
-     * @return string The XML SOAP response.
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws WsClientException
      * @throws NoServerAvailableException
      * @throws \InvalidArgumentException
      * @throws \SoapFault
+     *
+     * @return string the XML SOAP response
      */
     public function __doRequest($request, $location, $action, $version, $one_way = null)
     {
@@ -127,9 +177,10 @@ class SoapClient extends \SoapClient implements ClientInterface
      *
      * @param array $args
      *
-     * @return mixed
      * @throws \Exception
      * @throws \SoapFault
+     *
+     * @return mixed
      */
     public function call(array $args = [])
     {
@@ -178,10 +229,13 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param string $location
      * @param string $action
      *
-     * @return string
      * @throws WsClientException
      * @throws \SoapFault
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return string
+     *
      * @todo move exception handler to middleware, find solution error suppressing
      */
     private function doHttpRequest($requestBody, $location, $action)
@@ -264,8 +318,9 @@ class SoapClient extends \SoapClient implements ClientInterface
      * @param array      $input_headers
      * @param array|null $output_headers
      *
-     * @return mixed
      * @throws \Exception|\SoapFault
+     *
+     * @return mixed
      */
     public function __soapCall(
         $function_name,
@@ -275,6 +330,33 @@ class SoapClient extends \SoapClient implements ClientInterface
         &$output_headers = null
     ) {
         $this->log('Called:' . $function_name, LogLevel::INFO, ['arguments' => $arguments]);
+
+        //check if the function is in the list of signatures from the wsdl
+        if (!array_key_exists($function_name, $this->signatures)) {
+            throw new \SoapFault('Client', sprintf('Invalid function %s called', $function_name));
+        }
+
+        //if arguments are passed in with an associative array, make sure they are ordered correctly
+        //warning! this does not work for doclit endpoints, since the signature becomes one 'parameter' key
+        if (ArrayUtils::isAssociativeArray($arguments)) {
+            //create a prototype argument list from the function signature
+            $prototype = array_fill_keys($this->signatures[$function_name], null);
+            //if there are arguments passed that are not part of the signature
+            $invalidArguments = array_diff_key($arguments, $prototype);
+            if (count($invalidArguments) > 0) {
+                $this->log(
+                    sprintf(
+                        'Invalid argument(s): [%s] passed to function %s',
+                        implode(',', array_keys($invalidArguments)),
+                        $function_name
+                    ),
+                    LogLevel::WARNING
+                );
+            }
+
+            //by merging with the prototype ensure only valid arguments are passed + in the correct order
+            $arguments = array_merge($prototype, array_intersect_key($arguments, $prototype));
+        }
 
         try {
             return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);

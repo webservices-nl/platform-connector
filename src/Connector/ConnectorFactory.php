@@ -35,7 +35,7 @@ class ConnectorFactory implements LoggerAwareInterface
     /**
      * ConnectorFactory constructor.
      *
-     * @param array $settings
+     * @param array           $settings
      * @param LoggerInterface $logger
      */
     public function __construct(array $settings = [], LoggerInterface $logger = null)
@@ -47,7 +47,7 @@ class ConnectorFactory implements LoggerAwareInterface
     }
 
     /**
-     * @param array $settings
+     * @param array           $settings
      * @param LoggerInterface $logger
      *
      * @return static
@@ -63,15 +63,16 @@ class ConnectorFactory implements LoggerAwareInterface
      *
      * @param ClientInterface $client
      *
-     * @return AdapterInterface
      * @throws InputException
+     *
+     * @return AdapterInterface
      */
     private function buildAdapter(ClientInterface $client)
     {
         // Build an adapter for client (as proxy between the connector and the client)
         $adapterFQCN = sprintf(self::ADAPTER_PATH, ucfirst($client->getProtocolName()));
 
-        /** @var AdapterInterface $platFormAdapter */
+        /* @var AdapterInterface $platFormAdapter */
         return new $adapterFQCN($client);
     }
 
@@ -81,8 +82,9 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param string $protocolName type of connection (SOAP, REST etc)
      * @param string $platformName name of platform (webservices)
      *
-     * @return ConnectorInterface
      * @throws InputException
+     *
+     * @return ConnectorInterface
      */
     public function create($protocolName, $platformName)
     {
@@ -107,8 +109,9 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param ClientInterface         $client
      * @param PlatformConfigInterface $config
      *
-     * @return ConnectorInterface
      * @throws \WebservicesNl\Common\Exception\Client\InputException
+     *
+     * @return ConnectorInterface
      */
     private function buildConnector(ClientInterface $client, PlatformConfigInterface $config)
     {
@@ -132,8 +135,9 @@ class ConnectorFactory implements LoggerAwareInterface
      * @param string                  $protocolName name of the protocol
      * @param PlatformConfigInterface $config       platform config object
      *
-     * @return ClientFactoryInterface
      * @throws InputException
+     *
+     * @return ClientFactoryInterface
      */
     private function createProtocolFactory($protocolName, PlatformConfigInterface $config)
     {
@@ -142,7 +146,7 @@ class ConnectorFactory implements LoggerAwareInterface
             throw new InputException("Could not find a factory for $protocolName");
         }
 
-        /** @var ClientFactoryInterface $clientFactory */
+        /* @var ClientFactoryInterface $clientFactory */
         return $clientFactory::build($config);
     }
 
@@ -151,8 +155,9 @@ class ConnectorFactory implements LoggerAwareInterface
      *
      * @param string $platformName
      *
-     * @return PlatformConfigInterface
      * @throws InputException
+     *
+     * @return PlatformConfigInterface
      */
     private function createPlatformConfig($platformName)
     {
