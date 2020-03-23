@@ -716,7 +716,7 @@ class Connector extends AbstractConnector
      *
      * @link https://webview.webservices.nl/documentation/files/service_car-php.html#Car.carRDWCarCheckCode
      *
-     * @return \stdClass <CarCheckCode>.
+     * @return \stdClass <CarCheckCode>
      */
     public function carRDWCarCheckCode($licensePlate, $code)
     {
@@ -1534,9 +1534,9 @@ class Connector extends AbstractConnector
     /**
      *  Starts a UBO investigation.
      *
-     * @param string      $dossierNumber   chamber of Commerce number
+     * @param string      $dossierNumber     chamber of Commerce number
      * @param string|null $oldestExtractDate Period start date, in Y-m-d format [optional]
-     * @param bool        $useUpdates   Use a real-time extract [optional]
+     * @param bool        $useUpdates        Use a real-time extract [optional]
      *
      * @return \stdClass <DutchBusinessUBOInvestigationToken>
      */
@@ -1552,7 +1552,9 @@ class Connector extends AbstractConnector
     /**
      *  Checks the status of an (ongoing) UBO investigation.
      *
-     * @param string      $token   An investigation token.
+     * @param string $token an investigation token
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUBOCheckInvestigation
      *
      * @return \stdClass <DutchBusinessUBOInvestigationStatus>
      */
@@ -1566,8 +1568,10 @@ class Connector extends AbstractConnector
     /**
      *  Pick up the results of the UBO investigation.
      *
-     * @param string      $token    An investigation token.
-     * @param bool        $includeSource    When set the original source is added to the extracts.
+     * @param string $token         an investigation token
+     * @param bool   $includeSource when set the original source is added to the extracts
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessUBOPickupInvestigation
      *
      * @return \stdClass <DutchBusinessUBOInvestigationResult>
      */
@@ -1582,9 +1586,11 @@ class Connector extends AbstractConnector
     /**
      *  Request an annual financial statement document for a dutch-business.
      *
-     * @param string      $dossierNumber    Chamber of Commerce number
-     * @param integer     $year     The year of the financial statement
-     * @param string      $type     The type of the financial statement
+     * @param string $dossierNumber Chamber of Commerce number
+     * @param int    $year          The year of the financial statement
+     * @param string $type          The type of the financial statement
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetAnnualFinancialStatement
      *
      * @return \stdClass <DutchBusinessAnnualFinancialStatement>
      */
@@ -1603,10 +1609,12 @@ class Connector extends AbstractConnector
     /**
      *  Retrieve a list of person entities based on search criteria.
      *
-     * @param string      $firstName   First name [optional]
-     * @param string      $lastName    Last name (required)
-     * @param string      $dateOfBirth    Date of birth (optional, format: Y-m-d)
-     * @param int         $page    Pagination starts at 1 (optional, defaults to first page)
+     * @param string $firstName   First name [optional]
+     * @param string $lastName    Last name (required)
+     * @param string $dateOfBirth Date of birth (optional, format: Y-m-d)
+     * @param int    $page        Pagination starts at 1 (optional, defaults to first page)
+     *
+     * @link
      *
      * @return \stdClass <CompliancePersonSearchReference>
      */
@@ -1626,6 +1634,8 @@ class Connector extends AbstractConnector
      *
      * @param string $dossierNumber Chamber of Commerce number
      *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetConcernRelationsOverview
+     *
      * @return \stdClass <DutchBusinessGetConcernRelationsOverviewResult>
      */
     public function dutchBusinessGetConcernRelationsOverview($dossierNumber)
@@ -1638,7 +1648,9 @@ class Connector extends AbstractConnector
      *  The overview gives a summary of the concern-relations size and depth.
      *
      * @param string $dossierNumber Chamber of Commerce number
-     * @param bool   $includeSource  When set the original source is added to the response
+     * @param bool   $includeSource When set the original source is added to the response
+     *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetConcernRelationsDetails
      *
      * @return \stdClass <DutchBusinessGetConcernRelationsDetailsResult>
      */
@@ -1654,6 +1666,7 @@ class Connector extends AbstractConnector
      * @param string $dossierNumber Chamber of Commerce number
      * @param bool   $allowCaching  determines whether a cached document may be returned
      *
+     * @link https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.dutchBusinessGetExtractDocument
      * @see <DutchBusinessExtractDocumentData>
      *
      * @return \stdClass <DutchBusinessExtractDocument>
@@ -3041,16 +3054,15 @@ class Connector extends AbstractConnector
     /**
      * Search for publications for a person.
      *
-     * @param string $lastName     Persons surname
-     * @param string $prefix       Surname prefix (eg. de, van, van der ..)
-     * @param string $birthDate    Date of birth (format: yyyy-mm-dd)
-     * @param string $postcode     Postcode
-     * @param string $houseNumber  House number
-     *
-     * @return \stdClass <InsolvencyPublicationList>
+     * @param string $lastName    Persons surname
+     * @param string $prefix      Surname prefix (eg. de, van, van der ..)
+     * @param string $birthDate   Date of birth (format: yyyy-mm-dd)
+     * @param string $postcode    Postcode
+     * @param string $houseNumber House number
      *
      * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByPerson
      *
+     * @return \stdClass <InsolvencyPublicationList>
      */
     public function insolvencySearchPublicationsByPerson($lastName, $prefix, $birthDate, $postcode, $houseNumber)
     {
@@ -3066,12 +3078,11 @@ class Connector extends AbstractConnector
     /**
      * Search for publications for a dutch company.
      *
-     * @param string $cocNumber  A registration number from the dutch chamber of commerce (dutch: kvk-nummer)
-     *
-     * @return \stdClass <InsolvencyPublicationList>
+     * @param string $cocNumber A registration number from the dutch chamber of commerce (dutch: kvk-nummer)
      *
      * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencySearchPublicationsByCoCNumber
      *
+     * @return \stdClass <InsolvencyPublicationList>
      */
     public function insolvencySearchPublicationsByCoCNumber($cocNumber)
     {
@@ -3083,12 +3094,11 @@ class Connector extends AbstractConnector
     /**
      * Fetch a insolvency case from a given publication.
      *
-     * @param string $publicationId  The id of a insolvency publication, pattern: “([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}”.
-     *
-     * @return \stdClass <InsolvencyCase>
+     * @param string $publicationId The id of a insolvency publication, pattern: “([0-9]{2}\.){0,1}[a-z]{3}\.[0-9]{2}\.[0-9]{1,4}\.[F|S|R]\.[0-9]{4}\.[0-9]{1,2}\.[0-9]{2}”.
      *
      * @link https://webview.webservices.nl/documentation/files/service_insolvency-php.html#Insolvency.insolvencyGetCaseByPublication
      *
+     * @return \stdClass <InsolvencyCase>
      */
     public function insolvencyGetCaseByPublication($publicationId)
     {
@@ -3096,7 +3106,6 @@ class Connector extends AbstractConnector
             'publication_id' => $publicationId,
         ]);
     }
-
 
     /**
      * This method expects an address that is already more or less complete.
