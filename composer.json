@@ -24,14 +24,14 @@
   ],
   "prefer-stable": true,
   "require": {
-    "php": "^5.6 || ^7",
+    "php": "5.6 || ^7 || ^8",
     "ext-soap": "*",
     "ext-xml": "*",
     "ext-dom": "*",
-    "guzzlehttp/guzzle": "^6",
+    "guzzlehttp/guzzle": "^7",
     "psr/log": "^1.0",
-    "webservices-nl/common": "^0",
-    "webservices-nl/utils": "^1",
+    "webservices-nl/common": "dev-master",
+    "webservices-nl/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {
@@ -53,5 +53,16 @@
     "psr-4": {
       "WebservicesNl\\Test\\": "test/"
     }
-  }
+  },
+  "repositories":[
+    {
+        "type": "vcs",
+        "url": "https://github.com/sietzekeuning/common"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/sietzekeuning/utils"
+    }
+  ]
+
 }
