@@ -53,5 +53,16 @@
     "psr-4": {
       "WebservicesNl\\Test\\": "test/"
     }
-  }
+  },
+  "repositories":[
+    {
+        "type": "vcs",
+        "url": "https://github.com/pinkcubeecommerce/common"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/pinkcubeecommerce/utils"
+    }
+  ]
+
 }
