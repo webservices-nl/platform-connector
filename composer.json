@@ -40,9 +40,9 @@
     "friendsofphp/php-cs-fixer": "^2 || ^3",
     "sensiolabs/security-checker": "^5",
     "roave/security-advisories": "dev-master",
-    "squizlabs/php_codesniffer": "^2"
+    "squizlabs/php_codesniffer": "^2",
     "pinkcubeecommerce/common": "dev-master",
-    "pinkcubeecommerce/utils": "dev-master",
+    "pinkcubeecommerce/utils": "dev-master"
   },
   "autoload": {
     "psr-4": {
