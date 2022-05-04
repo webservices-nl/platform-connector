@@ -57,7 +57,7 @@
     "repositories": [
       {
             "type": "path",
-            "url": "error/google-ads-php"
+            "url": ".local_git_packages/common"
       },
         {
             "type": "vcs",
