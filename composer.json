@@ -31,8 +31,7 @@
     "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
     "roave/security-advisories": "dev-master",
-    "pinkcubeecommerce/common": "dev-master",
-    "pinkcubeecommerce/utils": "dev-master"
+    "gedmo/doctrine-extensions": "~2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^5",
@@ -56,12 +55,8 @@
   },
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/pinkcubeecommerce/common"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/pinkcubeecommerce/utils"
+            "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
+            "type": "git"
         }
     ],
   "minimum-stability": "dev"
