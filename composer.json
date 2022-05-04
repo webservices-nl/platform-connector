@@ -30,6 +30,7 @@
     "ext-dom": "*",
     "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
+    "pinkcubeecommerce/common": "dev-master",
     "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
@@ -54,6 +55,10 @@
     }
   },
     "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pinkcubeecommerce/common"
+        },
         {
             "type": "vcs",
             "url": "https://github.com/pinkcubeecommerce/utils"
