@@ -28,7 +28,7 @@
     "ext-soap": "*",
     "ext-xml": "*",
     "ext-dom": "*",
-    "guzzlehttp/guzzle": "^7",
+    "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
     "pinkcubeecommerce/common": "dev-master",
     "pinkcubeecommerce/utils": "dev-master",
