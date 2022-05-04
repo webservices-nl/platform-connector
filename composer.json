@@ -30,7 +30,7 @@
     "ext-dom": "*",
     "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
-    "test/common": "dev-master",
+    "test/common": "dev",
     "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
