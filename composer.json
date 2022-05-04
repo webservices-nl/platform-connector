@@ -54,12 +54,6 @@
       "WebservicesNl\\Test\\": "test/"
     }
   },
-    "repositories": [
-      {
-            "type": "path",
-            "url": ".local_git_packages/common"
-      }
-    ],
   "minimum-stability": "dev"
 
 }
