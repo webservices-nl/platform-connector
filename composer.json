@@ -55,6 +55,10 @@
     }
   },
     "repositories": [
+      {
+            "type": "path",
+            "url": "error/google-ads-php"
+      },
         {
             "type": "vcs",
             "url": "https://github.com/pinkcubeecommerce/commonnee"
