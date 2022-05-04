@@ -30,8 +30,8 @@
     "ext-dom": "*",
     "guzzlehttp/guzzle": "^6 || ^7.0.1",
     "psr/log": "^1.0",
-    "webservices-nl/common": "dev-master",
-    "webservices-nl/utils": "dev-master",
+    "pinkcubeecommerce/common": "dev-master",
+    "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {
