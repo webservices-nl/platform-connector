@@ -11,19 +11,8 @@
         {
             "type": "vcs",
             "url": "https://github.com/pinkcubeecommerce/common"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/pinkcubeecommerce/utils"
         }
     ],
-  "config": {
-    "gitlab-domains": [
-      "gitlab.fdmg.org"
-    ],
-    "preferred-install": "dist"
-  },
-  "type": "library",
   "license": "MIT",
   "authors": [
     {
