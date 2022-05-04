@@ -57,7 +57,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/pinkcubeecommerce/common"
+            "url": "https://github.com/pinkcubeecommerce/commonnee"
         },
         {
             "type": "vcs",
