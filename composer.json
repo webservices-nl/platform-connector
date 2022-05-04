@@ -30,7 +30,7 @@
     "ext-dom": "*",
     "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
-    "test/common": "master@dev",
+    "pinkcubeecommerce/common": "dev-master",
     "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
@@ -54,16 +54,16 @@
       "WebservicesNl\\Test\\": "test/"
     }
   },
-  "repositories":[
-    {
-        "type": "vcs",
-        "url": "git@github.com:pinkcubeecommerce/common.git"
-    },
-    {
-        "type": "vcs",
-        "url": "https://github.com/pinkcubeecommerce/utils"
-    }
-  ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pinkcubeecommerce/common"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/pinkcubeecommerce/utils"
+        }
+    ],
   "minimum-stability": "dev"
 
 }
