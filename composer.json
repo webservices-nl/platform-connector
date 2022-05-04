@@ -57,7 +57,7 @@
   "repositories":[
     {
         "type": "vcs",
-        "url": "https://github.com/pinkcubeecommerce/common"
+        "url": "git@github.com:pinkcubeecommerce/common.git"
     },
     {
         "type": "vcs",
