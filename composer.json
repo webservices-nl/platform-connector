@@ -30,8 +30,6 @@
     "ext-dom": "*",
     "guzzlehttp/guzzle": "^7.0.1",
     "psr/log": "^1.0",
-    "pinkcubeecommerce/common": "dev-master",
-    "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {
@@ -43,6 +41,8 @@
     "sensiolabs/security-checker": "^5",
     "roave/security-advisories": "dev-master",
     "squizlabs/php_codesniffer": "^2"
+    "pinkcubeecommerce/common": "dev-master",
+    "pinkcubeecommerce/utils": "dev-master",
   },
   "autoload": {
     "psr-4": {
