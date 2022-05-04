@@ -31,7 +31,7 @@
     "guzzlehttp/guzzle": "^7",
     "psr/log": "^1.0",
     "pinkcubeecommerce/common": "dev-master",
-    "webservices-nl/utils": "dev-master",
+    "pinkcubeecommerce/utils": "dev-master",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {
