@@ -5429,4 +5429,14 @@ class Connector extends AbstractConnector
     {
         return $this->getAdapter()->call('vatViesProxyCheckVat', ['vat_number' => $vatNumber]);
     }
+
+    public function creditsafeSearchV2($countries, $postalCode, $street)
+    {
+        return $this->getAdapter()->call('creditsafeSearchV2', ['countries' => $countries, 'postal_code' => $postalCode, 'street' => $street]);
+    }
+
+    public function creditsafeGetReportFullV2($companyId)
+    {
+        return $this->getAdapter()->call('creditsafeGetReportFullV2', ['company_id' => $companyId, 'language' => 'NL']);
+    }
 }
