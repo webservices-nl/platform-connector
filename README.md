@@ -1,5 +1,12 @@
 # Webservices Platform Connector
 
+> [!WARNING]
+> This project is no longer maintained and is provided as-is.
+>
+> No new features, bug fixes, security updates, or support will be provided.
+> If you depend on this project, please consider forking it and maintaining your own version.
+
+
 ### External checks
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webservices-nl/platform-connector/?branch=master)
